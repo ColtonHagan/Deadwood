@@ -2,9 +2,9 @@ public class Room {
    private int totalShotCounters;
    private int currentShotCounters;
    private Role[] extraRoles;
-   private sceneCard sceneCard;
+   private SceneCard sceneCard;
    
-   public Room (int totalShotCounters,Role[] extraRoles, sceneCard) {
+   public Room (int totalShotCounters, Role[] extraRoles, SceneCard sceneCard) {
    
    }
    public void endRoom() {
