@@ -7,9 +7,9 @@ public class SceneCard {
    }
    
    public boolean playerOn() {
-   
+      return 0;
    }
    public Role[] availableRoles() {
-    
+      return null;
    } 
 }
