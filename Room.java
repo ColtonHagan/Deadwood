@@ -14,6 +14,6 @@ public class Room {
    
    } 
    public Role[] availableExtraRoles() {
-   
+      return null;
    }
 }
