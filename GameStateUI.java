@@ -1,5 +1,5 @@
 class GameStateUI{
-   public GameStateInterface(){
+   public GameStateUI(){
    
    }
    

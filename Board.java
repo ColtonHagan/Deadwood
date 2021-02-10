@@ -16,6 +16,6 @@ class Board{
    }
    
    public Room[] adjustRooms(){
-   
+      return null;
    }
 }

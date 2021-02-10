@@ -34,6 +34,6 @@ class Player{
    }
    
    public int rollDice(){
-   
+      return 0;
    }
 }
