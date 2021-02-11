@@ -1,5 +1,5 @@
 class Player{
-   private String name; //Added 
+   private String name;
    private int money;
    private int credits;
    private int rank;
@@ -36,4 +36,41 @@ class Player{
    public int rollDice(){
       return 0;
    }
+   
+   public int getMoney(){
+      return 0;
+   }
+   
+   public int getCredits(){
+      return 0;
+   }
+   
+   public int getRank(){
+      return 0;
+   }
+   
+   public int getPracticeChips(){
+      return 0;
+   }
+   
+   public Room getCurrentRoom(){
+      return null;
+   }
+   
+   public String getName(){
+      return null;
+   }
+   
+   public void updateMoney(int money){
+   
+   }
+   
+   public void updateCredits(int credits){
+   
+   }
+   
+   public void upgradeRank(){
+   
+   }
+   
 }
