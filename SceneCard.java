@@ -11,5 +11,11 @@ public class SceneCard {
    }
    public Role[] availableRoles() {
       return null;
-   } 
+   }
+   public int getBudget () {
+      return budget;
+   }
+   public Role[] getRoles () {
+      return roles;
+   }
 }

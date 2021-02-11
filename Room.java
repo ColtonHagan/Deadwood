@@ -3,21 +3,27 @@ public class Room {
    private int currentShotCounters;
    private Role[] extraRoles;
    private SceneCard sceneCard;
+   private Room adjacentRooms;
    
-   public Room (int totalShotCounters,Role[] extraRoles, SceneCard sceneCard) {
-      
+   public Room (int totalShotCounters, Role[] extraRoles, SceneCard sceneCard) {
+   
    }
-   
    public void endRoom() {
    
    }
-   
    private void bonusPayment() {
    
    } 
-   
    public Role[] availableExtraRoles() {
       return null;
    }
+   public int getCurrentShotCounters () {
+      return currentShotCounters;
+   }
+   private void removeScene() {
    
+   }
+   private Room getAdjacentRooms () {
+      return adjacentRooms;
+   }
 }
