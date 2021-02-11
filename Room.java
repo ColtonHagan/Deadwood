@@ -3,7 +3,7 @@ public class Room {
    private int currentShotCounters;
    private Role[] extraRoles;
    private SceneCard sceneCard;
-   private Room adjacentRooms;
+   private Room[] adjacentRooms;
    private boolean flippedCard;
    
    public Room (int totalShotCounters, Role[] extraRoles, SceneCard sceneCard) {
@@ -24,7 +24,7 @@ public class Room {
    private void removeScene() {
    
    }
-   private Room getAdjacentRooms () {
+   private Room[] getAdjacentRooms () {
       return adjacentRooms;
    }
    private boolean getFlippedCard () {
