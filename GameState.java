@@ -21,4 +21,17 @@ class GameState{
    public void passTurn(){
    
    }
+   
+   public int getCurrentDay(){
+      return 0;
+   }
+   
+   public int getPlayerCount(){
+      return 0;
+   }
+   
+   public void setTotalDays(int days){
+   
+   }
 }
+
