@@ -5,15 +5,19 @@ public class Room {
    private SceneCard sceneCard;
    
    public Room (int totalShotCounters,Role[] extraRoles, SceneCard sceneCard) {
-   
+      
    }
+   
    public void endRoom() {
    
    }
+   
    private void bonusPayment() {
    
    } 
+   
    public Role[] availableExtraRoles() {
       return null;
    }
+   
 }
