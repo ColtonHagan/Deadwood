@@ -6,4 +6,7 @@ public class CastingOffice {
    public void upgrade () {
    
    }
+   public int[][] getPossibleUpgrades () {
+      return possibleUpgrades;
+   }
 }

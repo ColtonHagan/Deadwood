@@ -9,5 +9,18 @@ public class Role {
    
    public void changeRole() {
    
+   }
+   
+   public int getRank() {
+      return rank;
    } 
+   public boolean getExtra() {
+      return isExtra;
+   }
+   public Player getUsedBy() {
+      return usedBy;
+   }
+   public void setPlayer(Player player) {
+      usedBy = player;
+   }
 }
