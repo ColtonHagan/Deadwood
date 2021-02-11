@@ -4,6 +4,7 @@ public class Room {
    private Role[] extraRoles;
    private SceneCard sceneCard;
    private Room adjacentRooms;
+   private boolean flippedCard;
    
    public Room (int totalShotCounters, Role[] extraRoles, SceneCard sceneCard) {
    
@@ -25,5 +26,8 @@ public class Room {
    }
    private Room getAdjacentRooms () {
       return adjacentRooms;
+   }
+   private boolean getFlippedCard () {
+      return flippedCard;
    }
 }
