@@ -2,9 +2,15 @@ public class Role {
    private int rank;
    private Player usedBy;
    private boolean isExtra;
+   private String name;
+   private String tagLine;
    
-   public Role(int rank, boolean isExtra) {
-   
+   public Role(String name, String tagLine, int rank, boolean isExtra) {
+      this.name = name;
+      this.tagLine = tagLine;
+      this.rank = rank;
+      this.isExtra = isExtra;
+      usedBy = null;
    }
    
    public void changeRole() {

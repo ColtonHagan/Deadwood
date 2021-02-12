@@ -3,11 +3,15 @@ public class Room {
    private int currentShotCounters;
    private Role[] extraRoles;
    private SceneCard sceneCard;
-   private Room[] adjacentRooms;
-   private boolean flippedCard;
+   private String[] adjacentRooms;
+   private String name;
    
-   public Room (int totalShotCounters, Role[] extraRoles, SceneCard sceneCard) {
-   
+   public Room (String name, int shotCounters, Role[] extraRoles, SceneCard sceneCard) {
+      this.name = name;
+      totalShotCounters = shotCounters;
+      currentShotCounters = 0;
+      this.extraRoles = extraRoles;
+      this.sceneCard = sceneCard;
    }
    public void endRoom() {
    
@@ -21,13 +25,19 @@ public class Room {
    public int getCurrentShotCounters () {
       return currentShotCounters;
    }
-   private void removeScene() {
+   public void removeScene() {
    
    }
-   private Room[] getAdjacentRooms () {
+   public void createRoom() {
+   
+   }
+   public void parseRoom() {
+   
+   }
+   public String[] getAdjacentRooms () {
       return adjacentRooms;
    }
-   private boolean getFlippedCard () {
-      return flippedCard;
+   public String getName() {
+      return name;
    }
 }

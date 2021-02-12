@@ -1,8 +1,6 @@
-import java.util.*; 
 public class Deadwood {
-   public static void main(String args[]) {
-       
-       
+   public static void main(String args[]) throws Exception {
+      //GameState currentGameState = new GameState();
    }
 }
 

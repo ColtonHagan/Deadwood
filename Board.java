@@ -1,10 +1,11 @@
-class Board{
+class Board {
    private Room[] rooms;
    private int totalRooms;
    private int currentRooms;
    
-   public Board(){
-   
+   public Board() {
+      rooms = new Room[12];
+      totalRooms = 12;
    }
    
    public void resetBoard(){
@@ -15,8 +16,11 @@ class Board{
    
    }
    
-   public Room[] adjustRooms(){
+   public String adjacentRooms(){
       return null;
    }
    
+   public void createBoard(parseData dataParser,Scenes sceneLibray) throws Exception {
+      dataParser.parseBoard(rooms, sceneLibray);
+   }
 }

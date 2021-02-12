@@ -1,20 +1,23 @@
-class GameState{
+class GameState {
    private int days;
    private Player currentPlayersTurn;
-   private Board boardState; 
+   //private Board board; 
    private int totalDays;
    private Player[] players;
+   private Scenes sceneLibray = new Scenes();
+   private Board board = new Board();
    
-   
-   public void gameState(){
-   
+   public GameState () throws Exception {
+      setUpGame();
    }
    
-   public void setUpGame(){
-   
+   public void setUpGame() throws Exception {
+      parseData dataParser = new parseData();
+      sceneLibray.createScenes(dataParser);
+      board.createBoard(dataParser, sceneLibray);
    }
    
-   public void engGame(){
+   public void endGame(){
    
    }
    
