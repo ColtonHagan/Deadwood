@@ -66,12 +66,12 @@ public class parseData {
             }
       }
    }
-   public void parseBoard(Room[] rooms, Scenes sceneLibray) throws Exception {
-      parseRooms("set", rooms, sceneLibray);
-      parseRooms("trailer", rooms, sceneLibray);
-      parseRooms("office", rooms, sceneLibray);
+   public void parseBoard(Room[] rooms, CastingOffice office) throws Exception {
+      parseRooms("set", rooms, null);
+      parseRooms("trailer", rooms, null);
+      parseRooms("office", rooms, office);
    }
-   public void parseRooms(String tagName, Room[] rooms, Scenes sceneLibray) throws Exception {
+   public void parseRooms(String tagName, Room[] rooms, CastingOffice office) throws Exception {
       DocumentBuilderFactory myDomFactory = DocumentBuilderFactory.newInstance();
       DocumentBuilder myBuilder = myDomFactory.newDocumentBuilder();
       Document boardDoc = myBuilder.parse("board.xml");
@@ -79,6 +79,7 @@ public class parseData {
       for(int i = 0; i < roomList.getLength(); i++) {
          ArrayList<Role> roles = new ArrayList<Role>();
          ArrayList<String> neighbors = new ArrayList<String>();
+         int[][] possibleUpgrades = new int[5][3];
          int shotCounters = 0;
          Node roomNode = roomList.item(i);
          removeEmptyNodes(roomNode);
@@ -103,21 +104,32 @@ public class parseData {
             } else if (nodeName.equals("takes")) {
                Element roleElement = (Element) roleList.item(0);
                shotCounters = Integer.parseInt(roleElement.getAttribute("number"));
+            } else if (nodeName.equals("upgrades")) {
+               for(int k = 0; k < roleList.getLength(); k++) {
+                  Element roleElement = (Element) roleList.item(k);
+                  int upgradeCost = Integer.parseInt(roleElement.getAttribute("amt"));
+                  if(roleElement.getAttribute("currency").equals("dollar")) {
+                     possibleUpgrades[k][0] = k+2;
+                     possibleUpgrades[k][1] = upgradeCost;
+                  } else {
+                     possibleUpgrades[k-5][2] = upgradeCost;
+                  }
+               }
             }
          }
          String name = "";
          if(tagName.equals("trailer")) {
             name = "Trailer";
-            i = 10;
+            i = rooms.length-2;
          } else if (tagName.equals("office")) {
             name = "Office";
-            i = 11;
-            //Still need to create castingOffice object
+            i = rooms.length-1;
+            office = new CastingOffice(possibleUpgrades);
          } else {
             name = roomElement.getAttribute("name");
          }
          Role[] roleArray = Arrays.copyOf(roles.toArray(), roles.toArray().length, Role[].class);
-         rooms[i] = new Room(name, shotCounters, roleArray, sceneLibray.getRandomCard());
+         rooms[i] = new Room(name, shotCounters, roleArray);
       }
    }
 

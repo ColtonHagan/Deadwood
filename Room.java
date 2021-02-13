@@ -6,12 +6,11 @@ public class Room {
    private String[] adjacentRooms;
    private String name;
    
-   public Room (String name, int shotCounters, Role[] extraRoles, SceneCard sceneCard) {
+   public Room (String name, int shotCounters, Role[] extraRoles) {
       this.name = name;
       totalShotCounters = shotCounters;
       currentShotCounters = 0;
       this.extraRoles = extraRoles;
-      this.sceneCard = sceneCard;
    }
    public void endRoom() {
    
@@ -25,8 +24,8 @@ public class Room {
    public int getCurrentShotCounters () {
       return currentShotCounters;
    }
-   public void removeScene() {
-   
+   public void setScene(SceneCard newScene) {
+      sceneCard = newScene;
    }
    public void createRoom() {
    
