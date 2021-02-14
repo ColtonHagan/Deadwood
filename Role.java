@@ -1,6 +1,6 @@
 public class Role {
    private int rank;
-   private Player usedBy;
+   private PlayerModel usedBy;
    private boolean isExtra;
    private String name;
    private String tagLine;
@@ -23,10 +23,10 @@ public class Role {
    public boolean getExtra() {
       return isExtra;
    }
-   public Player getUsedBy() {
+   public PlayerModel getUsedBy() {
       return usedBy;
    }
-   public void setPlayer(Player player) {
+   public void setPlayer(PlayerModel player) {
       usedBy = player;
    }
 }

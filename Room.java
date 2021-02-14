@@ -36,4 +36,7 @@ public class Room {
    public String getName() {
       return name;
    }
+   public SceneCard getSceneCard(){
+      return sceneCard;
+   }
 }
