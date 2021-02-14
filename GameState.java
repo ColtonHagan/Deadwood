@@ -1,9 +1,9 @@
 class GameState {
    private int days;
-   private Player currentPlayersTurn;
+   private PlayerModel currentPlayersTurn;
    //private Board board; 
    private int totalDays;
-   private Player[] players;
+   private PlayerModel[] players;
    private Scenes sceneLibray = new Scenes();
    private Board board = new Board();
    
