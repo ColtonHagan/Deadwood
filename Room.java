@@ -27,11 +27,8 @@ public class Room {
    public void setScene(SceneCard newScene) {
       sceneCard = newScene;
    }
-   public void createRoom() {
-   
-   }
-   public void parseRoom() {
-   
+   public SceneCard getSceneCard() {
+      return sceneCard;
    }
    public String[] getAdjacentRooms () {
       return adjacentRooms;

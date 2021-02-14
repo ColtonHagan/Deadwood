@@ -4,7 +4,6 @@ public class Scenes {
    public Scenes () {
       possibleScenes = new SceneCard[40];
    }
-   //issue stop a card from being picked twice
    public SceneCard getRandomCard() {
       Random rand = new Random();
       SceneCard randomCard = possibleScenes[rand.nextInt(40)];
@@ -13,6 +12,10 @@ public class Scenes {
          return randomCard;
       }
       return getRandomCard();
+   }
+   public void resetLibray() {
+      for(SceneCard card : possibleScenes)
+         card.setUse(false);
    }
    public void createScenes(parseData dataParser) throws Exception {
       dataParser.parseScenes(possibleScenes);

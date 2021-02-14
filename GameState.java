@@ -25,7 +25,7 @@ class GameState {
    
    }
    
-   public int getCurrentDay(){
+   public int getCurrentDay() {
       return 0;
    }
    

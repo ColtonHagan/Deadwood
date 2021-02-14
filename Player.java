@@ -13,11 +13,11 @@ class Player{
       this.rank = rank;
    }
    
-   public void upgrade(){
+   public void upgrade() {
       
    }
    
-   public void move(){
+   public void move() {
    
    }
    

@@ -8,18 +8,27 @@ class Board {
       //includes rooms of office and trailer with 0 shot counters
       rooms = new Room[12];
       totalRooms = 12;
+      currentRooms = totalRooms;
    }
    
-   public void resetBoard(){
-   
+   public void resetBoard(Scenes sceneLibray){
+      for(Room room : rooms) {
+         room.getSceneCard().setUse(false);
+      }
+      placeScenes(sceneLibray);
+      currentRooms = totalRooms;
    }
    
-   public void endDay(){
-   
+   public void endRoom(Room currentRoom) {
+      currentRooms--;
+      if(currentRooms == 1) {
+         //endDay();
+      }
    }
    
-   public String adjacentRooms(){
-      return null;
+   
+   public String[] adjacentRooms(Room currentRoom){
+      return currentRoom.getAdjacentRooms();
    }
    
    public void createBoard(parseData dataParser, Scenes sceneLibray) throws Exception {
@@ -28,7 +37,7 @@ class Board {
    }
    
    public void placeScenes(Scenes sceneLibray) {
-      for(int i = 0; i < rooms.length; i++) {
+      for(int i = 0; i < rooms.length - 2; i++) {
          rooms[0].setScene(sceneLibray.getRandomCard());
       }
    }
