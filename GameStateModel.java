@@ -1,6 +1,6 @@
 class GameStateModel {
    private int currentDay;
-   private Player currentPlayersTurn;
+   private PlayerModel currentPlayersTurn;
    private int totalDays;
    private PlayerModel[] players;
    private Scenes sceneLibray = new Scenes();
