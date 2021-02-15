@@ -45,11 +45,11 @@ class PlayerModel {
    }
 
    public void updateMoney(int money) {
-      this.money += money;
+      this.money = money;
    }
 
    public void updateCredits(int credits) {
-      this.credits += credits;
+      this.credits = credits;
    }
 
    public void updateRole(Role role) {

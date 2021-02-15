@@ -27,9 +27,6 @@ public class Room {
    public void setScene(SceneCard newScene) {
       sceneCard = newScene;
    }
-   public SceneCard getSceneCard() {
-      return sceneCard;
-   }
    public String[] getAdjacentRooms () {
       return adjacentRooms;
    }
@@ -38,5 +35,8 @@ public class Room {
    }
    public SceneCard getSceneCard(){
       return sceneCard;
+   }
+   public void updateShotCounter(){
+      currentShotCounters++;
    }
 }

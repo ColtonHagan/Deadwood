@@ -1,3 +1,5 @@
+import java.util.Random;
+
 class PlayerController {
    private PlayerModel model;
    private PlayerUI view;
@@ -5,7 +7,7 @@ class PlayerController {
    public PlayerController(PlayerModel model, PlayerUI view) {
       this.model = model;
       this.view = view;
-      this.view.addListener(this);
+      view.addListener(this);
    }
 
    public void updateView(){
@@ -18,6 +20,10 @@ class PlayerController {
 
    public void updateCredits(int credits) {
       model.updateCredits(credits);
+   }
+
+   public void upgradeRank(){
+      //Handle in CastingOffice
    }
 
    public void addRole(Role role) {
@@ -35,12 +41,50 @@ class PlayerController {
    public void rehearse(){
       int budget = model.getCurrentRoom().getSceneCard().getBudget();
       if(model.getPracticeChips() + 1 == budget) {
-         System.out.println()
+         view.showRehearsalResults(false, model.getPracticeChips());
+      } else {
+         model.updatePracticeChips(model.getPracticeChips() + 1);
+         view.showRehearsalResults(true, model.getPracticeChips());
       }
+   }
+
+   public void clearRehearse(){
+      model.updatePracticeChips(0);
+   }
+
+   private int rollDice() {
+      Random rand = new Random();
+      return rand.nextInt(6) + 1;
    }
 
    public void act(){
 
-   }
+      int budget = model.getCurrentRoom().getSceneCard().getBudget();
+      if((rollDice() + model.getPracticeChips()) >= budget){
+         //If Actor succeeds in acting:
+         model.getCurrentRoom().updateShotCounter();
 
+
+         if(model.getCurrentRole().getExtra()){
+            //Off card:
+            model.updateMoney(model.getMoney() + 1);
+            model.updateCredits(model.getCredits() + 1);
+            view.showActingResults(false, true, 1, 1);
+         } else {
+            //On card:
+            model.updateCredits(model.getCredits() + 2);
+            view.showActingResults(false, true, 0, 2);
+         }
+      } else {
+         //If actor fails in acting:
+         if(model.getCurrentRole().getExtra()){
+            //Off card:
+            model.updateMoney(model.getMoney() + 1);
+            view.showActingResults(false, false, 1, 0);
+         } else {
+            //On card
+            view.showActingResults(false, true, 0, 0);
+         }
+      }
+   }
 }
