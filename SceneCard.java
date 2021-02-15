@@ -16,9 +16,6 @@ public class SceneCard {
    public boolean playerOn() {
       return true;
    }
-   public Role[] availableRoles() {
-      return null;
-   }
    public int getBudget () {
       return budget;
    }

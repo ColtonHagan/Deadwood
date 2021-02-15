@@ -1,9 +1,6 @@
 class PlayerUI {
    PlayerController controller;
 
-   public PlayerUI(){
-   }
-
    public void addListener(PlayerController controller) {
       this.controller = controller;
    }
@@ -54,7 +51,7 @@ class PlayerUI {
    }
 
    public void move() {
-
+      
    }
 
    public void takeRole(Role role) {

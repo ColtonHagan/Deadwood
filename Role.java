@@ -13,10 +13,6 @@ public class Role {
       usedBy = null;
    }
    
-   public void changeRole() {
-   
-   }
-   
    public int getRank() {
       return rank;
    } 
