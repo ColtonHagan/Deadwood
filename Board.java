@@ -26,7 +26,6 @@ class Board {
       }
    }
    
-   
    public String[] adjacentRooms(Room currentRoom){
       return currentRoom.getAdjacentRooms();
    }
@@ -34,6 +33,9 @@ class Board {
    public void createBoard(parseData dataParser, Scenes sceneLibray) throws Exception {
       dataParser.parseBoard(rooms, office);
       placeScenes(sceneLibray);
+   }
+   public Room getTrailer() {
+      return rooms[totalRooms-1];
    } 
    
    public void placeScenes(Scenes sceneLibray) {

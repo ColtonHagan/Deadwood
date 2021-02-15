@@ -30,17 +30,29 @@ class GameStateController {
          String name = "find latter"; //will request player name here
          players[i] = new PlayerModel(name, money, credits, rank, model.getBoard().getTrailer());
       }
+      model.setPlayers(players);
       parseData dataParser = new parseData();
       model.getSceneLibray().createScenes(dataParser);
       model.getBoard().createBoard(dataParser, model.getSceneLibray());
    }
    
    public void endGame(){
-      
-   }
-   
-   public void passTurn(){
-   
+      PlayerModel[] players = model.getPlayers();
+      int score = 0;
+      int highestScore = 0;
+      String player = "";
+      String winningPlayer = "";
+      for(int i = 0; i  < players.length; i++) {
+         PlayerModel currentPlayer = players[i];
+         score = currentPlayer.getRank() * 5 + currentPlayer.getCredits() + currentPlayer.getMoney();
+         player = currentPlayer.getName();
+         view.showScore(player, score);
+         if(score > highestScore) {
+            highestScore = score;
+            winningPlayer = player;
+         }
+      }
+      view.showWinner(winningPlayer, highestScore);
    }
 }
 

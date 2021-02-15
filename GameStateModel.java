@@ -8,17 +8,20 @@ class GameStateModel {
    public GameStateModel () throws Exception {
    }
    public int getCurrentDay() {
-      return 0;
+      return currentDay;
    }
    
    public int getPlayerCount(){
-      return 0;
+      return players.length;
    }
    public Scenes getSceneLibray() {
       return sceneLibray;
    }
    public Board getBoard() {
       return board;
+   }
+   public void setPlayers(PlayerModel[] players) {
+      this.players = players;
    }
    public PlayerModel[] getPlayers() {
       return players;

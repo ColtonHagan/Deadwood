@@ -33,13 +33,10 @@ public class Room {
    public String getName() {
       return name;
    }
-<<<<<<< HEAD
-=======
    public SceneCard getSceneCard(){
       return sceneCard;
    }
    public void updateShotCounter(){
       currentShotCounters++;
    }
->>>>>>> 19580e601be63dd97288cbf3678c53367ce3b81c
 }

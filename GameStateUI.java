@@ -1,13 +1,8 @@
 class GameStateUI {
-   public GameStateUI(){
-   
+   public void showScore(String name, int score){
+      System.out.println(name + " got " + score);
    }
-   
-   public int pickPlayers(){
-      return 0;
-   }
-   
-   public void showScore(){
-   
+   public void showWinner(String name, int score) {
+      System.out.println("WINNER " + name + " with a score of " + score);
    }
 }
