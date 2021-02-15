@@ -1,4 +1,4 @@
-class GameStateUI{
+class GameStateUI {
    public GameStateUI(){
    
    }

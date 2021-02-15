@@ -34,7 +34,7 @@ class Board {
    public void createBoard(parseData dataParser, Scenes sceneLibray) throws Exception {
       dataParser.parseBoard(rooms, office);
       placeScenes(sceneLibray);
-   }
+   } 
    
    public void placeScenes(Scenes sceneLibray) {
       for(int i = 0; i < rooms.length - 2; i++) {
