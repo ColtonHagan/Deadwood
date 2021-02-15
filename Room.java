@@ -27,13 +27,19 @@ public class Room {
    public void setScene(SceneCard newScene) {
       sceneCard = newScene;
    }
-   public SceneCard getSceneCard() {
-      return sceneCard;
-   }
    public String[] getAdjacentRooms () {
       return adjacentRooms;
    }
    public String getName() {
       return name;
    }
+<<<<<<< HEAD
+=======
+   public SceneCard getSceneCard(){
+      return sceneCard;
+   }
+   public void updateShotCounter(){
+      currentShotCounters++;
+   }
+>>>>>>> 19580e601be63dd97288cbf3678c53367ce3b81c
 }
