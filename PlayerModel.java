@@ -59,4 +59,8 @@ class PlayerModel {
    public void updatePracticeChips(int practiceChips) {
       this.practiceChips = practiceChips;
    }
+
+   public void updateCurrentRoom(Room currentRoomroom) {
+      this.currentRoom = currentRoom;
+   }
 }

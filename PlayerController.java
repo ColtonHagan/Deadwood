@@ -26,6 +26,23 @@ class PlayerController {
       //Handle in CastingOffice
    }
 
+   public void move(Room room){
+      boolean checkChange = false;
+      for (String s : model.getCurrentRoom().getAdjacentRooms()) {
+         if(room.equals(s)){
+            model.updateCurrentRoom(room);
+            checkChange = true;
+            break;
+         }
+      }
+
+      if(checkChange) {
+         view.showMoveResults(true, model.getCurrentRoom().getName());
+      } else {
+         view.showMoveResults(false, model.getCurrentRoom().getName());
+      }
+   }
+
    public void addRole(Role role) {
       if(model.getCurrentRole() == null && role.getUsedBy() == null){
          model.updateRole(role);
@@ -58,7 +75,6 @@ class PlayerController {
    }
 
    public void act(){
-
       int budget = model.getCurrentRoom().getSceneCard().getBudget();
       if((rollDice() + model.getPracticeChips()) >= budget){
          //If Actor succeeds in acting:

@@ -41,6 +41,18 @@ class PlayerUI {
       System.out.println("You currently have " + practiceChips + " Practice chips.");
    }
 
+   public void showMoveResults(boolean check, String roomName){
+      if(check) {
+         System.out.println("Move successful!");
+         System.out.println("You are now in the " + roomName);
+      } else {
+         System.out.println("Move failed!");
+         System.out.println("Error: this room is not adjacent to your current room!");
+         System.out.println("You are still in the " + roomName);
+      }
+
+   }
+
    public void move() {
 
    }
