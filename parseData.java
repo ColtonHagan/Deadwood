@@ -14,23 +14,14 @@ import java.util.ArrayList;
 import java.util.Arrays;
 public class parseData {
    public void parseScenes(SceneCard[] possibleScenes) throws Exception {
-      DocumentBuilderFactory myDomFactory = DocumentBuilderFactory.newInstance();
-      DocumentBuilder myBuilder = myDomFactory.newDocumentBuilder();
-      Document cardDoc = myBuilder.parse("cards.xml");
-      
-      NodeList cardList = cardDoc.getElementsByTagName("card");
-      //gets card values
+      NodeList cardList = getOuterNodes("cards.xml", "card");
       for(int i = 0; i < cardList.getLength(); i++) {
          String cardDescription = "";
-         
          ArrayList<Role> roles = new ArrayList<Role>();
          
          Node cardNode = cardList.item(i);
-         //removes empty nodes that where appearing for some reason
-         removeEmptyNodes(cardNode);
+         NodeList roleList = getInnerNodes(cardNode);
          Element cardElement = (Element) cardNode;
-         NodeList roleList = cardNode.getChildNodes();
-         //gets role values
          for(int j = 0; j < roleList.getLength(); j++) {
             Node roleNode = roleList.item(j);
             String nodeName = roleNode.getNodeName();
@@ -50,6 +41,7 @@ public class parseData {
          possibleScenes[i] = new SceneCard(name, cardDescription, budget, roleArray);
       }
    }
+   
    public void parseRole(ArrayList<Role> roles, Node cardNode, Element roleElement, boolean extra) {
       String name = roleElement.getAttribute("name");
       String line = cardNode.getChildNodes().item(1).getTextContent();
@@ -66,31 +58,51 @@ public class parseData {
             }
       }
    }
-   public void parseBoard(Room[] rooms, CastingOffice office) throws Exception {
-      parseRooms("set", rooms, null);
-      parseRooms("trailer", rooms, null);
-      parseRooms("office", rooms, office);
-   }
-   public void parseRooms(String tagName, Room[] rooms, CastingOffice office) throws Exception {
+   public NodeList getOuterNodes (String fileName, String tagName) throws Exception {
       DocumentBuilderFactory myDomFactory = DocumentBuilderFactory.newInstance();
       DocumentBuilder myBuilder = myDomFactory.newDocumentBuilder();
-      Document boardDoc = myBuilder.parse("board.xml");
-      NodeList roomList = boardDoc.getElementsByTagName(tagName);
-      for(int i = 0; i < roomList.getLength(); i++) {
-         ArrayList<Role> roles = new ArrayList<Role>();
-         ArrayList<String> neighbors = new ArrayList<String>();
-         int[][] possibleUpgrades = new int[5][3];
-         int shotCounters = 0;
-         Node roomNode = roomList.item(i);
-         removeEmptyNodes(roomNode);
+      Document myDoc = myBuilder.parse(fileName);
+      return myDoc.getElementsByTagName(tagName);
+   }
+   
+   public NodeList getInnerNodes (Node baseNode) {
+      removeEmptyNodes(baseNode);
+      return baseNode.getChildNodes();
+   }
+   
+   public int[][] parseOffice(CastingOffice office) throws Exception {
+      NodeList upgradeList = getOuterNodes("board.xml", "upgrade");
+      int[][] possibleUpgrades = new int[5][3];
+      for(int i = 0; i < upgradeList.getLength(); i++) {
+         Element upgradeElement = (Element) upgradeList.item(i);
+         int upgradeCost = Integer.parseInt(upgradeElement.getAttribute("amt"));
+         if(upgradeElement.getAttribute("currency").equals("dollar")) {
+            possibleUpgrades[i][0] = i+2;
+            possibleUpgrades[i][1] = upgradeCost;
+         } else {
+            possibleUpgrades[i-5][2] = upgradeCost;
+         }
+      }
+      return possibleUpgrades;
+   }
+   
+   public void parseRooms(NodeList itemList, Room[] rooms) {
+      ArrayList<Role> roles = new ArrayList<Role>();
+      ArrayList<String> neighbors = new ArrayList<String>();
+      int[][] possibleUpgrades = new int[5][3];
+      int shotCounters = 0;
+      String name = "";
+      
+      for(int i = 0; i < itemList.getLength(); i++) {
+         Node roomNode = itemList.item(i);
+         NodeList roomInfoList = getInnerNodes(roomNode);
          Element roomElement = (Element) roomNode;
-         NodeList roomInfoList = roomNode.getChildNodes();
          for(int j = 0; j < roomInfoList.getLength(); j++) {
             Node roomInfoNode = roomInfoList.item(j);
-            removeEmptyNodes(roomInfoNode);
+            NodeList roleList = getInnerNodes(roomInfoNode);
             String nodeName = roomInfoNode.getNodeName();
             Element roomInfoElement = (Element) roomInfoNode;
-            NodeList roleList = roomInfoNode.getChildNodes();
+            
             if(nodeName.equals("neighbors")) {
                for(int k = 0; k < roleList.getLength(); k++) {
                   Element roleElement = (Element) roleList.item(k);
@@ -104,27 +116,14 @@ public class parseData {
             } else if (nodeName.equals("takes")) {
                Element roleElement = (Element) roleList.item(0);
                shotCounters = Integer.parseInt(roleElement.getAttribute("number"));
-            } else if (nodeName.equals("upgrades")) {
-               for(int k = 0; k < roleList.getLength(); k++) {
-                  Element roleElement = (Element) roleList.item(k);
-                  int upgradeCost = Integer.parseInt(roleElement.getAttribute("amt"));
-                  if(roleElement.getAttribute("currency").equals("dollar")) {
-                     possibleUpgrades[k][0] = k+2;
-                     possibleUpgrades[k][1] = upgradeCost;
-                  } else {
-                     possibleUpgrades[k-5][2] = upgradeCost;
-                  }
-               }
-            }
+            } 
          }
-         String name = "";
-         if(tagName.equals("trailer")) {
+         if(roomNode.getNodeName().equals("trailer")) {
             name = "Trailer";
             i = rooms.length-2;
-         } else if (tagName.equals("office")) {
+         } else if (roomNode.getNodeName().equals("office")) {
             name = "Office";
             i = rooms.length-1;
-            office = new CastingOffice(possibleUpgrades);
          } else {
             name = roomElement.getAttribute("name");
          }
@@ -132,5 +131,11 @@ public class parseData {
          rooms[i] = new Room(name, shotCounters, roleArray);
       }
    }
-
+   
+   public void parseBoard(Room[] rooms) throws Exception {
+      parseRooms(getOuterNodes("board.xml", "set"), rooms);
+      parseRooms(getOuterNodes("board.xml", "office"), rooms);
+      parseRooms(getOuterNodes("board.xml", "trailer"), rooms);
+      
+   }
 }

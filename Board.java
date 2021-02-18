@@ -31,9 +31,11 @@ class Board {
    }
    
    public void createBoard(parseData dataParser, Scenes sceneLibray) throws Exception {
-      dataParser.parseBoard(rooms, office);
+      dataParser.parseBoard(rooms);
       placeScenes(sceneLibray);
+      office = new CastingOffice(dataParser.parseOffice(office));
    }
+   
    public Room getTrailer() {
       return rooms[totalRooms-1];
    } 

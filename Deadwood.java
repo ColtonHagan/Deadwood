@@ -1,6 +1,8 @@
 public class Deadwood {
    public static void main(String args[]) throws Exception {
-      //GameState currentGameState = new GameState();
+      /*GameStateModel model = new GameStateModel();
+      GameStateUI view = new GameStateUI();
+      GameStateController controller = new GameStateController(model, view);*/
    }
 }
 

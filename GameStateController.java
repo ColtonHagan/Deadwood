@@ -5,10 +5,11 @@ class GameStateController {
    public GameStateController (GameStateModel model, GameStateUI view) throws Exception {
       this.model = model;
       this.view = view;
+      setUpGame();
    }
    
    public void setUpGame() throws Exception {
-      int totalPlayers = -1; //will need to request this from user -- code later
+      int totalPlayers = 2; //will need to request this from user -- code later
       int rank = 1;
       int money = 0;
       int credits = 0;
@@ -23,6 +24,7 @@ class GameStateController {
          rank = 2;
       } else if (totalPlayers < 2 || totalPlayers > 2) {
          System.out.println("This game is not playable with given number of players");
+         return;
       }
       
       PlayerModel[] players = new PlayerModel[totalPlayers];
