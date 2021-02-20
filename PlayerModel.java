@@ -6,7 +6,7 @@ class PlayerModel {
    private int practiceChips;
    private Room currentRoom;
    private Role role;
-   
+
    public PlayerModel(String name, int money, int credits, int rank, Room currentRoom) {
       this.name = name;
       this.money = money;

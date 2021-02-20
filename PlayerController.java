@@ -3,11 +3,16 @@ import java.util.Random;
 class PlayerController {
    private PlayerModel model;
    private PlayerUI view;
+   private Systems system;
 
    public PlayerController(PlayerModel model, PlayerUI view) {
       this.model = model;
       this.view = view;
       view.addListener(this);
+   }
+
+   public void updateModel(PlayerModel model){
+      this.model = model;
    }
 
    public void updateView(){
@@ -28,8 +33,9 @@ class PlayerController {
 
    public void move(Room room){
       boolean checkChange = false;
+      String roomName = room.getName();
       for (String s : model.getCurrentRoom().getAdjacentRooms()) {
-         if(room.equals(s)){
+         if(roomName.equals(s)){
             model.updateCurrentRoom(room);
             checkChange = true;
             break;
