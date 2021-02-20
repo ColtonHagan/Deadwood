@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+import java.util.Random;
 public class Room {
    private int totalShotCounters;
    private int currentShotCounters;
@@ -18,15 +20,30 @@ public class Room {
    //maybe this should be in gamestate since it has access to diffrent players
    private void bonusPayment() {
       Role[] allRoles = availableRoles();
-      PlayerModel[] players = new PlayerModel[5]; // this should probably be an arraylist to prevent multiple passes
-      boolean onCard;
-      for(int i = 0; i < allRoles.length; i++) {
-         Role currentRole = allRoles[i];
+      ArrayList<PlayerModel> players = new ArrayList<PlayerModel>();  
+      boolean onCard = false;
+      for(Role currentRole : allRoles) {
          if(currentRole.getUsedBy() != null) {
             //add player to list
             if(!currentRole.getExtra())
                onCard = true;
-            players[i] = currentRole.getUsedBy();
+            players.add(currentRole.getUsedBy());
+         }
+      }
+      if(onCard) {
+         Random rand = new Random();
+               int[] diceRolls = new int[players.size()];
+               for(int diceRoll : diceRolls) {
+                  diceRoll = rand.nextInt(6) + 1;
+         }
+         for(PlayerModel player : players) {
+            if(true /*player.getRole().getUsedBy()*/) { //need to add player getRole
+               /*for() {
+                  
+               }*/
+            } else {
+               player.updateMoney(player.getRank()/*getRole().getRank()*/ + player.getMoney());
+            }
          }
       }
    } 
