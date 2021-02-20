@@ -1,11 +1,34 @@
-class GameStateController {
-   private GameStateModel model; 
-	private GameStateUI view; 
+class GameStateModel {
+   private int currentDay;
+   private PlayerModel currentPlayersTurn;
+   private int totalDays;
+   private PlayerModel[] players;
+   private Scenes sceneLibray = new Scenes();
+   private Board board = new Board();
+   private PlayerUI playerView;
+   public GameStateModel () throws Exception {
+   }
+   public int getCurrentDay() {
+      return currentDay;
+   }
    
-   public GameStateController (GameStateModel model, GameStateUI view) throws Exception {
-      this.model = model;
-      this.view = view;
-      setUpGame();
+   public int getPlayerCount() {
+      return players.length;
+   }
+   public Scenes getSceneLibray() {
+      return sceneLibray;
+   }
+   public Board getBoard() {
+      return board;
+   }
+   public void setPlayers(PlayerModel[] players) {
+      this.players = players;
+   }
+   public PlayerModel[] getPlayers() {
+      return players;
+   }
+   public void setTotalDays(int days) {
+      totalDays = days;
    }
    
    public void setUpGame() throws Exception {
@@ -30,16 +53,14 @@ class GameStateController {
       PlayerModel[] players = new PlayerModel[totalPlayers];
       for(int i = 0; i < totalPlayers; i++) {
          String name = "find latter"; //will request player name here
-         players[i] = new PlayerModel(name, money, credits, rank, model.getBoard().getTrailer());
+         players[i] = new PlayerModel(name, money, credits, rank, board.getTrailer());
       }
-      model.setPlayers(players);
       parseData dataParser = new parseData();
-      model.getSceneLibray().createScenes(dataParser);
-      model.getBoard().createBoard(dataParser, model.getSceneLibray());
+      sceneLibray.createScenes(dataParser);
+      board.createBoard(dataParser, sceneLibray);
    }
    
    public void endGame(){
-      PlayerModel[] players = model.getPlayers();
       int score = 0;
       int highestScore = 0;
       String player = "";
@@ -48,13 +69,13 @@ class GameStateController {
          PlayerModel currentPlayer = players[i];
          score = currentPlayer.getRank() * 5 + currentPlayer.getCredits() + currentPlayer.getMoney();
          player = currentPlayer.getName();
-         view.showScore(player, score);
+         playerView.showScore(player, score);
          if(score > highestScore) {
             highestScore = score;
             winningPlayer = player;
          }
       }
-      view.showWinner(winningPlayer, highestScore);
+      playerView.showWinner(winningPlayer, highestScore);
    }
-}
 
+}
