@@ -8,7 +8,6 @@ class GameState {
    private PlayerUI playerView;
    
    public GameState () throws Exception {
-      setUpGame();
    }
    
    public int getCurrentDay() {
@@ -51,15 +50,18 @@ class GameState {
       } else if (totalPlayers < 2 || totalPlayers > 2) {
          System.out.println("This game is not playable with given number of players");
          return;
-      }     
+      }
+
+      parseData dataParser = new parseData();
+      sceneLibray.createScenes(dataParser);
+      board.createBoard(dataParser, sceneLibray);
+
       PlayerModel[] players = new PlayerModel[totalPlayers];
       for(int i = 0; i < totalPlayers; i++) {
          String name = "find latter"; //will request player name here
          players[i] = new PlayerModel(name, money, credits, rank, board.getTrailer());
       }
-      parseData dataParser = new parseData();
-      sceneLibray.createScenes(dataParser);
-      board.createBoard(dataParser, sceneLibray);
+      this.players = players;
    }
    
    public void endGame(){

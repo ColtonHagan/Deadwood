@@ -57,8 +57,8 @@ class PlayerUI {
       System.out.println("WINNER " + name + " with a score of " + score);
    }
    
-   public void move() {
-      
+   public void move(Room room) {
+      controller.move(room);
    }
 
    public void takeRole(Role role) {
@@ -75,6 +75,10 @@ class PlayerUI {
 
    public void upgradeRank(){
       controller.upgradeRank();
+   }
+
+   public void playerDetails() {
+      controller.updateView();
    }
 
 }
