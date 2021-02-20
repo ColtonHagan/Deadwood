@@ -1,4 +1,4 @@
-class GameStateModel {
+class GameState {
    private int currentDay;
    private PlayerModel currentPlayersTurn;
    private int totalDays;
@@ -6,8 +6,11 @@ class GameStateModel {
    private Scenes sceneLibray = new Scenes();
    private Board board = new Board();
    private PlayerUI playerView;
-   public GameStateModel () throws Exception {
+   
+   public GameState () throws Exception {
+      setUpGame();
    }
+   
    public int getCurrentDay() {
       return currentDay;
    }
@@ -48,8 +51,7 @@ class GameStateModel {
       } else if (totalPlayers < 2 || totalPlayers > 2) {
          System.out.println("This game is not playable with given number of players");
          return;
-      }
-      
+      }     
       PlayerModel[] players = new PlayerModel[totalPlayers];
       for(int i = 0; i < totalPlayers; i++) {
          String name = "find latter"; //will request player name here
