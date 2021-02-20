@@ -128,7 +128,8 @@ public class parseData {
             name = roomElement.getAttribute("name");
          }
          Role[] roleArray = Arrays.copyOf(roles.toArray(), roles.toArray().length, Role[].class);
-         rooms[i] = new Room(name, shotCounters, roleArray);
+         String[] neighborsArray = Arrays.copyOf(neighbors.toArray(), neighbors.toArray().length, String[].class);
+         rooms[i] = new Room(name, shotCounters, roleArray, neighborsArray);
       }
    }
    
