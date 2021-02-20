@@ -130,6 +130,8 @@ public class parseData {
          Role[] roleArray = Arrays.copyOf(roles.toArray(), roles.toArray().length, Role[].class);
          String[] neighborsArray = Arrays.copyOf(neighbors.toArray(), neighbors.toArray().length, String[].class);
          rooms[i] = new Room(name, shotCounters, roleArray, neighborsArray);
+         roles.clear();
+         neighbors.clear();
       }
    }
    
