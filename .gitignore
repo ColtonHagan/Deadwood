@@ -3,6 +3,7 @@ bin/
 !.mvn/wrapper/maven-wrapper.jar
 
 *.class 
+credentials.txt
 
 ### STS ###
 .apt_generated
@@ -14,6 +15,9 @@ bin/
 
 ### IntelliJ IDEA ###
 .idea
+lib
+out
+src
 *.iws
 *.iml
 *.ipr
