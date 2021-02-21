@@ -42,7 +42,7 @@ class PlayerController {
         if (system.checkCanUpgrade()) {
             CastingOffice office = model.getOffice();
             boolean upgraded = false;
-            if (office.rankPossible(model.getRank(), targetUpgrade)) {
+            if (office.rankPossible(model.getRank(), targetUpgrade) && model.getCurrentRoom().getName().equals("office")) {
                 int cost = office.cost(targetUpgrade, paymentMethod);
                 if (paymentMethod.equals("credits") && model.getCredits() > cost) {
                     updateCredits(model.getCredits() - cost);
