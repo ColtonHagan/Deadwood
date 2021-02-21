@@ -20,9 +20,9 @@ class PlayerUI {
    public void showUpgradeResults(boolean check, int rank, int oldRank) {
       if(check) {
          System.out.println("You have succeeded in upgrading!");
-         System.out.println("You have upgrade from " + oldRank + " to " + rank);
+         System.out.println("You have upgraded from " + oldRank + " to " + rank);
       } else {
-         System.out.println("You can not upgrade to " + rank);
+         System.out.println("You can not upgrade to rank " + rank);
       }
    }
 
@@ -66,7 +66,7 @@ class PlayerUI {
          System.out.println("Role is now yours");
          System.out.println("You have the role: " + roleName + "\n");
       } else {
-         System.out.println("Error: You were unable to take the room! \n");
+         System.out.println("Error: You were unable to take the role! \n");
       }
    }
 
@@ -98,7 +98,7 @@ class PlayerUI {
    }
 
    public void upgradeRank(){
-      //controller.upgradeRank();
+      controller.upgradeRank("money", 5);
    }
 
    public void playerDetails() {
