@@ -22,10 +22,10 @@ public class Role {
    public PlayerModel getUsedBy() {
       return usedBy;
    }
+   public void setUsedBy(PlayerModel player) {
+      usedBy = player;
+   }
    public String getName(){
       return name;
-   }
-   public void setPlayer(PlayerModel player) {
-      usedBy = player;
    }
 }

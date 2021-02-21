@@ -53,6 +53,10 @@ class PlayerModel {
    public boolean getMoved() {
       return moved;
    }
+   
+   public int getRoleRank() {
+      return role.getRank();
+   }
 
    public void updateMoney(int money) {
       this.money = money;
@@ -84,4 +88,5 @@ class PlayerModel {
    public void updateMoved(boolean moved){
       this.moved = moved;
    }
+   
 }

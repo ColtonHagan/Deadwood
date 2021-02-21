@@ -33,6 +33,10 @@ class PlayerController {
     public void updateCredits(int credits) {
         model.updateCredits(credits);
     }
+    
+    public void createOffice(parseData dataParser) throws Exception {
+      model.createOffice(dataParser.parseOffice());
+    }
 
     public void upgradeRank(String paymentMethod, int targetUpgrade) {
       CastingOffice office = model.getOffice();
@@ -61,17 +65,14 @@ class PlayerController {
             }
         }
 
-        if (checkChange) {
-            view.showMoveResults(true, model.getCurrentRoom().getName());
-        } else {
-            view.showMoveResults(false, model.getCurrentRoom().getName());
-        }
+        view.showMoveResults(true, model.getCurrentRoom().getName());
+        view.showMoveResults(false, model.getCurrentRoom().getName());
     }
 
     public void addRole(Role role) {
         if (model.getCurrentRole() == null && role.getUsedBy() == null && model.getRank() >= role.getRank() && (model.getCurrentRoom().getSceneCard().hasRole(role)) || (model.getCurrentRoom().hasRole(role))) {
             model.updateRole(role);
-            role.setPlayer(model);
+            role.setUsedBy(model);
             view.showTakeRoleResults(true, role.getName());
         } else {
             view.showTakeRoleResults(false, role.getName());

@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.*;
 import java.util.Random;
 public class Room {
    private int totalShotCounters;
@@ -16,34 +17,36 @@ public class Room {
       this.extraRoles = extraRoles;
       this.adjacentRooms = adjacentRooms;
    }
-   //maybe this should be in gamestate since it has access to diffrent players
-   private void bonusPayment() {
+   
+   public void bonusPayment() {
       Role[] allRoles = availableRoles();
-      ArrayList<PlayerModel> players = new ArrayList<PlayerModel>();  
-      boolean onCard = false;
+      ArrayList<PlayerModel> playersOnCard = new ArrayList<PlayerModel>();
+      ArrayList<PlayerModel> playersOffCard = new ArrayList<PlayerModel>(); 
+       
       for(Role currentRole : allRoles) {
          if(currentRole.getUsedBy() != null) {
-            //add player to list
-            if(!currentRole.getExtra())
-               onCard = true;
-            players.add(currentRole.getUsedBy());
+            if(!currentRole.getExtra()) {
+               playersOnCard.add(currentRole.getUsedBy());
+            } else {
+               playersOffCard.add(currentRole.getUsedBy());
+            }
          }
       }
-      if(onCard) {
+      
+      if(playersOnCard.size() != 0) {
          Random rand = new Random();
-         int[] diceRolls = new int[players.size()];
-         for(int diceRoll : diceRolls) {
-            diceRoll = rand.nextInt(6) + 1;
+         Integer[] diceRolls = new Integer[sceneCard.getBudget()];
+         for(int i = 0; i < diceRolls.length; i++) {
+            diceRolls[i] = rand.nextInt(6) + 1;
          }
-         Arrays.sort(diceRolls);
-         //Need to sort players
-         for(int i = 0; i < players.size(); i++) {
-            PlayerModel player = players.get(i);
-            if(player.getCurrentRole().getExtra()) {
-            
-            } else {
-               player.updateMoney(player.getCurrentRole().getRank() + player.getMoney());
-            }
+         Arrays.sort(diceRolls, Collections.reverseOrder());
+         playersOnCard.sort(Comparator.comparing(PlayerModel::getRoleRank));
+         Collections.reverse(playersOnCard);
+         for(int i = 0; i < playersOnCard.size(); i++) {
+            playersOnCard.get(i).updateMoney(playersOnCard.get(i).getMoney() + diceRolls[i]);
+         }
+         for(int i = 0; i < playersOffCard.size(); i++) {
+            playersOffCard.get(i).updateMoney(playersOffCard.get(i).getCurrentRole().getRank() + playersOffCard.get(i).getMoney());
          }
       }
    } 
@@ -53,8 +56,8 @@ public class Room {
       int i = 0;
       for(; i < extraRoles.length; i++)
          allRoles[i] = extraRoles[i];
-      for(; i < extraRoles.length; i++)
-         allRoles[i] = sceneCardRoles[i];
+      for(int j = 0; j < sceneCardRoles.length; j++)
+         allRoles[i+j] = sceneCardRoles[j]; 
       return allRoles;
    }
 
