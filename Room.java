@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Random;
 public class Room {
    private int totalShotCounters;
@@ -15,8 +16,6 @@ public class Room {
       this.extraRoles = extraRoles;
       this.adjacentRooms = adjacentRooms;
    }
-   public void endRoom() {
-   }
    //maybe this should be in gamestate since it has access to diffrent players
    private void bonusPayment() {
       Role[] allRoles = availableRoles();
@@ -32,17 +31,18 @@ public class Room {
       }
       if(onCard) {
          Random rand = new Random();
-               int[] diceRolls = new int[players.size()];
-               for(int diceRoll : diceRolls) {
-                  diceRoll = rand.nextInt(6) + 1;
+         int[] diceRolls = new int[players.size()];
+         for(int diceRoll : diceRolls) {
+            diceRoll = rand.nextInt(6) + 1;
          }
-         for(PlayerModel player : players) {
-            if(true /*player.getRole().getUsedBy()*/) { //need to add player getRole
-               /*for() {
-                  
-               }*/
+         Arrays.sort(diceRolls);
+         
+         for(int i = 0; i < players.size(); i++) {
+            PlayerModel player = players.get(i);
+            if(player.getCurrentRole().getExtra()) {
+            
             } else {
-               player.updateMoney(player.getRank()/*getRole().getRank()*/ + player.getMoney());
+               player.updateMoney(player.getCurrentRole().getRank() + player.getMoney());
             }
          }
       }
