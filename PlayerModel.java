@@ -6,6 +6,7 @@ class PlayerModel {
    private int practiceChips;
    private Room currentRoom;
    private Role role;
+   private boolean moved;
 
    public PlayerModel(String name, int money, int credits, int rank, Room currentRoom) {
       this.name = name;
@@ -44,6 +45,10 @@ class PlayerModel {
       return name;
    }
 
+   public boolean getMoved() {
+      return moved;
+   }
+
    public void updateMoney(int money) {
       this.money = money;
    }
@@ -66,5 +71,9 @@ class PlayerModel {
 
    public void updateCurrentRoom(Room currentRoom) {
       this.currentRoom = currentRoom;
+   }
+
+   public void updateMoved(boolean moved){
+      this.moved = moved;
    }
 }
