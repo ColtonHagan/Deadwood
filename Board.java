@@ -46,7 +46,7 @@ class Board {
    
    public void placeScenes(Scenes sceneLibray) {
       for(int i = 0; i < rooms.length - 2; i++) {
-         rooms[0].setScene(sceneLibray.getRandomCard());
+         rooms[i].setScene(sceneLibray.getRandomCard());
       }
    }
 }

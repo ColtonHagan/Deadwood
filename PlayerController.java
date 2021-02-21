@@ -19,6 +19,10 @@ class PlayerController {
       view.printPlayerDetails(model.getName(), model.getMoney(), model.getCredits(), model.getRank(), model.getPracticeChips());
    }
 
+   public void getCurrentRoom(){
+      view.printRoom(model.getCurrentRoom().getName());
+   }
+
    public void updateMoney(int money) {
       model.updateMoney(money);
    }
@@ -50,10 +54,12 @@ class PlayerController {
    }
 
    public void addRole(Role role) {
-      if(model.getCurrentRole() == null && role.getUsedBy() == null){
+      if(model.getCurrentRole() == null && role.getUsedBy() == null && model.getRank() >= role.getRank() && (model.getCurrentRoom().getSceneCard().hasRole(role)) || (model.getCurrentRoom().hasRole(role))){
          model.updateRole(role);
+         role.setPlayer(model);
+         view.showTakeRoleResults(true, role.getName());
       } else {
-         System.out.println("Error: Player already has role or role is taken");
+         view.showTakeRoleResults(false, role.getName());
       }
    }
 
@@ -91,11 +97,11 @@ class PlayerController {
             //Off card:
             model.updateMoney(model.getMoney() + 1);
             model.updateCredits(model.getCredits() + 1);
-            view.showActingResults(false, true, 1, 1);
+            view.showActingResults(true, true, 1, 1);
          } else {
             //On card:
             model.updateCredits(model.getCredits() + 2);
-            view.showActingResults(false, true, 0, 2);
+            view.showActingResults(true, true, 0, 2);
          }
       } else {
          //If actor fails in acting:

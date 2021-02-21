@@ -52,6 +52,10 @@ class PlayerModel {
       this.credits = credits;
    }
 
+   public void updateRank(int rank) {
+      this.rank = rank;
+   }
+
    public void updateRole(Role role) {
       this.role = role;
    }
@@ -60,7 +64,7 @@ class PlayerModel {
       this.practiceChips = practiceChips;
    }
 
-   public void updateCurrentRoom(Room currentRoomroom) {
+   public void updateCurrentRoom(Room currentRoom) {
       this.currentRoom = currentRoom;
    }
 }
