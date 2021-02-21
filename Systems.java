@@ -10,20 +10,20 @@ class Systems {
     }
 
     public boolean checkCanMove() {
-        return (!model.getMoved() && model.getCurrentRole() == null);
+        return (!model.getMoved() && !model.getHasRole());
     }
 
 
     public boolean checkCanRehearse() {
-        return (model.getCurrentRole() != null);
+        return (model.getHasRole());
     }
 
     public boolean checkCanAct() {
-        return (model.getCurrentRole() != null);
+        return (model.getHasRole());
     }
 
     public boolean checkCanAddRole(Role role) {
-        return (model.getCurrentRole() == null && role.getUsedBy() == null && model.getRank() >= role.getRank() && (model.getCurrentRoom().getSceneCard().hasRole(role)) || (model.getCurrentRoom().hasRole(role)));
+        return (!model.getHasRole() && role.getUsedBy() == null && model.getRank() >= role.getRank() && (model.getCurrentRoom().getSceneCard().hasRole(role)) || (model.getCurrentRoom().hasRole(role)));
     }
 
     public boolean checkCanUpgrade() {

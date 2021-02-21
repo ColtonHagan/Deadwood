@@ -65,13 +65,16 @@ class PlayerController {
             }
         }
 
-        view.showMoveResults(true, model.getCurrentRoom().getName());
-        view.showMoveResults(false, model.getCurrentRoom().getName());
+        if(checkChange) {
+            view.showMoveResults(true, model.getCurrentRoom().getName());
+        } else {
+            view.showMoveResults(false, model.getCurrentRoom().getName());
+        }
     }
 
     public void addRole(Role role) {
-        if (model.getCurrentRole() == null && role.getUsedBy() == null && model.getRank() >= role.getRank() && (model.getCurrentRoom().getSceneCard().hasRole(role)) || (model.getCurrentRoom().hasRole(role))) {
-            model.updateRole(role);
+        if (!model.getHasRole() && role.getUsedBy() == null && model.getRank() >= role.getRank() && (model.getCurrentRoom().getSceneCard().hasRole(role)) || (model.getCurrentRoom().hasRole(role))) {
+            model.takeRole(role);
             role.setUsedBy(model);
             view.showTakeRoleResults(true, role.getName());
         } else {
@@ -80,7 +83,7 @@ class PlayerController {
     }
 
     public void removeRole() {
-        model.updateRole(null);
+        model.removeRole();
     }
 
     public void rehearse() {

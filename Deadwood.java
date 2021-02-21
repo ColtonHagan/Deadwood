@@ -5,7 +5,7 @@ public class Deadwood {
       model.setUpGame();
       PlayerModel[] test = model.getPlayers();
       PlayerUI view = new PlayerUI();
-      PlayerController control = new PlayerController(test[1], view);
+      PlayerController control = new PlayerController(test[0], view);
 
       Room[] allRooms = model.getBoard().allRooms();
 
@@ -25,6 +25,8 @@ public class Deadwood {
       view.rehearse();
       view.rehearse();
       view.act();
+      control.updateMoney(2000);
+      view.upgradeRank();
    }
 }
 

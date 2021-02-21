@@ -8,6 +8,7 @@ class PlayerModel {
    private Role role;
    private CastingOffice office;
    private boolean moved;
+   private boolean hasRole;
 
    public PlayerModel(String name, int money, int credits, int rank, Room currentRoom) {
       this.name = name;
@@ -16,6 +17,7 @@ class PlayerModel {
       this.rank = rank;
       this.role = null;
       this.currentRoom = currentRoom;
+      this.hasRole = false;
    }
    
    public int getMoney() {
@@ -45,6 +47,10 @@ class PlayerModel {
    public Role getCurrentRole() {
       return role;
    }
+
+   public boolean getHasRole(){
+      return hasRole;
+   }
    
    public String getName() {
       return name;
@@ -70,9 +76,17 @@ class PlayerModel {
       this.rank = rank;
    }
 
-   public void updateRole(Role role) {
+   public void takeRole(Role role) {
       this.role = role;
+      this.hasRole = true;
    }
+
+   public void removeRole() {
+      this.role = null;
+      this.hasRole = false;
+   }
+
+
 
    public void updatePracticeChips(int practiceChips) {
       this.practiceChips = practiceChips;
