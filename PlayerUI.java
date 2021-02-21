@@ -13,19 +13,22 @@ class PlayerUI {
       System.out.println("Practice Chips: " + practiceChips);
    }
 
+   public void printRoom(String room){
+      System.out.println("Currently in: " + room);
+   }
+
    public void showActingResults(boolean actCheck, boolean onCard, int moneyGained, int creditsGained) {
       if(actCheck) {
          System.out.println("You have succeeded in acting!");
+         if(onCard) {
+            System.out.println("You were working on the card.");
+         } else {
+            System.out.println("You were working off the card.");
+         }
+         System.out.println("You have gained " + moneyGained + " Dollars and " + creditsGained + " Credits. \n");
       } else {
          System.out.println("You have failed in acting!");
       }
-
-      if(onCard) {
-         System.out.println("You were working on the card.");
-      } else {
-         System.out.println("You were working off the card.");
-      }
-      System.out.println("You have gained " + moneyGained + " Dollars and " + creditsGained + " Credits.");
    }
 
    public void showRehearsalResults(boolean check, int practiceChips) {
@@ -35,19 +38,31 @@ class PlayerUI {
          System.out.println("Rehearsal fail!");
          System.out.println("Error: Player is guaranteed to succeed in the next act action");
       }
-      System.out.println("You currently have " + practiceChips + " Practice chips.");
+      System.out.println("You currently have " + practiceChips + " Practice chips. \n");
    }
 
    public void showMoveResults(boolean check, String roomName){
       if(check) {
          System.out.println("Move successful!");
-         System.out.println("You are now in the " + roomName);
+         System.out.println("You are now in the " + roomName + "\n");
       } else {
          System.out.println("Move failed!");
          System.out.println("Error: this room is not adjacent to your current room!");
-         System.out.println("You are still in the " + roomName);
+         System.out.println("You are still in the " + roomName + "\n");
       }
+   }
 
+   public void showTakeRoleResults(boolean check, String roleName){
+      if(check) {
+         System.out.println("Role is now yours");
+         System.out.println("You have the role: " + roleName + "\n");
+      } else {
+         System.out.println("Error: You were unable to take the room! \n");
+      }
+   }
+
+   public void showCurrentRoom(){
+      controller.getCurrentRoom();
    }
    
    public void showScore(String name, int score){

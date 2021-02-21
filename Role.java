@@ -22,6 +22,9 @@ public class Role {
    public PlayerModel getUsedBy() {
       return usedBy;
    }
+   public String getName(){
+      return name;
+   }
    public void setPlayer(PlayerModel player) {
       usedBy = player;
    }

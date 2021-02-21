@@ -57,6 +57,16 @@ public class Room {
          allRoles[i] = sceneCardRoles[i];
       return allRoles;
    }
+
+   public boolean hasRole(Role role) {
+      for(Role r : extraRoles){
+         if(r.equals(role)){
+            return true;
+         }
+      }
+      return false;
+   }
+
    public int getCurrentShotCounters () {
       return currentShotCounters;
    }

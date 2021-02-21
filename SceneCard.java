@@ -23,6 +23,16 @@ public class SceneCard {
    public boolean playerOn() {
       return true;
    }
+
+   public boolean hasRole(Role role) {
+      for(Role r : roles){
+         if(r.equals(role)){
+            return true;
+         }
+      }
+      return false;
+   }
+
    public int getBudget () {
       return budget;
    }
