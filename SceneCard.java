@@ -4,7 +4,6 @@ public class SceneCard {
    private String description;
    private Role[] roles;
    private boolean inUse; //if the card has been played on the board or not
-   private boolean flipped = false;
    
    public SceneCard (String name, String description, int budget, Role[] roles) {
       this.name = name;
@@ -14,12 +13,6 @@ public class SceneCard {
       inUse = false;
    }
    
-   public void setFlip(boolean flippedStatus) {
-      flipped = flippedStatus;
-   }
-   public boolean getFlip() {
-      return flipped;
-   }
    public boolean playerOn() {
       return true;
    }

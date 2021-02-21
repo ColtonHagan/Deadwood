@@ -9,7 +9,6 @@ public class Scenes {
       SceneCard randomCard = possibleScenes[rand.nextInt(40)];
       if(!randomCard.getUse()) {
          randomCard.setUse(true);
-         randomCard.setFlip(false);
          return randomCard;
       }
       return getRandomCard();
