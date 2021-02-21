@@ -27,6 +27,6 @@ class Systems {
     }
 
     public boolean checkCanUpgrade() {
-        return true;
+        return (!model.getHasRole());
     }
 }

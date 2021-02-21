@@ -70,6 +70,27 @@ class PlayerUI {
       }
    }
 
+   public void printUpgradeError(){
+      System.out.println("Error: Cannot upgrade! You are not at the casting office!");
+   }
+
+   public void printMoveError(){
+      System.out.println("Error: Cannot move! Either you currently have a role or you have already moved!");
+   }
+
+   public void printRehearseError(){
+      System.out.println("Error: Cannot rehearse! You do not currently have a role!");
+   }
+
+   public void printActError(){
+      System.out.println("Error: Cannot act! You do not currently have a role!");
+   }
+
+   public void printAddRoleError(){
+      System.out.println("Error: Cannot take role! This could be due to many reasons: You currently have a role, the role is already taken," +
+              " you do not have enough rank for the role, or the role does not exist!");
+   }
+
    public void showCurrentRoom(){
       controller.getCurrentRoom();
    }
