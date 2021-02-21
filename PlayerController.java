@@ -51,7 +51,7 @@ class PlayerController {
             upgraded = true;
          }
       }
-      view.showUpgradeResults(upgraded, targetUpgrade);
+      view.showUpgradeResults(upgraded, targetUpgrade, model.getCurrentRole().getRank());
     }
 
     public void move(Room room) {

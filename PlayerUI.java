@@ -17,10 +17,10 @@ class PlayerUI {
       System.out.println("Currently in: " + room);
    }
    
-   public void showUpgradeResults(boolean check, int rank) {
+   public void showUpgradeResults(boolean check, int rank, int oldRank) {
       if(check) {
          System.out.println("You have succeeded in upgrading!");
-         System.out.println("You are now rank " + rank);
+         System.out.println("You have upgrade from " + oldRank + " to " + rank);
       } else {
          System.out.println("You can not upgrade to " + rank);
       }
