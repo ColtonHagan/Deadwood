@@ -36,6 +36,13 @@ class GameState {
       totalDays = days;
    }
    
+   public void endDay() {
+      board.resetBoard(sceneLibray);
+      for(PlayerModel player : players) {
+         player.updateCurrentRoom(board.getTrailer());
+      }
+   }
+   
    public void setUpGame() throws Exception {
       int rank = 1;
       int money = 0;

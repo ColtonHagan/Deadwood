@@ -70,8 +70,11 @@ public class Room {
       return false;
    }
 
-   public int getCurrentShotCounters () {
-      return currentShotCounters;
+   public void resetShotCounters() {
+      currentShotCounters = totalShotCounters;
+   }
+   public int setCurrentShotCounters (int shotCounters) {
+      return shotCounters;
    }
    public void setScene(SceneCard newScene) {
       sceneCard = newScene;

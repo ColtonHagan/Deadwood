@@ -11,9 +11,10 @@ class Board {
       currentRooms = totalRooms;
    }
    
-   public void resetBoard(Scenes sceneLibray){
+   public void resetBoard(Scenes sceneLibray) {
       for(Room room : rooms) {
          room.getSceneCard().setUse(false);
+         room.resetShotCounters();
       }
       placeScenes(sceneLibray);
       currentRooms = totalRooms;
