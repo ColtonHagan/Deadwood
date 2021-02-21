@@ -1,6 +1,8 @@
 public class Deadwood {
    public static void main(String args[]) throws Exception {
-      GameState model = new GameState();
+      int totalPlayers = Integer.parseInt(args[0]);
+      GameState model = new GameState(totalPlayers);
+      System.out.println("Amount of players: " + model.getPlayerCount() + "\n");
 
       model.setUpGame();
       PlayerModel[] test = model.getPlayers();

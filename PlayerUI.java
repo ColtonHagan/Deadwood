@@ -26,14 +26,9 @@ class PlayerUI {
       }
    }
 
-   public void showActingResults(boolean actCheck, boolean onCard, int moneyGained, int creditsGained) {
+   public void showActingResults(boolean actCheck, int moneyGained, int creditsGained) {
       if(actCheck) {
          System.out.println("You have succeeded in acting!");
-         if(onCard) {
-            System.out.println("You were working on the card.");
-         } else {
-            System.out.println("You were working off the card.");
-         }
          System.out.println("You have gained " + moneyGained + " Dollars and " + creditsGained + " Credits. \n");
       } else {
          System.out.println("You have failed in acting!");
@@ -71,24 +66,24 @@ class PlayerUI {
    }
 
    public void printUpgradeError(){
-      System.out.println("Error: Cannot upgrade! You are not at the casting office!");
+      System.out.println("Error: Cannot upgrade! You are not at the casting office! \n");
    }
 
    public void printMoveError(){
-      System.out.println("Error: Cannot move! Either you currently have a role or you have already moved!");
+      System.out.println("Error: Cannot move! Either you currently have a role or you have already moved! \n");
    }
 
    public void printRehearseError(){
-      System.out.println("Error: Cannot rehearse! You do not currently have a role!");
+      System.out.println("Error: Cannot rehearse! You do not currently have a role! \n");
    }
 
    public void printActError(){
-      System.out.println("Error: Cannot act! You do not currently have a role!");
+      System.out.println("Error: Cannot act! You do not currently have a role! \n");
    }
 
    public void printAddRoleError(){
       System.out.println("Error: Cannot take role! This could be due to many reasons: You currently have a role, the role is already taken," +
-              " you do not have enough rank for the role, or the role does not exist!");
+              " you do not have enough rank for the role, or the role does not exist! \n");
    }
 
    public void showCurrentRoom(){

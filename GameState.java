@@ -7,8 +7,10 @@ class GameState {
    private Board board = new Board();
    private PlayerUI playerView;
    private PlayerController playerController;
+   private int totalPlayers;
    
-   public GameState () throws Exception {
+   public GameState (int totalPlayers) throws Exception {
+      this.totalPlayers = totalPlayers;
    }
    
    public int getCurrentDay() {
@@ -16,7 +18,7 @@ class GameState {
    }
    
    public int getPlayerCount() {
-      return players.length;
+      return totalPlayers;
    }
    public Scenes getSceneLibray() {
       return sceneLibray;
@@ -35,7 +37,6 @@ class GameState {
    }
    
    public void setUpGame() throws Exception {
-      int totalPlayers = 2; //will need to request this from user -- code later
       int rank = 1;
       int money = 0;
       int credits = 0;
@@ -48,8 +49,8 @@ class GameState {
          credits = 4;
       } else if (totalPlayers == 7 || totalPlayers == 8) {
          rank = 2;
-      } else if (totalPlayers < 2 || totalPlayers > 2) {
-         System.out.println("This game is not playable with given number of players");
+      } else if (totalPlayers < 2 || totalPlayers > 8) {
+         System.out.println("This game is not playable with the given number of players");
          return;
       }
 
@@ -57,9 +58,11 @@ class GameState {
       sceneLibray.createScenes(dataParser);
       board.createBoard(dataParser, sceneLibray);
 
+      String[] namesList = {"Blue", "Cyan", "Green", "Orange", "Pink", "Red", "Violet", "Yellow"};
+
       PlayerModel[] players = new PlayerModel[totalPlayers];
       for(int i = 0; i < totalPlayers; i++) {
-         String name = "find latter"; //will request player name here
+         String name = namesList[i];
          players[i] = new PlayerModel(name, money, credits, rank, board.getTrailer());
       }
       

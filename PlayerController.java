@@ -70,7 +70,6 @@ class PlayerController {
                 }
             }
 
-
             if (checkChange) {
                 view.showMoveResults(true, model.getCurrentRoom().getName());
             } else {
@@ -136,21 +135,21 @@ class PlayerController {
                     //Off card:
                     model.updateMoney(model.getMoney() + 1);
                     model.updateCredits(model.getCredits() + 1);
-                    view.showActingResults(true, true, 1, 1);
+                    view.showActingResults(true, 1, 1);
                 } else {
                     //On card:
                     model.updateCredits(model.getCredits() + 2);
-                    view.showActingResults(true, true, 0, 2);
+                    view.showActingResults(true, 0, 2);
                 }
             } else {
                 //If actor fails in acting:
                 if (model.getCurrentRole().getExtra()) {
                     //Off card:
                     model.updateMoney(model.getMoney() + 1);
-                    view.showActingResults(false, false, 1, 0);
+                    view.showActingResults(false, 1, 0);
                 } else {
                     //On card
-                    view.showActingResults(false, true, 0, 0);
+                    view.showActingResults(false, 0, 0);
                 }
             }
         } else {
