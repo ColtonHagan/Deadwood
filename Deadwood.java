@@ -14,7 +14,7 @@ public class Deadwood {
       view.showCurrentRoom();
 
       Role holden = allRooms[4].getSceneCard().getRoles()[0];
-      test[1].updateRank(6);
+      test[0].updateRank(6);
       view.takeRole(holden);
       view.rehearse();
       view.rehearse();
