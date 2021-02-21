@@ -3,11 +3,17 @@ public class CastingOffice {
    public CastingOffice(int[][] possibleUpgrades) {
       this.possibleUpgrades = possibleUpgrades;
    }
-   public boolean upgradePossible () {
-      return false;
+   public boolean rankPossible(int rank, int targetRank) {
+      return rank < 6 && rank < targetRank;
    }
-   public void upgrade () {
+   
+   public int cost(int tagetRank, String paymentType) {
+      if(paymentType.equals("credits")) {
+         return possibleUpgrades[tagetRank-1][2];
+      }
+      return possibleUpgrades[tagetRank-1][1];
    }
+   
    public int[][] getPossibleUpgrades () {
       return possibleUpgrades;
    }

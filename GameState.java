@@ -6,6 +6,7 @@ class GameState {
    private Scenes sceneLibray = new Scenes();
    private Board board = new Board();
    private PlayerUI playerView;
+   private PlayerController playerController;
    
    public GameState () throws Exception {
    }
@@ -61,7 +62,12 @@ class GameState {
          String name = "find latter"; //will request player name here
          players[i] = new PlayerModel(name, money, credits, rank, board.getTrailer());
       }
+      
       this.players = players;
+      
+      playerView = new PlayerUI();
+      playerController = new PlayerController(players[0], playerView);
+      playerController.createOffice(dataParser);
    }
    
    public void endGame(){

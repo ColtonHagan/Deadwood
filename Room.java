@@ -36,7 +36,7 @@ public class Room {
             diceRoll = rand.nextInt(6) + 1;
          }
          Arrays.sort(diceRolls);
-         
+         //Need to sort players
          for(int i = 0; i < players.size(); i++) {
             PlayerModel player = players.get(i);
             if(player.getCurrentRole().getExtra()) {

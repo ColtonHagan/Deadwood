@@ -16,6 +16,15 @@ class PlayerUI {
    public void printRoom(String room){
       System.out.println("Currently in: " + room);
    }
+   
+   public void showUpgradeResults(boolean check, int rank) {
+      if(check) {
+         System.out.println("You have succeeded in upgrading!");
+         System.out.println("You are now rank " + rank);
+      } else {
+         System.out.println("You can not upgrade to " + rank);
+      }
+   }
 
    public void showActingResults(boolean actCheck, boolean onCard, int moneyGained, int creditsGained) {
       if(actCheck) {
@@ -89,7 +98,7 @@ class PlayerUI {
    }
 
    public void upgradeRank(){
-      controller.upgradeRank();
+      //controller.upgradeRank();
    }
 
    public void playerDetails() {

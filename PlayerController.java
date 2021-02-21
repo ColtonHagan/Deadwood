@@ -31,8 +31,24 @@ class PlayerController {
       model.updateCredits(credits);
    }
 
-   public void upgradeRank(){
-      //Handle in CastingOffice
+   public void upgradeRank(String paymentMethod, int targetUpgrade) {
+      CastingOffice office = model.getOffice();
+      boolean upgraded = false;
+      if(office.rankPossible(model.getRank(), targetUpgrade)) {
+         int cost = office.cost(targetUpgrade, paymentMethod);
+         if(paymentMethod.equals("credits") && model.getCredits() > cost) {
+            updateCredits(model.getCredits() - cost);
+            upgraded = true;
+         } else if (paymentMethod.equals("money") && model.getMoney() > cost) {
+            updateMoney(model.getMoney() - cost);
+            upgraded = true;
+         }
+      }
+      view.showUpgradeResults(upgraded, targetUpgrade);
+   }
+   
+   public void createOffice(parseData dataParser) throws Exception {
+      model.createOffice(dataParser.parseOffice());
    }
 
    public void move(Room room){

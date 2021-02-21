@@ -70,7 +70,7 @@ public class parseData {
       return baseNode.getChildNodes();
    }
    
-   public int[][] parseOffice(CastingOffice office) throws Exception {
+   public int[][] parseOffice() throws Exception {
       NodeList upgradeList = getOuterNodes("board.xml", "upgrade");
       int[][] possibleUpgrades = new int[5][3];
       for(int i = 0; i < upgradeList.getLength(); i++) {

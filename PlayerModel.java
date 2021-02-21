@@ -6,6 +6,7 @@ class PlayerModel {
    private int practiceChips;
    private Room currentRoom;
    private Role role;
+   private CastingOffice office;
 
    public PlayerModel(String name, int money, int credits, int rank, Room currentRoom) {
       this.name = name;
@@ -22,6 +23,10 @@ class PlayerModel {
    
    public int getCredits() {
       return credits;
+   }
+   
+   public CastingOffice getOffice() {
+      return office;
    }
    
    public int getRank() {
@@ -66,5 +71,9 @@ class PlayerModel {
 
    public void updateCurrentRoom(Room currentRoom) {
       this.currentRoom = currentRoom;
+   }
+   
+   public void createOffice(int[][] upgrades) {
+      office = new CastingOffice(upgrades);
    }
 }
