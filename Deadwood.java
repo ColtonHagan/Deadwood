@@ -31,5 +31,3 @@ public class Deadwood {
       view.upgradeRank();
    }
 }
-
-

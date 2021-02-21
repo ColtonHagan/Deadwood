@@ -9,9 +9,9 @@ public class CastingOffice {
    
    public int cost(int tagetRank, String paymentType) {
       if(paymentType.equals("credits")) {
-         return possibleUpgrades[tagetRank-1][2];
+         return possibleUpgrades[tagetRank-2][2];
       }
-      return possibleUpgrades[tagetRank-1][1];
+      return possibleUpgrades[tagetRank-2][1];
    }
    
    public int[][] getPossibleUpgrades () {
