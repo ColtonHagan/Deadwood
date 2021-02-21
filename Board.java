@@ -7,7 +7,7 @@ class Board {
    public Board() {
       //includes rooms of office and trailer with 0 shot counters
       rooms = new Room[12];
-      totalRooms = 12;
+      totalRooms = 10;
       currentRooms = totalRooms;
    }
    
@@ -23,7 +23,7 @@ class Board {
       currentRooms--;
       currentRoom.setScene(null); //do we need another way to do it
       if(currentRooms == 1) {
-         //endDay(); -- 
+         //endDay(); -- //maybe move this into 
       }
    }
    

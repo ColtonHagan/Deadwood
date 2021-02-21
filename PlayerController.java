@@ -51,7 +51,7 @@ class PlayerController {
             upgraded = true;
          }
       }
-      view.showUpgradeResults(upgraded, targetUpgrade, model.getCurrentRole().getRank());
+      view.showUpgradeResults(upgraded, targetUpgrade, model.getRank());
     }
 
     public void move(Room room) {
@@ -69,7 +69,7 @@ class PlayerController {
         view.showMoveResults(false, model.getCurrentRoom().getName());
     }
 
-    public void addRole(Role role) {
+    public void addRole(Role role) {         
         if (model.getCurrentRole() == null && role.getUsedBy() == null && model.getRank() >= role.getRank() && (model.getCurrentRoom().getSceneCard().hasRole(role)) || (model.getCurrentRoom().hasRole(role))) {
             model.updateRole(role);
             role.setUsedBy(model);
