@@ -42,7 +42,7 @@ class PlayerController {
         if (system.checkCanUpgrade()) {
             CastingOffice office = model.getOffice();
             boolean upgraded = false;
-            if (office.rankPossible(model.getRank(), targetUpgrade) && model.getCurrentRoom().getName().equals("office")) {
+            if (office.rankPossible(model.getRank(), targetUpgrade)) {
                 int cost = office.cost(targetUpgrade, paymentMethod);
                 if (paymentMethod.equals("credits") && model.getCredits() > cost) {
                     updateCredits(model.getCredits() - cost);
@@ -52,7 +52,12 @@ class PlayerController {
                     upgraded = true;
                 }
             }
-            view.showUpgradeResults(upgraded, targetUpgrade, model.getRank());
+
+            if(upgraded) {
+                view.showUpgradeSuccess(targetUpgrade, model.getRank());
+            } else {
+                view.showUpgradeFail(targetUpgrade);
+            }
         } else {
             view.printUpgradeError();
         }
@@ -71,9 +76,9 @@ class PlayerController {
             }
 
             if (checkChange) {
-                view.showMoveResults(true, model.getCurrentRoom().getName());
+                view.showMoveSuccess(model.getCurrentRoom().getName());
             } else {
-                view.showMoveResults(false, model.getCurrentRoom().getName());
+                view.showMoveFail(model.getCurrentRoom().getName());
             }
         } else {
             view.printMoveError();
@@ -85,9 +90,9 @@ class PlayerController {
             if (!model.getHasRole() && role.getUsedBy() == null && model.getRank() >= role.getRank() && (model.getCurrentRoom().getSceneCard().hasRole(role)) || (model.getCurrentRoom().hasRole(role))) {
                 model.takeRole(role);
                 role.setUsedBy(model);
-                view.showTakeRoleResults(true, role.getName());
+                view.showTakeRoleSuccess(role.getName());
             } else {
-                view.showTakeRoleResults(false, role.getName());
+                view.showTakeRoleFail();
             }
         } else {
             view.printAddRoleError();
@@ -104,10 +109,10 @@ class PlayerController {
         if (system.checkCanRehearse()) {
             int budget = model.getCurrentRoom().getSceneCard().getBudget();
             if (model.getPracticeChips() + 1 == budget) {
-                view.showRehearsalResults(false, model.getPracticeChips());
+                view.showRehearsalFail(model.getPracticeChips());
             } else {
                 model.updatePracticeChips(model.getPracticeChips() + 1);
-                view.showRehearsalResults(true, model.getPracticeChips());
+                view.showRehearsalSuccess(model.getPracticeChips());
             }
         } else {
             view.printRehearseError();
@@ -135,21 +140,21 @@ class PlayerController {
                     //Off card:
                     model.updateMoney(model.getMoney() + 1);
                     model.updateCredits(model.getCredits() + 1);
-                    view.showActingResults(true, 1, 1);
+                    view.showActingSuccess(1, 1);
                 } else {
                     //On card:
                     model.updateCredits(model.getCredits() + 2);
-                    view.showActingResults(true, 0, 2);
+                    view.showActingSuccess(0, 2);
                 }
             } else {
                 //If actor fails in acting:
                 if (model.getCurrentRole().getExtra()) {
                     //Off card:
                     model.updateMoney(model.getMoney() + 1);
-                    view.showActingResults(false, 1, 0);
+                    view.showActingFail(1, 0);
                 } else {
                     //On card
-                    view.showActingResults(false, 0, 0);
+                    view.showActingFail(0, 0);
                 }
             }
         } else {

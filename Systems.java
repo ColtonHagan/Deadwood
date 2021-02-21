@@ -27,6 +27,6 @@ class Systems {
     }
 
     public boolean checkCanUpgrade() {
-        return (!model.getHasRole());
+        return (model.getCurrentRoom().getName().equals("office"));
     }
 }
