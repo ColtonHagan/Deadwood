@@ -46,7 +46,7 @@ public class SceneCard {
    public boolean getUse() {
       return inUse;
    }
-   public boolean gettFlip() {
+   public boolean getFlip() {
       return flipped;
    }
    public void setFlip(boolean flip) {

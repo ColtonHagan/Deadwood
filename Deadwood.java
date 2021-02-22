@@ -6,8 +6,8 @@ public class Deadwood {
       game.setUpGame();
 
       PlayerModel[] test = game.getPlayers();
-      PlayerUI view = new PlayerUI();
-      PlayerController control = new PlayerController(test[0], view);
+      DeadwoodView view = new DeadwoodView();
+      DeadwoodController control = new DeadwoodController(test[0], view);
 
       Room[] allRooms = game.getBoard().allRooms();
 

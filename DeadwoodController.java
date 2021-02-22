@@ -1,11 +1,11 @@
 import java.util.Random;
 
-class PlayerController {
+class DeadwoodController {
     private PlayerModel model;
-    private PlayerUI view;
+    private DeadwoodView view;
     private Systems system;
 
-    public PlayerController(PlayerModel model, PlayerUI view) {
+    public DeadwoodController(PlayerModel model, DeadwoodView view) {
         this.model = model;
         this.view = view;
         Systems system = new Systems(model);

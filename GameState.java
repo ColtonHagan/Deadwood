@@ -10,8 +10,8 @@ class GameState {
    private PlayerModel[] players;
    private Scenes sceneLibray = new Scenes();
    private Board board = new Board();
-   private PlayerUI playerView;
-   private PlayerController playerController;
+   private DeadwoodView playerView;
+   private DeadwoodController playerController;
    private int totalPlayers;
    
    public GameState (int totalPlayers) throws Exception {
@@ -42,7 +42,7 @@ class GameState {
       int credits = 0;
       int days = 4;
 
-      playerView = new PlayerUI();
+      playerView = new DeadwoodView();
 
       if(totalPlayers == 2 || totalPlayers == 3) {
          days = 3;
@@ -71,9 +71,8 @@ class GameState {
       }
       
       this.players = players;
-      
-      playerView = new PlayerUI();
-      playerController = new PlayerController(players[0], playerView);
+
+      playerController = new DeadwoodController(players[0], playerView);
       playerController.createOffice(dataParser);
    }
    

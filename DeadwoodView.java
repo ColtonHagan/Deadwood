@@ -1,7 +1,7 @@
-class PlayerUI {
-    PlayerController controller;
+class DeadwoodView {
+    DeadwoodController controller;
 
-    public void addListener(PlayerController controller) {
+    public void addListener(DeadwoodController controller) {
         this.controller = controller;
     }
 
