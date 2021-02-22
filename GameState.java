@@ -81,6 +81,11 @@ class GameState {
       bonusPayment(currentRoom);
       currentRoom.setScene(null);
       board.removeRoom();
+      for(PlayerModel player : players) {
+         if(player.getCurrentRoom() == currentRoom) {
+            player.removeRole();
+         }
+      }
    }
    
    public void bonusPayment(Room currentRoom) {
@@ -111,7 +116,6 @@ class GameState {
          for(int i = 0; i < playersOnCard.size(); i++) {
             bonus = diceRolls[i];
             playersOnCard.get(i).updateMoney(playersOnCard.get(i).getMoney() + diceRolls[i]);
-            System.out.println(playersOnCard.get(i).getName() + " was on card and earned a bonus of " + bonus);
             playerView.showBonusPayment(playersOnCard.get(i).getName(), "on card", bonus);
          }
          for(int i = 0; i < playersOffCard.size(); i++) {
