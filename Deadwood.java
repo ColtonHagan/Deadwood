@@ -2,9 +2,9 @@ public class Deadwood {
    public static void main(String args[]) throws Exception {
       int totalPlayers = Integer.parseInt(args[0]);
       GameState game = new GameState(totalPlayers);
-      System.out.println("Amount of players: " + game.getPlayerCount() + "\n");
 
       game.setUpGame();
+
       PlayerModel[] test = game.getPlayers();
       PlayerUI view = new PlayerUI();
       PlayerController control = new PlayerController(test[0], view);
@@ -30,6 +30,7 @@ public class Deadwood {
       control.updateMoney(2000);
       view.upgradeRank();
 
+      game.endTurn();
       game.endGame();
    }
 }

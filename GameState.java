@@ -51,6 +51,7 @@ class GameState {
          playerView.printUnsupportedPlayers();
          return;
       }
+      playerView.printPlayerCount(totalPlayers);
 
       parseData dataParser = new parseData();
       sceneLibray.createScenes(dataParser);
@@ -71,11 +72,17 @@ class GameState {
       playerController.createOffice(dataParser);
    }
 
+   public void playGame() {
+
+   }
+
    public void endTurn() {
       if(currentPlayer + 1 < totalPlayers) {
          playerController.clearMoved();
          currentPlayer++;
          playerController.updateModel(players[currentPlayer]);
+
+         playerView.showEndTurn();
       } else {
          endDay();
       }

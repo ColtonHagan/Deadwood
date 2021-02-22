@@ -10,21 +10,21 @@ class PlayerUI {
         System.out.println("Money: " + money);
         System.out.println("Credits: " + credits);
         System.out.println("Rank: " + rank);
-        System.out.println("Practice Chips: " + practiceChips);
+        System.out.println("Practice Chips: " + practiceChips + "\n");
     }
 
     public void printRoom(String room) {
-        System.out.println("Currently in: " + room);
+        System.out.println("Currently in: " + room + "\n");
     }
 
     public void showUpgradeSuccess(int rank, int oldRank) {
         System.out.println("You have succeeded in upgrading!");
-        System.out.println("You have upgraded from " + oldRank + " to " + rank);
+        System.out.println("You have upgraded from " + oldRank + " to " + rank + "\n");
     }
 
     public void showUpgradeFail(int rank) {
         System.out.println("You can not upgrade to rank " + rank);
-        System.out.println("Either you need more money / credits, or your rank is higher than the chosen rank");
+        System.out.println("Either you need more money / credits, or your rank is higher than the chosen rank \n");
     }
 
     public void showActingSuccess(int moneyGained, int creditsGained) {
@@ -90,12 +90,20 @@ class PlayerUI {
                 " you do not have enough rank for the role, or the role does not exist! \n");
     }
 
+    public void printPlayerCount(int count) {
+        System.out.println("Amount of players: " + count + "\n");
+    }
+
     public void printUnsupportedPlayers() {
-        System.out.println("This game is not playable with the given number of players");
+        System.out.println("This game is not playable with the given number of players!");
     }
 
     public void showCurrentRoom() {
         controller.getCurrentRoom();
+    }
+
+    public void showEndTurn() {
+        System.out.println("Turn Ended, next player's turn.");
     }
 
     public void showScore(String name, int score) {
