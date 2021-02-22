@@ -1,7 +1,7 @@
 class GameState {
    private int currentDay;
-   private PlayerModel currentPlayersTurn;
    private int totalDays;
+   private int currentPlayer;
    private PlayerModel[] players;
    private Scenes sceneLibray = new Scenes();
    private Board board = new Board();
@@ -11,6 +11,7 @@ class GameState {
    
    public GameState (int totalPlayers) throws Exception {
       this.totalPlayers = totalPlayers;
+      this.currentPlayer = 0;
    }
    
    public int getCurrentDay() {
@@ -26,21 +27,8 @@ class GameState {
    public Board getBoard() {
       return board;
    }
-   public void setPlayers(PlayerModel[] players) {
-      this.players = players;
-   }
    public PlayerModel[] getPlayers() {
       return players;
-   }
-   public void setTotalDays(int days) {
-      totalDays = days;
-   }
-   
-   public void endDay() {
-      board.resetBoard(sceneLibray);
-      for(PlayerModel player : players) {
-         player.updateCurrentRoom(board.getTrailer());
-      }
    }
    
    public void setUpGame() throws Exception {
@@ -78,6 +66,25 @@ class GameState {
       playerView = new PlayerUI();
       playerController = new PlayerController(players[0], playerView);
       playerController.createOffice(dataParser);
+   }
+
+   public void endTurn() {
+      if(currentPlayer + 1 < totalPlayers) {
+         playerController.clearMoved();
+         currentPlayer++;
+         playerController.updateModel(players[currentPlayer]);
+      } else {
+         endDay();
+      }
+   }
+
+   public void endDay() {
+      board.resetBoard(sceneLibray);
+      for(PlayerModel player : players) {
+         player.updateCurrentRoom(board.getTrailer());
+         player.removeRole();
+         player.updatePracticeChips(0);
+      }
    }
    
    public void endGame(){

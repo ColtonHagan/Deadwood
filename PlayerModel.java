@@ -4,11 +4,12 @@ class PlayerModel {
    private int credits;
    private int rank;
    private int practiceChips;
+   private boolean moved;
+   private boolean hasRole;
    private Room currentRoom;
    private Role role;
    private CastingOffice office;
-   private boolean moved;
-   private boolean hasRole;
+
 
    public PlayerModel(String name, int money, int credits, int rank, Room currentRoom) {
       this.name = name;
@@ -85,8 +86,6 @@ class PlayerModel {
       this.role = null;
       this.hasRole = false;
    }
-
-
 
    public void updatePracticeChips(int practiceChips) {
       this.practiceChips = practiceChips;

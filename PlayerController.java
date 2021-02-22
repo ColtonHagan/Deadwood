@@ -65,17 +65,18 @@ class PlayerController {
 
     public void move(Room room) {
         if (system.checkCanMove()) {
-            boolean checkChange = false;
+            boolean checkMoved = false;
             String roomName = room.getName();
             for (String s : model.getCurrentRoom().getAdjacentRooms()) {
                 if (roomName.equals(s)) {
                     model.updateCurrentRoom(room);
-                    checkChange = true;
+                    checkMoved = true;
                     break;
                 }
             }
 
-            if (checkChange) {
+            if (checkMoved) {
+                model.updateMoved(true);
                 view.showMoveSuccess(model.getCurrentRoom().getName());
             } else {
                 view.showMoveFail(model.getCurrentRoom().getName());
@@ -99,8 +100,6 @@ class PlayerController {
         }
     }
 
-
-
     public void removeRole() {
         model.removeRole();
     }
@@ -121,6 +120,10 @@ class PlayerController {
 
     public void clearRehearse() {
         model.updatePracticeChips(0);
+    }
+
+    public void clearMoved() {
+        model.updateMoved(false);
     }
 
     private int rollDice() {
