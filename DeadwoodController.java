@@ -5,9 +5,9 @@ class DeadwoodController {
     private DeadwoodView view;
     private Systems system;
 
-    public DeadwoodController(PlayerModel model, DeadwoodView view) {
+    public DeadwoodController(PlayerModel model) {
         this.model = model;
-        this.view = view;
+        view = new DeadwoodView();
         Systems system = new Systems(model);
         this.system = system;
         view.addListener(this);
@@ -38,25 +38,34 @@ class DeadwoodController {
         model.createOffice(dataParser.parseOffice());
     }
 
-    public void upgradeRank(String paymentMethod, int targetUpgrade) {
+    public void upgradeRankCredits(int targetUpgrade) {
         if (system.checkCanUpgrade()) {
             CastingOffice office = model.getOffice();
-            boolean upgraded = false;
             if (office.rankPossible(model.getRank(), targetUpgrade)) {
-                int cost = office.cost(targetUpgrade, paymentMethod);
-                if (paymentMethod.equals("credits") && model.getCredits() > cost) {
+                int cost = office.costCredits(targetUpgrade);
+                if (model.getCredits() > cost) {
                     updateCredits(model.getCredits() - cost);
-                    upgraded = true;
-                } else if (paymentMethod.equals("money") && model.getMoney() > cost) {
-                    updateMoney(model.getMoney() - cost);
-                    upgraded = true;
+                    view.showUpgradeSuccess(targetUpgrade, model.getRank());
+                } else {
+                    view.showUpgradeFail(targetUpgrade);
                 }
-            }
-
-            if(upgraded) {
-                view.showUpgradeSuccess(targetUpgrade, model.getRank());
             } else {
-                view.showUpgradeFail(targetUpgrade);
+                view.printUpgradeError();
+            }
+        }
+    }
+
+    public void upgradeRankDollars(int targetUpgrade) {
+        if (system.checkCanUpgrade()) {
+            CastingOffice office = model.getOffice();
+            if (office.rankPossible(model.getRank(), targetUpgrade)) {
+                int cost = office.costDollars(targetUpgrade);
+                if (model.getMoney() > cost) {
+                    updateMoney(model.getMoney() - cost);
+                    view.showUpgradeSuccess(targetUpgrade, model.getRank());
+                } else {
+                    view.showUpgradeFail(targetUpgrade);
+                }
             }
         } else {
             view.printUpgradeError();

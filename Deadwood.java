@@ -6,29 +6,29 @@ public class Deadwood {
       game.setUpGame();
 
       PlayerModel[] test = game.getPlayers();
-      DeadwoodView view = new DeadwoodView();
-      DeadwoodController control = new DeadwoodController(test[0], view);
+      DeadwoodController control = new DeadwoodController(test[0]);
 
       Room[] allRooms = game.getBoard().allRooms();
 
-      view.playerDetails();
-      view.move(allRooms[4]);
-      view.showCurrentRoom();
+      control.updateView();
+      control.move(allRooms[4]);
+      control.getCurrentRoom();
 
       Role holden = allRooms[4].getSceneCard().getRoles()[0];
       test[0].updateRank(6);
-      view.takeRole(holden);
-      view.rehearse();
-      view.rehearse();
-      view.rehearse();
-      view.rehearse();
-      view.rehearse();
-      view.rehearse();
-      view.rehearse();
-      view.rehearse();
-      view.act();
+      control.addRole(holden);
+      control.rehearse();
+      control.rehearse();
+      control.rehearse();
+      control.rehearse();
+      control.rehearse();
+      control.rehearse();
+      control.rehearse();
+      control.rehearse();
+      control.act();
       control.updateMoney(2000);
-      view.upgradeRank();
+      control.upgradeRankCredits(3);
+      control.upgradeRankDollars(5);
 
       game.endTurn();
       game.endGame();

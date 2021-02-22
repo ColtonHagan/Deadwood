@@ -97,10 +97,6 @@ class DeadwoodView {
     public void printUnsupportedPlayers() {
         System.out.println("This game is not playable with the given number of players!");
     }
-
-    public void showCurrentRoom() {
-        controller.getCurrentRoom();
-    }
     
     public void showBonusPayment(String playerName, String roleType, int bonus) {
         System.out.println(playerName + " had a " + roleType + " role and earned a bonus of " + bonus);
@@ -120,30 +116,6 @@ class DeadwoodView {
 
     public void showWinner(String name, int score) {
         System.out.println("WINNER " + name + " with a score of " + score);
-    }
-
-    public void move(Room room) {
-        controller.move(room);
-    }
-
-    public void takeRole(Role role) {
-        controller.addRole(role);
-    }
-
-    public void act() {
-        controller.act();
-    }
-
-    public void rehearse() {
-        controller.rehearse();
-    }
-
-    public void upgradeRank() {
-        controller.upgradeRank("money", 5);
-    }
-
-    public void playerDetails() {
-        controller.updateView();
     }
 
 }

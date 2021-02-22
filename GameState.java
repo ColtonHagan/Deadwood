@@ -10,7 +10,6 @@ class GameState {
    private PlayerModel[] players;
    private Scenes sceneLibray = new Scenes();
    private Board board = new Board();
-   private DeadwoodView playerView;
    private DeadwoodController playerController;
    private int totalPlayers;
    
@@ -42,8 +41,6 @@ class GameState {
       int credits = 0;
       int days = 4;
 
-      playerView = new DeadwoodView();
-
       if(totalPlayers == 2 || totalPlayers == 3) {
          days = 3;
       } else if (totalPlayers == 5) {
@@ -53,10 +50,10 @@ class GameState {
       } else if (totalPlayers == 7 || totalPlayers == 8) {
          rank = 2;
       } else if (totalPlayers < 2 || totalPlayers > 8) {
-         playerView.printUnsupportedPlayers();
+         //playerView.printUnsupportedPlayers();
          return;
       }
-      playerView.printPlayerCount(totalPlayers);
+      //playerView.printPlayerCount(totalPlayers);
 
       parseData dataParser = new parseData();
       sceneLibray.createScenes(dataParser);
@@ -72,7 +69,7 @@ class GameState {
       
       this.players = players;
 
-      playerController = new DeadwoodController(players[0], playerView);
+      playerController = new DeadwoodController(players[0]);
       playerController.createOffice(dataParser);
    }
    
@@ -115,15 +112,15 @@ class GameState {
          for(int i = 0; i < playersOnCard.size(); i++) {
             bonus = diceRolls[i];
             playersOnCard.get(i).updateMoney(playersOnCard.get(i).getMoney() + diceRolls[i]);
-            playerView.showBonusPayment(playersOnCard.get(i).getName(), "on card", bonus);
+            //playerView.showBonusPayment(playersOnCard.get(i).getName(), "on card", bonus);
          }
          for(int i = 0; i < playersOffCard.size(); i++) {
             bonus = playersOffCard.get(i).getCurrentRole().getRank();
             playersOffCard.get(i).updateMoney(playersOffCard.get(i).getCurrentRole().getRank() + playersOffCard.get(i).getMoney());
-            playerView.showBonusPayment(playersOffCard.get(i).getName(), "extra", bonus);
+            //playerView.showBonusPayment(playersOffCard.get(i).getName(), "extra", bonus);
          }
       } else {
-         playerView.noBonusPayment();
+         //playerView.noBonusPayment();
       }
    }
 
@@ -137,7 +134,7 @@ class GameState {
          currentPlayer++;
          playerController.updateModel(players[currentPlayer]);
 
-         playerView.showEndTurn();
+         //playerView.showEndTurn();
       } else {
          endDay();
       }
@@ -161,13 +158,13 @@ class GameState {
          PlayerModel currentPlayer = players[i];
          score = currentPlayer.getRank() * 5 + currentPlayer.getCredits() + currentPlayer.getMoney();
          player = currentPlayer.getName();
-         playerView.showScore(player, score);
+         //playerView.showScore(player, score);
          if(score > highestScore) {
             highestScore = score;
             winningPlayer = player;
          }
       }
-      playerView.showWinner(winningPlayer, highestScore);
+      //playerView.showWinner(winningPlayer, highestScore);
    }
 
 }
