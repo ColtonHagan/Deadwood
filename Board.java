@@ -21,11 +21,9 @@ class Board {
    }
    
    public void endRoom(Room currentRoom) {
+      currentRoom.bonusPayment();
+      currentRoom.setScene(null);
       currentRooms--;
-      currentRoom.setScene(null); //do we need another way to do it
-      if(currentRooms == 1) {
-         //endDay(); -- 
-      }
    }
    
    public String[] adjacentRooms(Room currentRoom){

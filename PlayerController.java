@@ -91,6 +91,7 @@ class PlayerController {
             if (!model.getHasRole() && role.getUsedBy() == null && model.getRank() >= role.getRank() && (model.getCurrentRoom().getSceneCard().hasRole(role)) || (model.getCurrentRoom().hasRole(role))) {
                 model.takeRole(role);
                 role.setUsedBy(model);
+                model.getCurrentRoom().removeShotCounter();
                 view.showTakeRoleSuccess(role.getName());
             } else {
                 view.showTakeRoleFail();
