@@ -1,7 +1,3 @@
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.*;
-import java.util.Random;
 public class Room {
    private int totalShotCounters;
    private int currentShotCounters;
@@ -17,39 +13,6 @@ public class Room {
       this.extraRoles = extraRoles;
       this.adjacentRooms = adjacentRooms;
    }
-   
-   public void bonusPayment() {
-      Role[] allRoles = availableRoles();
-      ArrayList<PlayerModel> playersOnCard = new ArrayList<PlayerModel>();
-      ArrayList<PlayerModel> playersOffCard = new ArrayList<PlayerModel>(); 
-       
-      for(Role currentRole : allRoles) {
-         if(currentRole.getUsedBy() != null) {
-            if(!currentRole.getExtra()) {
-               playersOnCard.add(currentRole.getUsedBy());
-            } else {
-               playersOffCard.add(currentRole.getUsedBy());
-            }
-         }
-      }
-      
-      if(playersOnCard.size() != 0) {
-         Random rand = new Random();
-         Integer[] diceRolls = new Integer[sceneCard.getBudget()];
-         for(int i = 0; i < diceRolls.length; i++) {
-            diceRolls[i] = rand.nextInt(6) + 1;
-         }
-         Arrays.sort(diceRolls, Collections.reverseOrder());
-         playersOnCard.sort(Comparator.comparing(PlayerModel::getRoleRank));
-         Collections.reverse(playersOnCard);
-         for(int i = 0; i < playersOnCard.size(); i++) {
-            playersOnCard.get(i).updateMoney(playersOnCard.get(i).getMoney() + diceRolls[i]);
-         }
-         for(int i = 0; i < playersOffCard.size(); i++) {
-            playersOffCard.get(i).updateMoney(playersOffCard.get(i).getCurrentRole().getRank() + playersOffCard.get(i).getMoney());
-         }
-      }
-   } 
    public Role[] availableRoles() {
       Role[] sceneCardRoles = sceneCard.getRoles();
       Role[] allRoles = new Role[extraRoles.length + sceneCardRoles.length];

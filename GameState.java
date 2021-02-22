@@ -1,3 +1,8 @@
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.*;
+import java.util.Random;
+
 class GameState {
    private int currentDay;
    private int totalDays;
@@ -70,6 +75,53 @@ class GameState {
       playerView = new PlayerUI();
       playerController = new PlayerController(players[0], playerView);
       playerController.createOffice(dataParser);
+   }
+   
+   public void endRoom(Room currentRoom) {
+      bonusPayment(currentRoom);
+      currentRoom.setScene(null);
+      board.removeRoom();
+   }
+   
+   public void bonusPayment(Room currentRoom) {
+      Role[] allRoles = currentRoom.availableRoles();
+      ArrayList<PlayerModel> playersOnCard = new ArrayList<PlayerModel>();
+      ArrayList<PlayerModel> playersOffCard = new ArrayList<PlayerModel>(); 
+       
+      for(Role currentRole : allRoles) {
+         if(currentRole.getUsedBy() != null) {
+            if(!currentRole.getExtra()) {
+               playersOnCard.add(currentRole.getUsedBy());
+            } else {
+               playersOffCard.add(currentRole.getUsedBy());
+            }
+         }
+      }
+      
+      if(playersOnCard.size() != 0) {
+         Random rand = new Random();
+         int bonus = 0;
+         Integer[] diceRolls = new Integer[currentRoom.getSceneCard().getBudget()];
+         for(int i = 0; i < diceRolls.length; i++) {
+            diceRolls[i] = rand.nextInt(6) + 1;
+         }
+         Arrays.sort(diceRolls, Collections.reverseOrder());
+         playersOnCard.sort(Comparator.comparing(PlayerModel::getRoleRank));
+         Collections.reverse(playersOnCard);
+         for(int i = 0; i < playersOnCard.size(); i++) {
+            bonus = diceRolls[i];
+            playersOnCard.get(i).updateMoney(playersOnCard.get(i).getMoney() + diceRolls[i]);
+            System.out.println(playersOnCard.get(i).getName() + " was on card and earned a bonus of " + bonus);
+            playerView.showBonusPayment(playersOnCard.get(i).getName(), "on card", bonus);
+         }
+         for(int i = 0; i < playersOffCard.size(); i++) {
+            bonus = playersOffCard.get(i).getCurrentRole().getRank();
+            playersOffCard.get(i).updateMoney(playersOffCard.get(i).getCurrentRole().getRank() + playersOffCard.get(i).getMoney());
+            playerView.showBonusPayment(playersOffCard.get(i).getName(), "extra", bonus);
+         }
+      } else {
+         playerView.noBonusPayment();
+      }
    }
 
    public void playGame() {

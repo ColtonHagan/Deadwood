@@ -20,12 +20,6 @@ class Board {
       currentRooms = totalRooms;
    }
    
-   public void endRoom(Room currentRoom) {
-      currentRoom.bonusPayment();
-      currentRoom.setScene(null);
-      currentRooms--;
-   }
-   
    public String[] adjacentRooms(Room currentRoom){
       return currentRoom.getAdjacentRooms();
    }
@@ -47,5 +41,9 @@ class Board {
       for(int i = 0; i < rooms.length - 2; i++) {
          rooms[i].setScene(sceneLibray.getRandomCard());
       }
+   }
+   
+   public void removeRoom() {
+      currentRooms--;
    }
 }
