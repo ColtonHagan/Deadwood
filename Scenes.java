@@ -10,6 +10,7 @@ public class Scenes {
       if(!randomCard.getUse()) {
          randomCard.setUse(true);
          randomCard.setFlip(false);
+         System.out.println(randomCard.getSceneNumber());
          return randomCard;
       }
       return getRandomCard();

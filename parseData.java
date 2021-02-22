@@ -17,6 +17,7 @@ public class parseData {
       NodeList cardList = getOuterNodes("cards.xml", "card");
       for(int i = 0; i < cardList.getLength(); i++) {
          String cardDescription = "";
+         int sceneNumber = 0;
          ArrayList<Role> roles = new ArrayList<Role>();
          
          Node cardNode = cardList.item(i);
@@ -29,6 +30,7 @@ public class parseData {
             //scene info
             if(nodeName.equals("scene")) {
                cardDescription = roleNode.getTextContent();
+               sceneNumber = Integer.parseInt(roleElement.getAttribute("number"));
             //if role create role
             } else {
                parseRole(roles, cardNode, roleElement, false);
@@ -38,7 +40,7 @@ public class parseData {
          int budget = Integer.parseInt(cardElement.getAttribute("budget"));
          String name = cardElement.getAttribute("name");
          Role[] roleArray = Arrays.copyOf(roles.toArray(), roles.toArray().length, Role[].class);
-         possibleScenes[i] = new SceneCard(name, cardDescription, budget, roleArray);
+         possibleScenes[i] = new SceneCard(name, cardDescription, budget, sceneNumber, roleArray);
       }
    }
    
