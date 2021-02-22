@@ -97,6 +97,14 @@ class PlayerUI {
     public void showCurrentRoom() {
         controller.getCurrentRoom();
     }
+    
+    public void showBonusPayment(String playerName, String roleType, int bonus) {
+        System.out.println(playerName + " had a " + roleType + " role and earned a bonus of " + bonus);
+    }
+    
+    public void noBonusPayment() {
+        System.out.println("No player was on card, so no bonuses where given");
+    }
 
     public void showScore(String name, int score) {
         System.out.println(name + " got " + score);
