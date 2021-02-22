@@ -90,6 +90,10 @@ class PlayerUI {
                 " you do not have enough rank for the role, or the role does not exist! \n");
     }
 
+    public void printUnsupportedPlayers() {
+        System.out.println("This game is not playable with the given number of players");
+    }
+
     public void showCurrentRoom() {
         controller.getCurrentRoom();
     }

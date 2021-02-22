@@ -36,6 +36,9 @@ class GameState {
       int money = 0;
       int credits = 0;
       int days = 4;
+
+      playerView = new PlayerUI();
+
       if(totalPlayers == 2 || totalPlayers == 3) {
          days = 3;
       } else if (totalPlayers == 5) {
@@ -45,7 +48,7 @@ class GameState {
       } else if (totalPlayers == 7 || totalPlayers == 8) {
          rank = 2;
       } else if (totalPlayers < 2 || totalPlayers > 8) {
-         System.out.println("This game is not playable with the given number of players");
+         playerView.printUnsupportedPlayers();
          return;
       }
 
