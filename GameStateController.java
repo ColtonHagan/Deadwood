@@ -129,10 +129,14 @@ class GameStateController extends DeadwoodController {
 
                 case "Move":
                     String roomName = concatenateArray(userInputArray, 1, userInputArray.length - 1);
+                    Room room = roomNameToRoom(roomName);
+                    move(room);
                     break;
 
                 case "Work":  //take role
                     String roleName = concatenateArray(userInputArray, 1, userInputArray.length - 1);
+                    Role role = roleNameToRole(roleName);
+                    addRole(role);
                     break;
 
                 case "Act":
@@ -182,18 +186,25 @@ class GameStateController extends DeadwoodController {
         return combined;
     }
 
-    public Room roomNameToRoom(String roomName) {
-      /*for(Room room : board.allRooms()) {
+   public Room roomNameToRoom(String roomName) {
+      for(Room room : gameModel.getBoard().allRooms()) {
          if(room.getName().equals(roomName)) {
             return room;
          }
-      }*/
-        return null;
-    }
-
-    public Role roleNameToRole() {
-        return null;
-    }
+      }
+      return null;
+   }
+   
+   public Role roleNameToRole(String roleName) {
+      for(Room room : gameModel.getBoard().allRooms()) {
+         for(Role role : room.availableRoles()) {
+            if(role.getName().equals(roleName)) {
+               return role;
+            }
+         }
+      }
+      return null;
+   }
 
     public void endTurn() {
         if (gameModel.getCurrentPlayerInt() + 1 < gameModel.getTotalPlayers()) {
