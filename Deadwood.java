@@ -5,10 +5,10 @@ public class Deadwood {
 
       control.setUpGame();
       Room[] allRooms = control.getGameModel().getBoard().allRooms();
+      control.playGame();
 
 
-
-      //control.updateView();
+/*
       control.move(allRooms[9]);
 
       //control.getCurrentRoom();
@@ -32,5 +32,7 @@ public class Deadwood {
       control.endRoom(allRooms[4]);
       control.endTurn();
       control.endGame();
+
+       */
    }
 }
