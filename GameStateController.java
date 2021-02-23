@@ -57,8 +57,6 @@ class GameStateController extends DeadwoodController {
 
         gameModel.getCurrentPlayer().getCurrentRoom().clearExtras();
 
-
-
         for (PlayerModel player : gameModel.getPlayers()) {
             if (player.getCurrentRoom() == currentRoom) {
                 player.removeRole();

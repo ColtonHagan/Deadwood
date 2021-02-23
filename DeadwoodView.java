@@ -112,7 +112,7 @@ class DeadwoodView {
 
     public void printAddRoleError() {
         System.out.println("Error: Cannot take role! This could be due to many reasons: You currently have a role, the role is already taken," +
-                " you do not have enough rank for the role, or the exists in a different location! \n");
+                " you do not have enough rank for the role, there is no scene card on location, or the role exists in a different location! \n");
     }
 
     public void printRoles(Role[] roles) {
