@@ -113,7 +113,7 @@ class GameStateController extends DeadwoodController {
                 case "Upgrade":
                     if (userInputArray.length == 3) {
                         int targetRank = Integer.parseInt(userInputArray[2]);
-                        if (userInputArray[0].equals("Credits")) {
+                        if (userInputArray[1].equals("Credits")) {
                             upgradeRankCredits(targetRank);
                         } else if (userInputArray[1].equals("Dollars")) {
                             upgradeRankDollars(targetRank);
