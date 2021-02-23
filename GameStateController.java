@@ -56,6 +56,7 @@ class GameStateController extends DeadwoodController {
     }
 
     public void endRoom(Room currentRoom) {
+        getView().printSceneEnd();
         bonusPayment(currentRoom);
         currentRoom.setScene(null);
         gameModel.getBoard().removeRoom();
@@ -66,7 +67,6 @@ class GameStateController extends DeadwoodController {
                 player.updatePracticeChips(0);
             }
         }
-        getView().printSceneEnd();
     }
 
     public void bonusPayment(Room currentRoom) {

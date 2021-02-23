@@ -105,9 +105,8 @@ class DeadwoodController {
     public void addRole(Role role) {
             model.takeRole(role);
             role.setUsedBy(model);
-            model.updateHasRole(true);
-            model.getCurrentRoom().removeShotCounter();
             view.showTakeRoleSuccess(role.getName());
+            model.updateHasRole(true);
             model.updateWorked(true);
     }
 
