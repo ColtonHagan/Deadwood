@@ -117,7 +117,7 @@ class DeadwoodController {
     public void rehearse() {
         if (system.checkCanRehearse()) {
             int budget = model.getCurrentRoom().getSceneCard().getBudget();
-            if (model.getPracticeChips() + 1 == budget) {
+            if (model.getPracticeChips() + 1 >= budget) {
                 view.showRehearsalFail(model.getPracticeChips());
             } else {
                 model.updatePracticeChips(model.getPracticeChips() + 1);
