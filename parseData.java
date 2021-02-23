@@ -119,10 +119,10 @@ public class parseData {
          }
          //Creates a blank trailer/office room with no shotcounters/sceneCard
          if(roomNode.getNodeName().equals("trailer")) {
-            name = "Trailer";
+            name = "trailer";
             i = rooms.length-2;
          } else if (roomNode.getNodeName().equals("office")) {
-            name = "Office";
+            name = "office";
             i = rooms.length-1;
          } else {
             name = roomElement.getAttribute("name");
