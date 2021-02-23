@@ -6,7 +6,7 @@ public class CastingOffice {
     }
 
     public boolean rankPossible(int rank, int targetRank) {
-        return rank < 6 && rank < targetRank;
+        return rank < 6 && rank < targetRank && targetRank <= 6;
     }
 
     public int costCredits(int tagetRank) {
