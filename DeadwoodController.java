@@ -25,10 +25,6 @@ class DeadwoodController {
         system.updateModel(model);
     }
 
-    public void getCurrentRoom() {
-        view.playerLocation(model.getCurrentRoom().getName());
-    }
-
     public void updateMoney(int money) {
         model.updateMoney(money);
     }
@@ -46,7 +42,8 @@ class DeadwoodController {
             CastingOffice office = model.getOffice();
             if (office.rankPossible(model.getRank(), targetUpgrade)) {
                 int cost = office.costCredits(targetUpgrade);
-                if (model.getCredits() > cost) {
+                if (model.getCredits() >= cost) {
+                    model.updateRank(targetUpgrade);
                     updateCredits(model.getCredits() - cost);
                     view.showUpgradeSuccess(targetUpgrade, model.getRank());
                 } else {
@@ -65,7 +62,8 @@ class DeadwoodController {
             CastingOffice office = model.getOffice();
             if (office.rankPossible(model.getRank(), targetUpgrade)) {
                 int cost = office.costDollars(targetUpgrade);
-                if (model.getMoney() > cost) {
+                if (model.getMoney() >= cost) {
+                    model.updateRank(targetUpgrade);
                     updateMoney(model.getMoney() - cost);
                     view.showUpgradeSuccess(targetUpgrade, model.getRank());
                 } else {

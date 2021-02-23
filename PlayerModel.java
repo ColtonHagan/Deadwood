@@ -23,7 +23,8 @@ class PlayerModel {
       this.moved = false;
       this.worked = false;
    }
-   
+
+   // Getters
    public int getMoney() {
       return money;
    }
@@ -72,7 +73,7 @@ class PlayerModel {
       return role.getRank();
    }
 
-
+   // Setters and Modifiers
    public void updateMoney(int money) {
       this.money = money;
    }
@@ -85,28 +86,6 @@ class PlayerModel {
       this.rank = rank;
    }
 
-   public void takeRole(Role role) {
-      this.role = role;
-      this.hasRole = true;
-   }
-
-   public void removeRole() {
-      this.role = null;
-      this.hasRole = false;
-   }
-
-   public void updatePracticeChips(int practiceChips) {
-      this.practiceChips = practiceChips;
-   }
-
-   public void updateCurrentRoom(Room currentRoom) {
-      this.currentRoom = currentRoom;
-   }
-   
-   public void createOffice(int[][] upgrades) {
-      office = new CastingOffice(upgrades);
-   }
-
    public void updateMoved(boolean moved){
       this.moved = moved;
    }
@@ -117,5 +96,27 @@ class PlayerModel {
 
    public void updateHasRole(boolean hasRole) {
       this.hasRole = hasRole;
+   }
+
+   public void updatePracticeChips(int practiceChips) {
+      this.practiceChips = practiceChips;
+   }
+
+   public void updateCurrentRoom(Room currentRoom) {
+      this.currentRoom = currentRoom;
+   }
+
+   public void takeRole(Role role) {
+      this.role = role;
+      this.hasRole = true;
+   }
+
+   public void removeRole() {
+      this.role = null;
+      this.hasRole = false;
+   }
+   
+   public void createOffice(int[][] upgrades) {
+      office = new CastingOffice(upgrades);
    }
 }
