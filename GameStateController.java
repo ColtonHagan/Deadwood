@@ -52,6 +52,7 @@ class GameStateController extends DeadwoodController {
         gameModel.setAllPlayers(players);
         updateModel(gameModel.getCurrentPlayer());
         createOffice(dataParser);
+        playGame();
     }
 
     public void endRoom(Room currentRoom) {
@@ -139,7 +140,7 @@ class GameStateController extends DeadwoodController {
                             getView().inputMoveInvalidRoom();
                         }
                     } else {
-                        getView().inputError();
+                        getView().inputMoveMissingInfo();
                     }
                     break;
 
@@ -153,7 +154,7 @@ class GameStateController extends DeadwoodController {
                             getView().inputWorkInvalidRole();
                         }
                     } else {
-                        getView().inputError();
+                        getView().inputWorkMissingInfo();
                     }
                     break;
 
