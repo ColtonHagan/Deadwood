@@ -36,6 +36,12 @@ public class Room {
       return false;
    }
 
+   public void clearExtras() {
+      for (Role r : extraRoles) {
+         r.setUsedBy(null);
+      }
+   }
+
    public void resetShotCounters() {
       currentShotCounters = totalShotCounters;
    }
