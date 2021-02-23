@@ -109,10 +109,11 @@ class DeadwoodView {
     public void printRoles(Role[] roles) {
         if(roles.length > 0) {
             for (Role r : roles) {
-                System.out.println("Role " + r.getName() + " requiring a rank of " + r.getRank() + ". Off card: " + r.getExtra() + "\n");
+                System.out.println("Role \"" + r.getName() + "\" requiring a rank of " + r.getRank() + ". Off card: " + r.getExtra());
             }
+            System.out.println();
         } else {
-            System.out.print("There are no roles here! \n");
+            System.out.println("There are no roles here! \n");
         }
     }
 
