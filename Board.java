@@ -7,9 +7,9 @@ class Board {
    public Board() {
       //includes rooms of office and trailer with 0 shot counters
       rooms = new Room[12];
-      totalRooms = 12;
+      //totalRooms = 10;
       //TESTING, CHANGE BACK FOR FINAL
-      //totalRooms = 2;
+      totalRooms = 2;
       currentRooms = totalRooms;
    }
    
