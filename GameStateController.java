@@ -149,8 +149,14 @@ class GameStateController extends DeadwoodController {
                     if (userInputArray.length > 1) {
                         String roleName = concatenateArray(userInputArray, 1, userInputArray.length - 1);
                         Role role = roleNameToRole(roleName);
+
                         if (role != null) {
-                            addRole(role);
+                            if (getSystem().checkCanAddRole(role)) {
+                                addRole(role);
+                                role.setUsedBy(gameModel.getCurrentPlayer());
+                            } else {
+                                view.printAddRoleError();
+                            }
                         } else {
                             getView().inputWorkInvalidRole();
                         }
@@ -268,19 +274,19 @@ class GameStateController extends DeadwoodController {
     }
 
     public void endTurn() {
-        if(gameModel.getBoard().getCurrentRooms() == 1) {
-          endDay();
+        if (gameModel.getBoard().getCurrentRooms() == 1) {
+            endDay();
         } else {
-           clearMoved();
-           clearWorked();
-           if (gameModel.getCurrentPlayerInt() + 1 < gameModel.getTotalPlayers()) {
-               gameModel.setCurrentPlayerInt(gameModel.getCurrentPlayerInt() + 1);
-               updateModel(gameModel.getCurrentPlayer());
-           } else {
-               gameModel.setCurrentPlayerInt(0);
-               updateModel(gameModel.getCurrentPlayer());
-           }
-           view.showEndTurn();
+            clearMoved();
+            clearWorked();
+            if (gameModel.getCurrentPlayerInt() + 1 < gameModel.getTotalPlayers()) {
+                gameModel.setCurrentPlayerInt(gameModel.getCurrentPlayerInt() + 1);
+                updateModel(gameModel.getCurrentPlayer());
+            } else {
+                gameModel.setCurrentPlayerInt(0);
+                updateModel(gameModel.getCurrentPlayer());
+            }
+            view.showEndTurn(gameModel.getCurrentPlayer().getName());
         }
     }
 

@@ -33,7 +33,14 @@ class Systems {
      * 4) role exists in room, on or off card
      */
     public boolean checkCanAddRole(Role role) {
-        return (!model.getHasRole() && role.getUsedBy() == null && model.getRank() >= role.getRank() && (model.getCurrentRoom().getSceneCard().hasRole(role)) || (model.getCurrentRoom().hasRole(role)));
+        boolean onCard = false;
+        if(!(model.getCurrentRoom().getSceneCard() == null)) {
+            if(model.getCurrentRoom().getSceneCard().hasRole(role)) {
+                onCard = true;
+            }
+        }
+
+        return (!model.getHasRole() && role.getUsedBy() == null && model.getRank() >= role.getRank() && (onCard || (model.getCurrentRoom().hasRole(role))));
     }
 
     // Checking if player is in office
