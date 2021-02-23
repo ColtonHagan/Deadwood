@@ -2,12 +2,9 @@ import java.util.*;
 
 class GameStateController extends DeadwoodController {
     private final GameState gameModel;
-    private final DeadwoodView view;
 
     public GameStateController(int totalPlayers) throws Exception {
         this.gameModel = new GameState(totalPlayers);
-        view = new DeadwoodView();
-        view.addListener(this);
     }
 
     public void setUpGame() throws Exception {
@@ -27,11 +24,11 @@ class GameStateController extends DeadwoodController {
         } else if (gameModel.getTotalPlayers() == 7 || gameModel.getTotalPlayers() == 8) {
             rank = 2;
         } else if (gameModel.getTotalPlayers() < 2 || gameModel.getTotalPlayers() > 8) {
-            view.printUnsupportedPlayers();
+            getView().printUnsupportedPlayers();
             return;
         }
 
-        view.printPlayerCount(gameModel.getTotalPlayers());
+        getView().printPlayerCount(gameModel.getTotalPlayers());
         gameModel.setTotalDays(days);
 
         parseData dataParser = new parseData();
@@ -64,6 +61,7 @@ class GameStateController extends DeadwoodController {
                 player.updatePracticeChips(0);
             }
         }
+        gameModel.getCurrentPlayer().updateMoved(true);
     }
 
     public void bonusPayment(Room currentRoom) {
@@ -94,15 +92,15 @@ class GameStateController extends DeadwoodController {
             for (int i = 0; i < playersOnCard.size(); i++) {
                 bonus = diceRolls[i];
                 playersOnCard.get(i).updateMoney(playersOnCard.get(i).getMoney() + diceRolls[i]);
-                view.showBonusPayment(playersOnCard.get(i).getName(), "on card", bonus);
+                getView().showBonusPayment(playersOnCard.get(i).getName(), "on card", bonus);
             }
             for (int i = 0; i < playersOffCard.size(); i++) {
                 bonus = playersOffCard.get(i).getCurrentRole().getRank();
                 playersOffCard.get(i).updateMoney(playersOffCard.get(i).getCurrentRole().getRank() + playersOffCard.get(i).getMoney());
-                view.showBonusPayment(playersOffCard.get(i).getName(), "extra", bonus);
+                getView().showBonusPayment(playersOffCard.get(i).getName(), "extra", bonus);
             }
         } else {
-            view.noBonusPayment();
+            getView().noBonusPayment();
         }
     }
 
@@ -152,7 +150,7 @@ class GameStateController extends DeadwoodController {
                                 addRole(role);
                                 role.setUsedBy(gameModel.getCurrentPlayer());
                             } else {
-                                view.printAddRoleError();
+                                getView().printAddRoleError();
                             }
                         } else {
                             getView().inputWorkInvalidRole();
@@ -169,7 +167,7 @@ class GameStateController extends DeadwoodController {
                             endRoom(gameModel.getCurrentPlayer().getCurrentRoom());
                         }
                     } else {
-                        view.printActError();
+                        getView().printActError();
                     }
                     break;
 
@@ -211,7 +209,7 @@ class GameStateController extends DeadwoodController {
                             }
                         } else {
                             if (currentPlayer.getHasRole()) {
-                                getView().inactivePlayerLocationWithRole(currentPlayer.getName(), currentPlayer.getCurrentRoom().getName(), currentPlayer.getCurrentRole().getName());        
+                                getView().inactivePlayerLocationWithRole(currentPlayer.getName(), currentPlayer.getCurrentRoom().getName(), currentPlayer.getCurrentRole().getName());
                             } else {
                                 getView().inactivePlayerLocation(currentPlayer.getName(),currentPlayer.getCurrentRoom().getName());
                             }
@@ -281,7 +279,7 @@ class GameStateController extends DeadwoodController {
                 gameModel.setCurrentPlayerInt(0);
                 updateModel(gameModel.getCurrentPlayer());
             }
-            view.showEndTurn(gameModel.getCurrentPlayer().getName());
+            getView().showEndTurn(gameModel.getCurrentPlayer().getName());
         }
     }
 
@@ -294,6 +292,7 @@ class GameStateController extends DeadwoodController {
             clearWorked();
             clearMoved();
         }
+        getView().showEndDay();
         gameModel.setCurrentDay(gameModel.getCurrentDay() + 1);
     }
 
@@ -306,12 +305,12 @@ class GameStateController extends DeadwoodController {
             PlayerModel currentPlayer = gameModel.getExactPlayer(i);
             score = currentPlayer.getRank() * 5 + currentPlayer.getCredits() + currentPlayer.getMoney();
             player = currentPlayer.getName();
-            view.showScore(player, score);
+            getView().showScore(player, score);
             if (score > highestScore) {
                 highestScore = score;
                 winningPlayer = player;
             }
         }
-        view.showWinner(winningPlayer, highestScore);
+        getView().showWinner(winningPlayer, highestScore);
     }
 }
