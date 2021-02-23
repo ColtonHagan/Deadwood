@@ -1,5 +1,3 @@
-import java.util.ArrayList;
-
 class Systems {
     private PlayerModel model;
 
@@ -43,8 +41,6 @@ class Systems {
         } else {
             return false;
         }
-
-
     }
 
     // Checking if player is in office
@@ -52,7 +48,4 @@ class Systems {
         return (model.getCurrentRoom().getName().equals("office"));
     }
 
-    public boolean checkCanBonus(ArrayList<PlayerModel> playersOnCard) {
-        return (playersOnCard.size() != 0);
-    }
 }
