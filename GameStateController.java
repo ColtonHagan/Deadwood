@@ -13,10 +13,8 @@ class GameStateController extends DeadwoodController {
         int credits = 0;
         int days = 4;
 
-        //TEMPORARY TEST, CHANGE BACK LATER
         if (gameModel.getTotalPlayers() == 2 || gameModel.getTotalPlayers() == 3) {
-            //days = 3;
-            days = 2;
+            days = 3;
         } else if (gameModel.getTotalPlayers() == 5) {
             credits = 2;
         } else if (gameModel.getTotalPlayers() == 6) {
@@ -117,12 +115,12 @@ class GameStateController extends DeadwoodController {
                 case "Upgrade":
                     if (userInputArray.length == 3) {
                         int targetRank = Integer.parseInt(userInputArray[2]);
-                        if (userInputArray[0].equals("Credits")) {
+                        if (userInputArray[1].equals("Credits")) {
                             upgradeRankCredits(targetRank);
                         } else if (userInputArray[1].equals("Dollars")) {
                             upgradeRankDollars(targetRank);
                         } else {
-                            getView().inputUpgradeWrongPaymentType();
+                            getView().inputUpgradeMissingInfo();
                         }
                     } else {
                         getView().inputUpgradeMissingInfo();
