@@ -9,7 +9,7 @@ public class Room {
    public Room (String name, int shotCounters, Role[] extraRoles, String[] adjacentRooms) {
       this.name = name;
       totalShotCounters = shotCounters;
-      currentShotCounters = 0;
+      currentShotCounters = shotCounters;
       this.extraRoles = extraRoles;
       this.adjacentRooms = adjacentRooms;
    }
