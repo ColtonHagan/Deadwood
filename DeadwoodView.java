@@ -6,31 +6,40 @@ class DeadwoodView {
     }
 
     public void printPlayerDetails(String name, int money, int credits, int rank, String roleName, String tagLine) {
-        System.out.println("The active player is " + name + ". They have $" + money + ", " + credits + " credits and have rank " + rank);
-        System.out.println(" they are currently working " + roleName + " \"" + tagLine + "\"");
+        System.out.print("The active player is " + name + ". They have $" + money + ", " + credits + " credits and has rank " + rank);
+        System.out.println(" they are currently working " + roleName + " \"" + tagLine + "\"\n");
     }
     
     public void printPlayerDetailsNoRole(String name, int money, int credits, int rank) {
-        System.out.println("The active player is " + name + ". They have $" + money + ", " + credits + " credits and have rank " + rank + "\n");
+        System.out.println("The active player is " + name + ". They have $" + money + ", " + credits + " credits and has rank " + rank + "\n");
     }
 
     public void printInactivePlayerDetails(String name, int money, int credits, int rank, String roleName, String tagLine) {
-        System.out.println("Player " + name + " has $" + money + ", " + credits + " credits and have rank " + rank);
-        System.out.println(" they are currently working " + roleName + " \"" + tagLine + "\"");
+        System.out.print("Player " + name + " has $" + money + ", " + credits + " credits and has rank " + rank);
+        System.out.println(" they are currently working " + roleName + " \"" + tagLine + "\"\n");
     }
 
     public void printInactivePlayerDetailsNoRole(String name, int money, int credits, int rank) {
-        System.out.println("Player " + name + " has $" + money + ", " + credits + " credits and have rank " + rank + "\n");
+        System.out.println("Player " + name + " has $" + money + ", " + credits + " credits and has rank " + rank + "\n");
     }
     
     public void playerLocationWithExtraRole(String roomName, String roleName) {
-        System.out.println("in " + roomName + " shooting " + roleName + "\n");
+        System.out.println("In " + roomName + " shooting " + roleName + "\n");
     }
+    
+    public void activePlayerLocationWithRole(String Player, String roomName, String roleName) {
+       System.out.println("Active Player is in " + roomName + " shooting " + roleName + "\n");
+    }
+    
     public void playerLocationWithOnCardRole(String roomName, String roleName, String sceneNumber) {
-        System.out.println("in " + roomName + " shooting " + roleName + "scene " + sceneNumber + "\n");
+        System.out.println("In " + roomName + " shooting " + roleName + "scene " + sceneNumber + "\n");
     }
     public void playerLocation(String roomName) {
-        System.out.println("in " + roomName + "\n");
+        System.out.println("In " + roomName + "\n");
+    }
+    
+    public void activePlayerLocation(String Player, String roomName) {
+       System.out.println("Active Player is in " + roomName + "\n");
     }
 
     public void showUpgradeSuccess(int rank, int oldRank) {

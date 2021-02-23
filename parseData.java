@@ -43,7 +43,7 @@ public class parseData {
    
    public void parseRole(ArrayList<Role> roles, Node cardNode, Element roleElement, boolean extra) {
       String name = roleElement.getAttribute("name");
-      String line = cardNode.getChildNodes().item(1).getTextContent();
+      String line = cardNode.getChildNodes().item(1).getTextContent().trim();
       int rank = Integer.parseInt(roleElement.getAttribute("level"));
       Role newRole = new Role(name, line, rank, extra);
       roles.add(newRole);
