@@ -5,24 +5,16 @@ class DeadwoodView {
         this.controller = controller;
     }
 
-    public void printPlayerDetails(String name, int money, int credits, int rank, String roleName, String tagLine) {
-        System.out.print("The active player is " + name + ". They have $" + money + ", " + credits + " credits and is rank " + rank);
-        System.out.print(" they are currently working " + roleName + " \"" + tagLine + "\"\n");
+    public void printPlayerDetails(String name, int money, int credits, int rank, int practiceChips) {
+        System.out.println("Actor: " + name);
+        System.out.println("Money: " + money);
+        System.out.println("Credits: " + credits);
+        System.out.println("Rank: " + rank);
+        System.out.println("Practice Chips: " + practiceChips + "\n");
     }
-    
-    public void printInactivePlayerDetails(String name, int money, int credits, int rank, String roleName, String tagLine) {
-        System.out.print(name + ". has $" + money + ", " + credits + " credits and is rank " + rank);
-        System.out.print(" they are currently working " + roleName + " \"" + tagLine + "\"\n");
-    }
-    
-    public void playerLocationWithExtraRole(String roomName, String roleName) {
-      System.out.println("in " + roomName + " shooting " + roleName);
-    }
-    public void playerLocationWithOnCardRole(String roomName, String roleName, String sceneNumber) {
-      System.out.println("in " + roomName + " shooting " + roleName + "scene " + sceneNumber);
-    }
-    public void playerLocation(String roomName) {
-      System.out.println("in " + roomName);
+
+    public void printRoom(String room) {
+        System.out.println("Currently in: " + room + "\n");
     }
 
     public void showUpgradeSuccess(int rank, int oldRank) {
@@ -120,25 +112,5 @@ class DeadwoodView {
     public void showWinner(String name, int score) {
         System.out.println("WINNER " + name + " with a score of " + score);
     }
-    
-    public void inputUpgradeMissingInfo() {
-      System.out.println("Please enter Credits or Dollars and target rank to upgrade to");
-    }
-    
-    public void inputUpgradeWrongPaymentType() {
-      System.out.println("Please enter Credits or Dollars to upgrade");
-    }
-    
-    public void inputMoveInvalidRoom() {
-      System.out.println("There is no room with that name");
-    }
-    
-    public void inputWorkInvalidRole() {
-      System.out.println("There is no active role with that name");
-    }
 
-    public void inputError() {
-      System.out.println("User input not recognize");
-      System.out.println("Please input one of the following actions : Upgrade, Work, Act, Rehearsing, Active player?, Where, Locations, or End");
-    }
 }
