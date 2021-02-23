@@ -112,7 +112,7 @@ class DeadwoodView {
 
     public void printAddRoleError() {
         System.out.println("Error: Cannot take role! This could be due to many reasons: You currently have a role, the role is already taken," +
-                " you do not have enough rank for the role, or the role does not exist! \n");
+                " you do not have enough rank for the role, or the exists in a different location! \n");
     }
 
     public void printRoles(Role[] roles) {
@@ -142,8 +142,8 @@ class DeadwoodView {
         System.out.println("No player was on card, so no bonuses where given");
     }
 
-    public void showEndTurn() {
-        System.out.println("Turn Ended, next player's turn.");
+    public void showEndTurn(String name) {
+        System.out.println("Turn Ended, it is now " + name + "'s turn");
     }
 
     public void showScore(String name, int score) {

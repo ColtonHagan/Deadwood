@@ -103,16 +103,11 @@ class DeadwoodController {
     }
 
     public void addRole(Role role) {
-        if (system.checkCanAddRole(role)) {
             model.takeRole(role);
             role.setUsedBy(model);
             model.getCurrentRoom().removeShotCounter();
             view.showTakeRoleSuccess(role.getName());
             model.updateWorked(true);
-
-        } else {
-            view.printAddRoleError();
-        }
     }
 
     public void removeRole() {
