@@ -108,6 +108,7 @@ class GameStateController extends DeadwoodController {
     public void playGame() {
         int currentDays = 0;
         int totalDays = 4;
+        PlayerModel player = gameModel.getCurrentPlayer();
         while (currentDays <= totalDays) {
             String[] userInputArray = getInput().split(" ");
 
@@ -120,23 +121,31 @@ class GameStateController extends DeadwoodController {
                         } else if (userInputArray[1].equals("Dollars")) {
                             upgradeRankDollars(targetRank);
                         } else {
-                            System.out.println("Please enter Credits or Dollars to upgrade");
+                           getView().inputUpgradeWrongPaymentType();
                         }
                     } else {
-                        System.out.println("Please enter Credits or Dollars and target rank to upgrade to");
+                        getView().inputUpgradeMissingInfo();
                     }
                     break;
 
                 case "Move":
                     String roomName = concatenateArray(userInputArray, 1, userInputArray.length - 1);
                     Room room = roomNameToRoom(roomName);
-                    move(room);
+                    if(room != null) {
+                      move(room);
+                    } else {
+                      getView().inputMoveInvalidRoom();
+                    }
                     break;
 
                 case "Work":  //take role
                     String roleName = concatenateArray(userInputArray, 1, userInputArray.length - 1);
                     Role role = roleNameToRole(roleName);
-                    addRole(role);
+                    if(role != null) {
+                      addRole(role);
+                    } else {
+                      getView().inputWorkInvalidRole();
+                    }
                     break;
 
                 case "Act":
@@ -151,15 +160,31 @@ class GameStateController extends DeadwoodController {
                     break;
 
                 case "Active player?":
-                    //The active player is Jane Doe. She has $15, 3 credits and 10 fames. She is working Crusty Prospector, "Aww, peaches!"
+                    getView().printPlayerDetails(player.getName(), player.getMoney(), player.getCredits(), player.getRank(),
+                                                 player.getCurrentRole().getName(), player.getCurrentRole().getTagLine());
                     break;
 
                 case "Where":
-                    //in Train Station shooting Law and the Old West scene 20
+                    if(player.getCurrentRole() == null) {
+                      getView().playerLocation(player.getCurrentRoom().getName());
+                    } else if (player.getCurrentRole().getExtra()) {
+                       getView().playerLocationWithExtraRole(player.getCurrentRoom().getName(), player.getCurrentRole().getName());
+                    } else {
+                       getView().playerLocationWithOnCardRole(player.getCurrentRoom().getName(), player.getCurrentRole().getName(),
+                                                player.getCurrentRoom().getSceneCard().getName());
+                    }
                     break;
 
                 case "Locations":
-                    //Display location of all players and indicate the active player
+                    for (PlayerModel currentPlayer : gameModel.getPlayers()) {
+                      if(currentPlayer == player) {
+                        getView().printPlayerDetails(player.getName(), player.getMoney(), player.getCredits(), player.getRank(),
+                                                     player.getCurrentRole().getName(), player.getCurrentRole().getTagLine());
+                      } else {
+                        getView().printInactivePlayerDetails(currentPlayer.getName(), currentPlayer.getMoney(), currentPlayer.getCredits(), currentPlayer.getRank(),
+                                                     currentPlayer.getCurrentRole().getName(), currentPlayer.getCurrentRole().getTagLine());
+                      }
+                    }
                     break;
 
                 case "End":
@@ -167,8 +192,7 @@ class GameStateController extends DeadwoodController {
                     break;
 
                 default:
-                    System.out.println("User input not recognize");
-                    System.out.println("Please input one of the following actions : Upgrade, Work, Act, Rehearsing, Active player?, Where, Locations, or End");
+                    getView().inputError();
                     break;
             }
         }
