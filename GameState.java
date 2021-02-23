@@ -1,4 +1,3 @@
-import java.util.Scanner;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.*;
@@ -126,37 +125,9 @@ class GameState {
    }
 
    public void playGame() {
-      int currentDays = 0;
-      int totalDays = 4;
-      while(currentDays <= totalDays) {
-         String userInput = getInput();
-         if(userInput.equals("upgrade")) {
-         
-         } else if (userInput.equals("move")) {
-         
-         } else if (userInput.equals("work")) { //take role
-         
-         } else if (userInput.equals("act")) {
-         
-         } else if (userInput.equals("rehearsing")) {
-         
-         } else if (userInput.equals("active player?")) {
-            //The active player is Jane Doe. She has $15, 3 credits and 10 fames. She is working Crusty Prospector, "Aww, peaches!"
-         } else if (userInput.equals("where")) {
-            //in Train Station shooting Law and the Old West scene 20
-         } else if (userInput.equals("locations")) {
-            //Display location of all players and indicate the active player
-         } else if (userInput.equals("end")) {
-         
-         }
-      }
+
    }
-   
-   public static String getInput() {
-      Scanner in = new Scanner(System.in); 
-      return in.nextLine();
-   }
-   
+
    public void endTurn() {
       if(currentPlayer + 1 < totalPlayers) {
          playerController.clearMoved();
