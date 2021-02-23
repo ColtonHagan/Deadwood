@@ -125,6 +125,10 @@ class DeadwoodView {
         System.out.println("This game is not playable with the given number of players!");
     }
 
+    public void printSceneEnd() {
+        System.out.println("The Scene has ended");
+    }
+
     public void showBonusPayment(String playerName, String roleType, int bonus) {
         System.out.println(playerName + " had a " + roleType + " role and earned a bonus of " + bonus);
     }

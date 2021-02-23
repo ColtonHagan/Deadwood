@@ -113,5 +113,9 @@ class PlayerModel {
    public void updateWorked(boolean worked){
       this.worked = worked;
    }
+
+   public void updateHasRole(boolean hasRole) {
+      this.hasRole = hasRole;
+   }
    
 }
