@@ -12,12 +12,22 @@ class DeadwoodController {
         this.system = system;
     }
 
+    // Getters
     public Systems getSystem() {
         return system;
     }
 
     public DeadwoodView getView() {
         return view;
+    }
+
+    // Setters and Modifiers
+    public void clearMoved() {
+        model.updateMoved(false);
+    }
+
+    public void clearWorked() {
+        model.updateWorked(false);
     }
 
     public void updateModel(PlayerModel model) {
@@ -37,15 +47,16 @@ class DeadwoodController {
         model.createOffice(dataParser.parseOffice());
     }
 
+    // Important player action classes: Covers upgrading rank, moving, roles, acting, and rehearsing
     public void upgradeRankCredits(int targetUpgrade) {
         if (system.checkCanUpgrade()) {
             CastingOffice office = model.getOffice();
             if (office.rankPossible(model.getRank(), targetUpgrade)) {
                 int cost = office.costCredits(targetUpgrade);
                 if (model.getCredits() >= cost) {
+                    view.showUpgradeSuccess(targetUpgrade, model.getRank());
                     model.updateRank(targetUpgrade);
                     updateCredits(model.getCredits() - cost);
-                    view.showUpgradeSuccess(targetUpgrade, model.getRank());
                 } else {
                     view.showUpgradeFail(targetUpgrade);
                 }
@@ -125,14 +136,6 @@ class DeadwoodController {
         } else {
             view.printRehearseError();
         }
-    }
-
-    public void clearMoved() {
-        model.updateMoved(false);
-    }
-
-    public void clearWorked() {
-        model.updateWorked(false);
     }
 
     private int rollDice() {
