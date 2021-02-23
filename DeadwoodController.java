@@ -23,15 +23,7 @@ class DeadwoodController {
     public void updateModel(PlayerModel model) {
         this.model = model;
         system.updateModel(model);
-    }
-
-    public void updateView() {
-        view.printPlayerDetails(model.getName(), model.getMoney(), model.getCredits(), model.getRank(), model.getPracticeChips());
-    }
-
-    public void getCurrentRoom() {
-        view.printRoom(model.getCurrentRoom().getName());
-    }
+    }   
 
     public void updateMoney(int money) {
         model.updateMoney(money);
