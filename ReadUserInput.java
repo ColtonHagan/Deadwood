@@ -24,8 +24,10 @@ class ReadUserInput {
             }
          } else if (userInputArray[0].equals("Move")) {
             String roomName = concatenateArray(userInputArray,1,userInputArray.length-1);
+            Role room = roomNameToRoom(roomName);
          } else if (userInputArray[0].equals("Work")) { //take role
             String roleName = concatenateArray(userInputArray,1,userInputArray.length-1);
+            Role role = roomNameToRoom(roleName);
          } else if (userInputArray[0].equals("Act")) {
             act();
          } else if (userInputArray[0].equals("Rehearsing")) {
@@ -47,12 +49,32 @@ class ReadUserInput {
       endGame();
    }
    
-   public String getInput() {
+     public Room roomNameToRoom(String roomName) {
+      for(Room room : gameModel.getBoard().allRooms()) {
+         if(room.getName().equals(roomName)) {
+            return room;
+         }
+      }
+      return null;
+   }
+   
+   public Role roleNameToRole(String roleName) {
+      for(Room room : gameModel.getBoard().allRooms()) {
+         for(Role role : room.availableRoles()) {
+            if(role.getName().equals(roleName)) {
+               return role;
+            }
+         }
+      }
+      return null;
+   }
+   
+   public static String getInput() {
       Scanner in = new Scanner(System.in); 
       return in.nextLine();
    }
    
-   public String concatenateArray(String[] array, int startIndex, int endIndex) {
+   public static String concatenateArray(String[] array, int startIndex, int endIndex) {
       String combined = array[startIndex];
       for(int i = startIndex+1; i <= endIndex; i++) {
          combined += " " + array[i];
@@ -60,8 +82,8 @@ class ReadUserInput {
       return combined;
    }
    
-   public Room roomNameToRoom(String roomName) {
-      /*for(Room room : board.allRooms()) {
+   public static Room roomNameToRoom(String roomName) {
+      /*for(Room room : board.getBoard().allRooms()) {
          if(room.getName().equals(roomName)) {
             return room;
          }
@@ -69,7 +91,14 @@ class ReadUserInput {
       return null;
    }
    
-   public Role roleNameToRole() {
+   public static Role roleNameToRole(String roleName) {
+      /*for(Room room : board.getBoard().allRooms()) {
+         for(Role role : room.availableRoles()) {
+            if(role.getName().equals(roleName)) {
+               return role;
+            }
+         }
+      }*/
       return null;
    }
    

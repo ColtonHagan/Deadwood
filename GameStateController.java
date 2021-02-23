@@ -1,8 +1,8 @@
 import java.util.*;
 
-class GameStateController extends DeadwoodController{
-    private GameState gameModel;
-    private DeadwoodView view;
+class GameStateController extends DeadwoodController {
+    private final GameState gameModel;
+    private final DeadwoodView view;
 
     public GameStateController(int totalPlayers) throws Exception {
         this.gameModel = new GameState(totalPlayers);
@@ -11,7 +11,7 @@ class GameStateController extends DeadwoodController{
     }
 
     // FOR TESTING, DELETE LATER
-    public GameState getGameModel(){
+    public GameState getGameModel() {
         return gameModel;
     }
 
@@ -21,7 +21,7 @@ class GameStateController extends DeadwoodController{
         int credits = 0;
         int days = 4;
 
-        if(gameModel.getTotalPlayers() == 2 || gameModel.getTotalPlayers() == 3) {
+        if (gameModel.getTotalPlayers() == 2 || gameModel.getTotalPlayers() == 3) {
             days = 3;
         } else if (gameModel.getTotalPlayers() == 5) {
             credits = 2;
@@ -44,7 +44,7 @@ class GameStateController extends DeadwoodController{
         String[] namesList = {"Blue", "Cyan", "Green", "Orange", "Pink", "Red", "Violet", "Yellow"};
 
         PlayerModel[] players = new PlayerModel[gameModel.getTotalPlayers()];
-        for(int i = 0; i < gameModel.getTotalPlayers(); i++) {
+        for (int i = 0; i < gameModel.getTotalPlayers(); i++) {
             String name = namesList[i];
             players[i] = new PlayerModel(name, money, credits, rank, gameModel.getBoard().getTrailer());
         }
@@ -58,8 +58,8 @@ class GameStateController extends DeadwoodController{
         bonusPayment(currentRoom);
         currentRoom.setScene(null);
         gameModel.getBoard().removeRoom();
-        for(PlayerModel player : gameModel.getPlayers()) {
-            if(player.getCurrentRoom() == currentRoom) {
+        for (PlayerModel player : gameModel.getPlayers()) {
+            if (player.getCurrentRoom() == currentRoom) {
                 player.removeRole();
             }
         }
@@ -67,12 +67,12 @@ class GameStateController extends DeadwoodController{
 
     public void bonusPayment(Room currentRoom) {
         Role[] allRoles = currentRoom.availableRoles();
-        ArrayList<PlayerModel> playersOnCard = new ArrayList<PlayerModel>();
-        ArrayList<PlayerModel> playersOffCard = new ArrayList<PlayerModel>();
+        ArrayList<PlayerModel> playersOnCard = new ArrayList<>();
+        ArrayList<PlayerModel> playersOffCard = new ArrayList<>();
 
-        for(Role currentRole : allRoles) {
-            if(currentRole.getUsedBy() != null) {
-                if(!currentRole.getExtra()) {
+        for (Role currentRole : allRoles) {
+            if (currentRole.getUsedBy() != null) {
+                if (!currentRole.getExtra()) {
                     playersOnCard.add(currentRole.getUsedBy());
                 } else {
                     playersOffCard.add(currentRole.getUsedBy());
@@ -80,22 +80,22 @@ class GameStateController extends DeadwoodController{
             }
         }
 
-        if(playersOnCard.size() != 0) {
+        if (playersOnCard.size() != 0) {
             Random rand = new Random();
-            int bonus = 0;
+            int bonus;
             Integer[] diceRolls = new Integer[currentRoom.getSceneCard().getBudget()];
-            for(int i = 0; i < diceRolls.length; i++) {
+            for (int i = 0; i < diceRolls.length; i++) {
                 diceRolls[i] = rand.nextInt(6) + 1;
             }
             Arrays.sort(diceRolls, Collections.reverseOrder());
             playersOnCard.sort(Comparator.comparing(PlayerModel::getRoleRank));
             Collections.reverse(playersOnCard);
-            for(int i = 0; i < playersOnCard.size(); i++) {
+            for (int i = 0; i < playersOnCard.size(); i++) {
                 bonus = diceRolls[i];
                 playersOnCard.get(i).updateMoney(playersOnCard.get(i).getMoney() + diceRolls[i]);
                 view.showBonusPayment(playersOnCard.get(i).getName(), "on card", bonus);
             }
-            for(int i = 0; i < playersOffCard.size(); i++) {
+            for (int i = 0; i < playersOffCard.size(); i++) {
                 bonus = playersOffCard.get(i).getCurrentRole().getRank();
                 playersOffCard.get(i).updateMoney(playersOffCard.get(i).getCurrentRole().getRank() + playersOffCard.get(i).getMoney());
                 view.showBonusPayment(playersOffCard.get(i).getName(), "extra", bonus);
@@ -108,37 +108,95 @@ class GameStateController extends DeadwoodController{
     public void playGame() {
         int currentDays = 0;
         int totalDays = 4;
-        while(currentDays <= totalDays) {
-            String userInput = getInput();
-            if(userInput.equals("upgrade")) {
+        while (currentDays <= totalDays) {
+            String[] userInputArray = getInput().split(" ");
 
-            } else if (userInput.equals("move")) {
+            switch (userInputArray[0]) {
+                case "Upgrade":
+                    if (userInputArray.length == 3) {
+                        int targetRank = Integer.parseInt(userInputArray[2]);
+                        if (userInputArray[0].equals("Credits")) {
+                            upgradeRankCredits(targetRank);
+                        } else if (userInputArray[1].equals("Dollars")) {
+                            upgradeRankDollars(targetRank);
+                        } else {
+                            System.out.println("Please enter Credits or Dollars to upgrade");
+                        }
+                    } else {
+                        System.out.println("Please enter Credits or Dollars and target rank to upgrade to");
+                    }
+                    break;
 
-            } else if (userInput.equals("work")) { //take role
+                case "Move":
+                    String roomName = concatenateArray(userInputArray, 1, userInputArray.length - 1);
+                    break;
 
-            } else if (userInput.equals("act")) {
+                case "Work":  //take role
+                    String roleName = concatenateArray(userInputArray, 1, userInputArray.length - 1);
+                    break;
 
-            } else if (userInput.equals("rehearsing")) {
+                case "Act":
+                    act();
+                    break;
 
-            } else if (userInput.equals("active player?")) {
-                //The active player is Jane Doe. She has $15, 3 credits and 10 fames. She is working Crusty Prospector, "Aww, peaches!"
-            } else if (userInput.equals("where")) {
-                //in Train Station shooting Law and the Old West scene 20
-            } else if (userInput.equals("locations")) {
-                //Display location of all players and indicate the active player
-            } else if (userInput.equals("end")) {
+                case "Rehearsing":
+                    rehearse();
+                    break;
 
+                case "Active player?":
+                    //The active player is Jane Doe. She has $15, 3 credits and 10 fames. She is working Crusty Prospector, "Aww, peaches!"
+                    break;
+
+                case "Where":
+                    //in Train Station shooting Law and the Old West scene 20
+                    break;
+
+                case "Locations":
+                    //Display location of all players and indicate the active player
+                    break;
+
+                case "End":
+                    endTurn();
+                    break;
+
+                default:
+                    System.out.println("User input not recognize");
+                    System.out.println("Please input one of the following actions : Upgrade, Work, Act, Rehearsing, Active player?, Where, Locations, or End");
+                    break;
             }
+            currentDays++;
         }
+        endGame();
     }
 
-    public static String getInput() {
+    public String getInput() {
         Scanner in = new Scanner(System.in);
         return in.nextLine();
     }
 
+    public String concatenateArray(String[] array, int startIndex, int endIndex) {
+        String combined = array[startIndex];
+        for (int i = startIndex + 1; i <= endIndex; i++) {
+            combined += " " + array[i];
+        }
+        return combined;
+    }
+
+    public Room roomNameToRoom(String roomName) {
+      /*for(Room room : board.allRooms()) {
+         if(room.getName().equals(roomName)) {
+            return room;
+         }
+      }*/
+        return null;
+    }
+
+    public Role roleNameToRole() {
+        return null;
+    }
+
     public void endTurn() {
-        if(gameModel.getCurrentPlayerInt() + 1 < gameModel.getTotalPlayers()) {
+        if (gameModel.getCurrentPlayerInt() + 1 < gameModel.getTotalPlayers()) {
             clearMoved();
             gameModel.setCurrentPlayerInt(gameModel.getCurrentPlayerInt() + 1);
             updateModel(gameModel.getCurrentPlayer());
@@ -151,24 +209,24 @@ class GameStateController extends DeadwoodController{
 
     public void endDay() {
         gameModel.getBoard().resetBoard(gameModel.getSceneLibrary());
-        for(PlayerModel player : gameModel.getPlayers()) {
+        for (PlayerModel player : gameModel.getPlayers()) {
             player.updateCurrentRoom(gameModel.getBoard().getTrailer());
             player.removeRole();
             player.updatePracticeChips(0);
         }
     }
 
-    public void endGame(){
-        int score = 0;
+    public void endGame() {
+        int score;
         int highestScore = 0;
-        String player = "";
+        String player;
         String winningPlayer = "";
-        for(int i = 0; i  < gameModel.getTotalPlayers(); i++) {
+        for (int i = 0; i < gameModel.getTotalPlayers(); i++) {
             PlayerModel currentPlayer = gameModel.getExactPlayer(i);
             score = currentPlayer.getRank() * 5 + currentPlayer.getCredits() + currentPlayer.getMoney();
             player = currentPlayer.getName();
             view.showScore(player, score);
-            if(score > highestScore) {
+            if (score > highestScore) {
                 highestScore = score;
                 winningPlayer = player;
             }
