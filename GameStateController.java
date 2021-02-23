@@ -208,7 +208,7 @@ class GameStateController extends DeadwoodController {
                                 getView().printPlayerDetailsNoRole(gameModel.getCurrentPlayer().getName(), gameModel.getCurrentPlayer().getMoney(), gameModel.getCurrentPlayer().getCredits(), gameModel.getCurrentPlayer().getRank());
                             }
                         } else {
-                            if (gameModel.getCurrentPlayer().getHasRole()) {
+                            if (currentPlayer.getHasRole()) {
                                 getView().printInactivePlayerDetails(currentPlayer.getName(), currentPlayer.getMoney(), currentPlayer.getCredits(), currentPlayer.getRank(),
                                         currentPlayer.getCurrentRole().getName(), currentPlayer.getCurrentRole().getTagLine());
                             } else {
