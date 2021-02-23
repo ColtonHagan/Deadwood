@@ -54,6 +54,11 @@ class GameStateController extends DeadwoodController {
         bonusPayment(currentRoom);
         currentRoom.setScene(null);
         gameModel.getBoard().removeRoom();
+
+        gameModel.getCurrentPlayer().getCurrentRoom().clearExtras();
+
+
+
         for (PlayerModel player : gameModel.getPlayers()) {
             if (player.getCurrentRoom() == currentRoom) {
                 player.removeRole();
