@@ -216,9 +216,9 @@ class GameStateController extends DeadwoodController {
                             }
                         } else {
                             if (currentPlayer.getHasRole()) {
-                                getView().inactivePlayerLocationWithRole(currentPlayer.getName(), currentPlayer.getCurrentRoom().getName(), currentPlayer.getCurrentRole().getName());        
+                                getView().playerLocationWithExtraRole(currentPlayer.getCurrentRoom().getName(), currentPlayer.getCurrentRole().getName());        
                             } else {
-                                getView().inactivePlayerLocation(currentPlayer.getName(),currentPlayer.getCurrentRoom().getName());
+                                getView().playerLocation(currentPlayer.getCurrentRoom().getName());
                             }
                         }
                     }
