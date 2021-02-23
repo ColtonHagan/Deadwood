@@ -165,7 +165,11 @@ class GameStateController extends DeadwoodController {
                     break;
 
                 default:
+<<<<<<< HEAD
                     System.out.println("User input not recognized");
+=======
+                    System.out.println("User input not recognize");
+>>>>>>> parent of 080119d (everything is in view as it should be now)
                     System.out.println("Please input one of the following actions : Upgrade, Work, Act, Rehearsing, Active player?, Where, Locations, or End");
                     break;
             }

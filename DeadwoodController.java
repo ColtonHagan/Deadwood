@@ -25,6 +25,9 @@ class DeadwoodController {
         system.updateModel(model);
     }
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> parent of 080119d (everything is in view as it should be now)
 
     public void updateView() {
         view.printPlayerDetails(model.getName(), model.getMoney(), model.getCredits(), model.getRank(), model.getPracticeChips());
