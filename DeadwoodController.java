@@ -51,7 +51,7 @@ class DeadwoodController {
     public void upgradeRankCredits(int targetUpgrade) {
         if (system.checkCanUpgrade()) {
             CastingOffice office = model.getOffice();
-            if (office.rankPossible(model.getRank(), targetUpgrade)) {
+            if (system.rankPossible(model.getRank(), targetUpgrade)) {
                 int cost = office.costCredits(targetUpgrade);
                 if (model.getCredits() >= cost) {
                     view.showUpgradeSuccess(targetUpgrade, model.getRank());
@@ -71,7 +71,7 @@ class DeadwoodController {
     public void upgradeRankDollars(int targetUpgrade) {
         if (system.checkCanUpgrade()) {
             CastingOffice office = model.getOffice();
-            if (office.rankPossible(model.getRank(), targetUpgrade)) {
+            if (system.rankPossible(model.getRank(), targetUpgrade)) {
                 int cost = office.costDollars(targetUpgrade);
                 if (model.getMoney() >= cost) {
                     model.updateRank(targetUpgrade);

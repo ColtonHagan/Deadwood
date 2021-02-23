@@ -1,9 +1,3 @@
-import java.util.Scanner;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.*;
-import java.util.Random;
-
 class GameState {
    private int currentDay;
    private int totalDays;
@@ -18,7 +12,8 @@ class GameState {
       this.currentDay = 1;
       this.currentPlayer = 0;
    }
-   
+
+   // Getters
    public int getCurrentDay() {
       return currentDay;
    }
@@ -53,6 +48,7 @@ class GameState {
       return players;
    }
 
+   // Setters and Modifiers
    public void setCurrentDay(int currentDay){
       this.currentDay = currentDay;
    }
