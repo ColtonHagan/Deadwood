@@ -15,6 +15,7 @@ class GameState {
    
    public GameState (int totalPlayers) throws Exception {
       this.totalPlayers = totalPlayers;
+      this.currentDay = 1;
       this.currentPlayer = 0;
    }
    
@@ -38,6 +39,10 @@ class GameState {
       return players[i];
    }
 
+   public int getTotalDays(){
+      return totalDays;
+   }
+
    public Scenes getSceneLibrary() {
       return sceneLibray;
    }
@@ -46,6 +51,10 @@ class GameState {
    }
    public PlayerModel[] getPlayers() {
       return players;
+   }
+
+   public void setCurrentDay(int currentDay){
+      this.currentDay = currentDay;
    }
 
    public void setTotalDays(int totalDays) {

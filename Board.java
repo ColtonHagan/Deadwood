@@ -8,6 +8,8 @@ class Board {
       //includes rooms of office and trailer with 0 shot counters
       rooms = new Room[12];
       totalRooms = 12;
+      //TESTING, CHANGE BACK FOR FINAL
+      //totalRooms = 2;
       currentRooms = totalRooms;
    }
    
@@ -48,5 +50,9 @@ class Board {
    
    public int getCurrentRooms() {
       return currentRooms;
+   }
+
+   public void setCurrentRoom(int currentRooms) {
+      this.currentRooms = currentRooms;
    }
 }

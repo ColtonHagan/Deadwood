@@ -10,19 +10,16 @@ class GameStateController extends DeadwoodController {
         view.addListener(this);
     }
 
-    // FOR TESTING, DELETE LATER
-    public GameState getGameModel() {
-        return gameModel;
-    }
-
     public void setUpGame() throws Exception {
         int rank = 1;
         int money = 0;
         int credits = 0;
         int days = 4;
 
+        //TEMPORARY TEST, CHANGE BACK LATER
         if (gameModel.getTotalPlayers() == 2 || gameModel.getTotalPlayers() == 3) {
-            days = 3;
+            //days = 3;
+            days = 2;
         } else if (gameModel.getTotalPlayers() == 5) {
             credits = 2;
         } else if (gameModel.getTotalPlayers() == 6) {
@@ -110,11 +107,9 @@ class GameStateController extends DeadwoodController {
     }
 
     public void playGame() {
-        int currentDays = 0;
-        int totalDays = 4;
         getView().inputWelcome();
 
-        while (currentDays <= totalDays) {
+        while (gameModel.getCurrentDay() <= gameModel.getTotalDays()) {
             getView().inputChoose();
             String[] userInputArray = getInput().split(" ");
             switch (userInputArray[0]) {
@@ -299,6 +294,7 @@ class GameStateController extends DeadwoodController {
             clearWorked();
             clearMoved();
         }
+        gameModel.setCurrentDay(gameModel.getCurrentDay() + 1);
     }
 
     public void endGame() {

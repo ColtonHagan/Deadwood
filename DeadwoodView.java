@@ -35,7 +35,7 @@ class DeadwoodView {
     }
     
     public void activePlayerLocation(String playerName, String roomName) {
-       System.out.println("Active Player " + playerName + roomName + "\n");
+       System.out.println("Active Player " + playerName + " is in " + roomName + "\n");
     }
     
     public void inactivePlayerLocation(String playerName, String roomName) {
