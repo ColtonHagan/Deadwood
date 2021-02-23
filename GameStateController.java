@@ -208,17 +208,15 @@ class GameStateController extends DeadwoodController {
                     for (PlayerModel currentPlayer : gameModel.getPlayers()) {
                         if (currentPlayer == gameModel.getCurrentPlayer()) {
                             if (gameModel.getCurrentPlayer().getHasRole()) {
-                                getView().printPlayerDetails(gameModel.getCurrentPlayer().getName(), gameModel.getCurrentPlayer().getMoney(), gameModel.getCurrentPlayer().getCredits(), gameModel.getCurrentPlayer().getRank(),
-                                        gameModel.getCurrentPlayer().getCurrentRole().getName(), gameModel.getCurrentPlayer().getCurrentRole().getTagLine());
+                                getView().activePlayerLocationWithRole(currentPlayer.getName(), currentPlayer.getCurrentRoom().getName(), currentPlayer.getCurrentRole().getName());
                             } else {
-                                getView().printPlayerDetailsNoRole(gameModel.getCurrentPlayer().getName(), gameModel.getCurrentPlayer().getMoney(), gameModel.getCurrentPlayer().getCredits(), gameModel.getCurrentPlayer().getRank());
+                                getView().activePlayerLocation(currentPlayer.getName(), currentPlayer.getCurrentRoom().getName());
                             }
                         } else {
                             if (currentPlayer.getHasRole()) {
-                                getView().printInactivePlayerDetails(currentPlayer.getName(), currentPlayer.getMoney(), currentPlayer.getCredits(), currentPlayer.getRank(),
-                                        currentPlayer.getCurrentRole().getName(), currentPlayer.getCurrentRole().getTagLine());
+                                getView().playerLocationWithExtraRole(currentPlayer.getCurrentRoom().getName(), currentPlayer.getCurrentRole().getName());        
                             } else {
-                                getView().printInactivePlayerDetailsNoRole(currentPlayer.getName(), currentPlayer.getMoney(), currentPlayer.getCredits(), currentPlayer.getRank());
+                                getView().playerLocation(currentPlayer.getCurrentRoom().getName());
                             }
                         }
                     }
