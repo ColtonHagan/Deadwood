@@ -35,7 +35,7 @@ class Board {
    }
    
    public Room getTrailer() {
-      return rooms[totalRooms-2];
+      return rooms[rooms.length-2];
    } 
    
    public void placeScenes(Scenes sceneLibray) {
