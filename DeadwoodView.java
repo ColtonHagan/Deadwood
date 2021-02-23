@@ -150,6 +150,11 @@ class DeadwoodView {
         System.out.println("Turn Ended, it is now " + name + "'s turn");
     }
 
+    public void showEndDay() {
+        System.out.println("The day has ended!");
+        System.out.println("Everyone has been returned to the trailers.");
+    }
+
     public void showScore(String name, int score) {
         System.out.println(name + " got " + score);
     }
