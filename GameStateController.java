@@ -262,14 +262,18 @@ class GameStateController extends DeadwoodController {
     }
 
     public void endTurn() {
-        if (gameModel.getCurrentPlayerInt() + 1 < gameModel.getTotalPlayers()) {
-            clearMoved();
-            gameModel.setCurrentPlayerInt(gameModel.getCurrentPlayerInt() + 1);
-            updateModel(gameModel.getCurrentPlayer());
-
-            view.showEndTurn();
+        if(gameModel.getBoard().getCurrentRooms() == 1) {
+          endDay();
         } else {
-            endDay();
+           clearMoved();
+           if (gameModel.getCurrentPlayerInt() + 1 < gameModel.getTotalPlayers()) {
+               gameModel.setCurrentPlayerInt(gameModel.getCurrentPlayerInt() + 1);
+               updateModel(gameModel.getCurrentPlayer());
+           } else {
+               gameModel.setCurrentPlayerInt(0);
+               updateModel(gameModel.getCurrentPlayer());
+           }
+           view.showEndTurn();
         }
     }
 

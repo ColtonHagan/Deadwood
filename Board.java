@@ -13,9 +13,6 @@ class Board {
    
    public void resetBoard(Scenes sceneLibray) {
       for(Room room : rooms) {
-         if(room.getSceneCard() != null) {
-            room.getSceneCard().setUse(false);
-         }
          room.resetShotCounters();
       }
       placeScenes(sceneLibray);
@@ -47,5 +44,9 @@ class Board {
    
    public void removeRoom() {
       currentRooms--;
+   }
+   
+   public int getCurrentRooms() {
+      return currentRooms;
    }
 }
