@@ -49,7 +49,7 @@ class DeadwoodView {
 
     public void showUpgradeFail(int rank) {
         System.out.println("You can not upgrade to rank " + rank);
-        System.out.println("Either you need more money / credits, or your rank is higher than the chosen rank \n");
+        System.out.println("Either you need more money / credits, your rank is higher than the chosen rank, or the chosen rank is greater then 6  \n");
     }
 
     public void showActingSuccess(int moneyGained, int creditsGained) {
