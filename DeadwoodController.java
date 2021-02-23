@@ -10,7 +10,7 @@ class DeadwoodController {
         view.addListener(this);
         Systems system = new Systems(model);
         this.system = system;
-    }
+   }
 
     public Systems getSystem() {
         return system;
@@ -23,7 +23,7 @@ class DeadwoodController {
     public void updateModel(PlayerModel model) {
         this.model = model;
         system.updateModel(model);
-    }   
+    }
 
     public void updateMoney(int money) {
         model.updateMoney(money);
