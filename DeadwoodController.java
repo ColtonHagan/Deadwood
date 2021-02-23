@@ -146,36 +146,32 @@ class DeadwoodController {
     }
 
     public void act() {
-        if (system.checkCanAct()) {
-            int budget = model.getCurrentRoom().getSceneCard().getBudget();
-            if ((rollDice() + model.getPracticeChips()) >= budget) {
-                //If Actor succeeds in acting:
-                model.getCurrentRoom().removeShotCounter();
+        int budget = model.getCurrentRoom().getSceneCard().getBudget();
+        if ((rollDice() + model.getPracticeChips()) >= budget) {
+            //If Actor succeeds in acting:
+            model.getCurrentRoom().removeShotCounter();
 
-                if (model.getCurrentRole().getExtra()) {
-                    //Off card:
-                    model.updateMoney(model.getMoney() + 1);
-                    model.updateCredits(model.getCredits() + 1);
-                    view.showActingSuccess(1, 1);
-                } else {
-                    //On card:
-                    model.updateCredits(model.getCredits() + 2);
-                    view.showActingSuccess(0, 2);
-                }
+            if (model.getCurrentRole().getExtra()) {
+                //Off card:
+                model.updateMoney(model.getMoney() + 1);
+                model.updateCredits(model.getCredits() + 1);
+                view.showActingSuccess(1, 1);
             } else {
-                //If actor fails in acting:
-                if (model.getCurrentRole().getExtra()) {
-                    //Off card:
-                    model.updateMoney(model.getMoney() + 1);
-                    view.showActingFail(1, 0);
-                } else {
-                    //On card
-                    view.showActingFail(0, 0);
-                }
+                //On card:
+                model.updateCredits(model.getCredits() + 2);
+                view.showActingSuccess(0, 2);
             }
-            model.updateWorked(true);
         } else {
-            view.printActError();
+            //If actor fails in acting:
+            if (model.getCurrentRole().getExtra()) {
+                //Off card:
+                model.updateMoney(model.getMoney() + 1);
+                view.showActingFail(1, 0);
+            } else {
+                //On card
+                view.showActingFail(0, 0);
+            }
         }
+        model.updateWorked(true);
     }
 }

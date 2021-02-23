@@ -158,9 +158,13 @@ class GameStateController extends DeadwoodController {
                     break;
 
                 case "Act":
-                    act();
-                    if (gameModel.getCurrentPlayer().getCurrentRoom().getShotCounters() == 0) {
-                        endRoom(gameModel.getCurrentPlayer().getCurrentRoom());
+                    if (getSystem().checkCanAct()) {
+                        act();
+                        if (gameModel.getCurrentPlayer().getCurrentRoom().getShotCounters() == 0) {
+                            endRoom(gameModel.getCurrentPlayer().getCurrentRoom());
+                        }
+                    } else {
+                        view.printActError();
                     }
                     break;
 
@@ -171,10 +175,10 @@ class GameStateController extends DeadwoodController {
                 case "Active":
                     if (userInputArray[1].equals("Player?")) {
                         if (gameModel.getCurrentPlayer().getHasRole()) {
-                                 getView().printPlayerDetails(gameModel.getCurrentPlayer().getName(), gameModel.getCurrentPlayer().getMoney(), gameModel.getCurrentPlayer().getCredits(), gameModel.getCurrentPlayer().getRank(),
-                                         gameModel.getCurrentPlayer().getCurrentRole().getName(), gameModel.getCurrentPlayer().getCurrentRole().getTagLine());
+                            getView().printPlayerDetails(gameModel.getCurrentPlayer().getName(), gameModel.getCurrentPlayer().getMoney(), gameModel.getCurrentPlayer().getCredits(), gameModel.getCurrentPlayer().getRank(),
+                                    gameModel.getCurrentPlayer().getCurrentRole().getName(), gameModel.getCurrentPlayer().getCurrentRole().getTagLine());
                         } else {
-                                 getView().printPlayerDetailsNoRole(gameModel.getCurrentPlayer().getName(), gameModel.getCurrentPlayer().getMoney(), gameModel.getCurrentPlayer().getCredits(), gameModel.getCurrentPlayer().getRank());
+                            getView().printPlayerDetailsNoRole(gameModel.getCurrentPlayer().getName(), gameModel.getCurrentPlayer().getMoney(), gameModel.getCurrentPlayer().getCredits(), gameModel.getCurrentPlayer().getRank());
                         }
                     } else {
                         getView().inputError();
@@ -196,17 +200,17 @@ class GameStateController extends DeadwoodController {
                     for (PlayerModel currentPlayer : gameModel.getPlayers()) {
                         if (currentPlayer == gameModel.getCurrentPlayer()) {
                             if (gameModel.getCurrentPlayer().getHasRole()) {
-                                 getView().printPlayerDetails(gameModel.getCurrentPlayer().getName(), gameModel.getCurrentPlayer().getMoney(), gameModel.getCurrentPlayer().getCredits(), gameModel.getCurrentPlayer().getRank(),
-                                         gameModel.getCurrentPlayer().getCurrentRole().getName(), gameModel.getCurrentPlayer().getCurrentRole().getTagLine());
+                                getView().printPlayerDetails(gameModel.getCurrentPlayer().getName(), gameModel.getCurrentPlayer().getMoney(), gameModel.getCurrentPlayer().getCredits(), gameModel.getCurrentPlayer().getRank(),
+                                        gameModel.getCurrentPlayer().getCurrentRole().getName(), gameModel.getCurrentPlayer().getCurrentRole().getTagLine());
                             } else {
-                                 getView().printPlayerDetailsNoRole(gameModel.getCurrentPlayer().getName(), gameModel.getCurrentPlayer().getMoney(), gameModel.getCurrentPlayer().getCredits(), gameModel.getCurrentPlayer().getRank());
+                                getView().printPlayerDetailsNoRole(gameModel.getCurrentPlayer().getName(), gameModel.getCurrentPlayer().getMoney(), gameModel.getCurrentPlayer().getCredits(), gameModel.getCurrentPlayer().getRank());
                             }
                         } else {
                             if (gameModel.getCurrentPlayer().getHasRole()) {
-                              getView().printInactivePlayerDetails(currentPlayer.getName(), currentPlayer.getMoney(), currentPlayer.getCredits(), currentPlayer.getRank(),
-                                                                   currentPlayer.getCurrentRole().getName(), currentPlayer.getCurrentRole().getTagLine());
-                            } else {    
-                              getView().printInactivePlayerDetailsNoRole(currentPlayer.getName(), currentPlayer.getMoney(), currentPlayer.getCredits(), currentPlayer.getRank());
+                                getView().printInactivePlayerDetails(currentPlayer.getName(), currentPlayer.getMoney(), currentPlayer.getCredits(), currentPlayer.getRank(),
+                                        currentPlayer.getCurrentRole().getName(), currentPlayer.getCurrentRole().getTagLine());
+                            } else {
+                                getView().printInactivePlayerDetailsNoRole(currentPlayer.getName(), currentPlayer.getMoney(), currentPlayer.getCredits(), currentPlayer.getRank());
                             }
                         }
                     }
