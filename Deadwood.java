@@ -1,11 +1,10 @@
 public class Deadwood {
    public static void main(String args[]) throws Exception {
       //int totalPlayers = Integer.parseInt(args[0]);
-      GameStateController control = new GameStateController(2);
 
+      GameStateController control = new GameStateController(2);
       control.setUpGame();
       Room[] allRooms = control.getGameModel().getBoard().allRooms();
-      control.playGame();
 
 
 /*
