@@ -10,7 +10,7 @@ class DeadwoodController {
         view.addListener(this);
         Systems system = new Systems(model);
         this.system = system;
-   }
+    }
 
     public Systems getSystem() {
         return system;
@@ -24,20 +24,10 @@ class DeadwoodController {
         this.model = model;
         system.updateModel(model);
     }
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> parent of 080119d (everything is in view as it should be now)
-
-    public void updateView() {
-        view.printPlayerDetails(model.getName(), model.getMoney(), model.getCredits(), model.getRank(), model.getPracticeChips());
-    }
 
     public void getCurrentRoom() {
-        view.printRoom(model.getCurrentRoom().getName());
+        view.playerLocation(model.getCurrentRoom().getName());
     }
-=======
->>>>>>> f161387426b2db1c8a0ed539c045581d99e29459
 
     public void updateMoney(int money) {
         model.updateMoney(money);
@@ -63,8 +53,10 @@ class DeadwoodController {
                     view.showUpgradeFail(targetUpgrade);
                 }
             } else {
-                view.printUpgradeError();
+                view.showUpgradeFail(targetUpgrade);
             }
+        } else {
+            view.printUpgradeError();
         }
     }
 
