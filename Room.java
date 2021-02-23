@@ -14,14 +14,17 @@ public class Room {
       this.adjacentRooms = adjacentRooms;
    }
    public Role[] availableRoles() {
-      Role[] sceneCardRoles = sceneCard.getRoles();
-      Role[] allRoles = new Role[extraRoles.length + sceneCardRoles.length];
-      int i = 0;
-      for(; i < extraRoles.length; i++)
-         allRoles[i] = extraRoles[i];
-      for(int j = 0; j < sceneCardRoles.length; j++)
-         allRoles[i+j] = sceneCardRoles[j]; 
-      return allRoles;
+      if (sceneCard != null) {
+         Role[] sceneCardRoles = sceneCard.getRoles();
+         Role[] allRoles = new Role[extraRoles.length + sceneCardRoles.length];
+         int i = 0;
+         for(; i < extraRoles.length; i++)
+            allRoles[i] = extraRoles[i];
+         for(int j = 0; j < sceneCardRoles.length; j++)
+            allRoles[i+j] = sceneCardRoles[j]; 
+         return allRoles;
+      }
+      return extraRoles;
    }
 
    public boolean hasRole(Role role) {
