@@ -55,7 +55,7 @@ public class Room {
    public SceneCard getSceneCard(){
       return sceneCard;
    }
-   public void updateShotCounter(){
-      currentShotCounters++;
+   public int getShotCounters() {
+      return currentShotCounters;
    }
 }

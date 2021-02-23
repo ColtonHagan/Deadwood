@@ -145,7 +145,7 @@ class DeadwoodController {
             int budget = model.getCurrentRoom().getSceneCard().getBudget();
             if ((rollDice() + model.getPracticeChips()) >= budget) {
                 //If Actor succeeds in acting:
-                model.getCurrentRoom().updateShotCounter();
+                model.getCurrentRoom().removeShotCounter();
 
 
                 if (model.getCurrentRole().getExtra()) {

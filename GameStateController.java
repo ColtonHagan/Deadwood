@@ -141,6 +141,9 @@ class GameStateController extends DeadwoodController {
 
                 case "Act":
                     act();
+                    if(gameModel.getCurrentPlayer().getCurrentRoom().getShotCounters() == 0) {
+                      endRoom(gameModel.getCurrentPlayer().getCurrentRoom());
+                    }
                     break;
 
                 case "Rehearsing":
