@@ -171,7 +171,6 @@ class GameStateController extends DeadwoodController {
                     System.out.println("Please input one of the following actions : Upgrade, Work, Act, Rehearsing, Active player?, Where, Locations, or End");
                     break;
             }
-            currentDays++;
         }
         endGame();
     }
