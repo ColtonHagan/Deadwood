@@ -299,6 +299,7 @@ class GameStateController extends DeadwoodController {
     }
 
     public void endGame() {
+        getView().showEndGame();
         int score;
         int highestScore = 0;
         String player;

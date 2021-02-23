@@ -152,7 +152,12 @@ class DeadwoodView {
 
     public void showEndDay() {
         System.out.println("The day has ended!");
-        System.out.println("Everyone has been returned to the trailers.");
+    }
+
+    public void showEndGame() {
+        System.out.println("The game has ended!");
+        System.out.println("Final Scores:");
+
     }
 
     public void showScore(String name, int score) {
