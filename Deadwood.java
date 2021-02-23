@@ -5,10 +5,14 @@ public class Deadwood {
 
       control.setUpGame();
       Room[] allRooms = control.getGameModel().getBoard().allRooms();
-      control.playGame();
 
 
+<<<<<<< HEAD
 /*
+=======
+
+      control.updateView();
+>>>>>>> parent of 13d5e87 (merging view)
       control.move(allRooms[9]);
 
       //control.getCurrentRoom();
@@ -32,7 +36,5 @@ public class Deadwood {
       control.endRoom(allRooms[4]);
       control.endTurn();
       control.endGame();
-
-       */
    }
 }

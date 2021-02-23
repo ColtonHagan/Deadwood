@@ -60,10 +60,8 @@ class DeadwoodController {
                     view.showUpgradeFail(targetUpgrade);
                 }
             } else {
-                view.showUpgradeFail(targetUpgrade);
+                view.printUpgradeError();
             }
-        } else {
-            view.printUpgradeError();
         }
     }
 
