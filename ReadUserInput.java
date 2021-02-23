@@ -47,12 +47,12 @@ class ReadUserInput {
       endGame();
    }
    
-   public static String getInput() {
+   public String getInput() {
       Scanner in = new Scanner(System.in); 
       return in.nextLine();
    }
    
-   public static String concatenateArray(String[] array, int startIndex, int endIndex) {
+   public String concatenateArray(String[] array, int startIndex, int endIndex) {
       String combined = array[startIndex];
       for(int i = startIndex+1; i <= endIndex; i++) {
          combined += " " + array[i];
@@ -60,7 +60,7 @@ class ReadUserInput {
       return combined;
    }
    
-   public static Room roomNameToRoom(String roomName) {
+   public Room roomNameToRoom(String roomName) {
       /*for(Room room : board.allRooms()) {
          if(room.getName().equals(roomName)) {
             return room;
@@ -69,7 +69,7 @@ class ReadUserInput {
       return null;
    }
    
-   public static Role roleNameToRole() {
+   public Role roleNameToRole() {
       return null;
    }
    
