@@ -8,11 +8,10 @@ public class Deadwood {
       control.playGame();
 
 
-      /*
-      control.updateView();
+/*
       control.move(allRooms[9]);
 
-      control.getCurrentRoom();
+      //control.getCurrentRoom();
 
       Role holden = allRooms[4].getSceneCard().getRoles()[0];
       control.addRole(holden);
