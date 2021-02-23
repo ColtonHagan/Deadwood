@@ -25,7 +25,7 @@ public class Deadwood {
       control.upgradeRankCredits(3);
       control.upgradeRankDollars(5);
 
-     // game.endTurn();
-     // game.endGame();
+      control.endTurn();
+      control.endGame();
    }
 }

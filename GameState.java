@@ -12,7 +12,6 @@ class GameState {
    private PlayerModel[] players;
    private Scenes sceneLibray = new Scenes();
    private Board board = new Board();
-
    
    public GameState (int totalPlayers) throws Exception {
       this.totalPlayers = totalPlayers;
