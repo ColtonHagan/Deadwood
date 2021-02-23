@@ -131,28 +131,36 @@ class GameStateController extends DeadwoodController {
                     break;
 
                 case "Move":
-                    String roomName = concatenateArray(userInputArray, 1, userInputArray.length - 1);
-                    Room room = roomNameToRoom(roomName);
-                    if(room != null) {
-                        move(room);
+                    if (userInputArray.length > 1) {
+                        String roomName = concatenateArray(userInputArray, 1, userInputArray.length - 1);
+                        Room room = roomNameToRoom(roomName);
+                        if (room != null) {
+                            move(room);
+                        } else {
+                            getView().inputMoveInvalidRoom();
+                        }
                     } else {
-                        getView().inputMoveInvalidRoom();
+                        getView().inputError();
                     }
                     break;
 
                 case "Work":  //take role
-                    String roleName = concatenateArray(userInputArray, 1, userInputArray.length - 1);
-                    Role role = roleNameToRole(roleName);
-                    if(role != null) {
-                        addRole(role);
+                    if (userInputArray.length > 1) {
+                        String roleName = concatenateArray(userInputArray, 1, userInputArray.length - 1);
+                        Role role = roleNameToRole(roleName);
+                        if (role != null) {
+                            addRole(role);
+                        } else {
+                            getView().inputWorkInvalidRole();
+                        }
                     } else {
-                        getView().inputWorkInvalidRole();
+                        getView().inputError();
                     }
                     break;
 
                 case "Act":
                     act();
-                    if(gameModel.getCurrentPlayer().getCurrentRoom().getShotCounters() == 0) {
+                    if (gameModel.getCurrentPlayer().getCurrentRoom().getShotCounters() == 0) {
                         endRoom(gameModel.getCurrentPlayer().getCurrentRoom());
                     }
                     break;
@@ -161,13 +169,17 @@ class GameStateController extends DeadwoodController {
                     rehearse();
                     break;
 
-                case "Active player?":
-                    getView().printPlayerDetails(player.getName(), player.getMoney(), player.getCredits(), player.getRank(),
-                            player.getCurrentRole().getName(), player.getCurrentRole().getTagLine());
+                case "Active":
+                    if (userInputArray[1].equals("Player?")) {
+                        getView().printPlayerDetails(player.getName(), player.getMoney(), player.getCredits(), player.getRank(),
+                                player.getCurrentRole().getName(), player.getCurrentRole().getTagLine());
+                    } else {
+                        getView().inputError();
+                    }
                     break;
 
                 case "Where":
-                    if(player.getCurrentRole() == null) {
+                    if (player.getCurrentRole() == null) {
                         getView().playerLocation(player.getCurrentRoom().getName());
                     } else if (player.getCurrentRole().getExtra()) {
                         getView().playerLocationWithExtraRole(player.getCurrentRoom().getName(), player.getCurrentRole().getName());
@@ -179,7 +191,7 @@ class GameStateController extends DeadwoodController {
 
                 case "Locations":
                     for (PlayerModel currentPlayer : gameModel.getPlayers()) {
-                        if(currentPlayer == player) {
+                        if (currentPlayer == player) {
                             getView().printPlayerDetails(player.getName(), player.getMoney(), player.getCredits(), player.getRank(),
                                     player.getCurrentRole().getName(), player.getCurrentRole().getTagLine());
                         } else {
@@ -215,8 +227,8 @@ class GameStateController extends DeadwoodController {
     }
 
     public Room roomNameToRoom(String roomName) {
-        for(Room room : gameModel.getBoard().allRooms()) {
-            if(room.getName().equals(roomName)) {
+        for (Room room : gameModel.getBoard().allRooms()) {
+            if (room.getName().equals(roomName)) {
                 return room;
             }
         }
@@ -224,9 +236,9 @@ class GameStateController extends DeadwoodController {
     }
 
     public Role roleNameToRole(String roleName) {
-        for(Room room : gameModel.getBoard().allRooms()) {
-            for(Role role : room.availableRoles()) {
-                if(role.getName().equals(roleName)) {
+        for (Room room : gameModel.getBoard().allRooms()) {
+            for (Role role : room.availableRoles()) {
+                if (role.getName().equals(roleName)) {
                     return role;
                 }
             }
