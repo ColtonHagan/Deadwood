@@ -5,6 +5,7 @@ class PlayerModel {
    private int rank;
    private int practiceChips;
    private boolean moved;
+   private boolean worked;
    private boolean hasRole;
    private Room currentRoom;
    private Role role;
@@ -19,6 +20,8 @@ class PlayerModel {
       this.role = null;
       this.currentRoom = currentRoom;
       this.hasRole = false;
+      this.moved = false;
+      this.worked = false;
    }
    
    public int getMoney() {
@@ -60,6 +63,10 @@ class PlayerModel {
    public boolean getMoved() {
       return moved;
    }
+
+   public boolean getWorked(){
+      return worked;
+   }
    
    public int getRoleRank() {
       return role.getRank();
@@ -98,8 +105,13 @@ class PlayerModel {
    public void createOffice(int[][] upgrades) {
       office = new CastingOffice(upgrades);
    }
+
    public void updateMoved(boolean moved){
       this.moved = moved;
+   }
+
+   public void updateWorked(boolean worked){
+      this.worked = worked;
    }
    
 }

@@ -12,18 +12,18 @@ class DeadwoodController {
         this.system = system;
     }
 
+    public Systems getSystem() {
+        return system;
+    }
+
+    public DeadwoodView getView() {
+        return view;
+    }
+
     public void updateModel(PlayerModel model) {
         this.model = model;
         system.updateModel(model);
-    }
-    
-    public DeadwoodView getView() {
-      return view;
-    }
-
-    public void getCurrentRoom() {
-        view.printRoom(model.getCurrentRoom().getName());
-    }
+    }   
 
     public void updateMoney(int money) {
         model.updateMoney(money);
@@ -96,14 +96,12 @@ class DeadwoodController {
 
     public void addRole(Role role) {
         if (system.checkCanAddRole(role)) {
-            if (!model.getHasRole() && role.getUsedBy() == null && model.getRank() >= role.getRank() && (model.getCurrentRoom().getSceneCard().hasRole(role)) || (model.getCurrentRoom().hasRole(role))) {
-                model.takeRole(role);
-                role.setUsedBy(model);
-                model.getCurrentRoom().removeShotCounter();
-                view.showTakeRoleSuccess(role.getName());
-            } else {
-                view.showTakeRoleFail();
-            }
+            model.takeRole(role);
+            role.setUsedBy(model);
+            model.getCurrentRoom().removeShotCounter();
+            view.showTakeRoleSuccess(role.getName());
+            model.updateWorked(true);
+
         } else {
             view.printAddRoleError();
         }
@@ -121,18 +119,19 @@ class DeadwoodController {
             } else {
                 model.updatePracticeChips(model.getPracticeChips() + 1);
                 view.showRehearsalSuccess(model.getPracticeChips());
+                model.updateWorked(true);
             }
         } else {
             view.printRehearseError();
         }
     }
 
-    public void clearRehearse() {
-        model.updatePracticeChips(0);
-    }
-
     public void clearMoved() {
         model.updateMoved(false);
+    }
+
+    public void clearWorked() {
+        model.updateWorked(false);
     }
 
     private int rollDice() {
@@ -146,7 +145,6 @@ class DeadwoodController {
             if ((rollDice() + model.getPracticeChips()) >= budget) {
                 //If Actor succeeds in acting:
                 model.getCurrentRoom().removeShotCounter();
-
 
                 if (model.getCurrentRole().getExtra()) {
                     //Off card:
@@ -169,6 +167,7 @@ class DeadwoodController {
                     view.showActingFail(0, 0);
                 }
             }
+            model.updateWorked(true);
         } else {
             view.printActError();
         }

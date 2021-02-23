@@ -6,8 +6,11 @@ public class Deadwood {
       control.setUpGame();
       Room[] allRooms = control.getGameModel().getBoard().allRooms();
 
+
+
       control.updateView();
-      control.move(allRooms[4]);
+      control.move(allRooms[9]);
+
       control.getCurrentRoom();
 
       Role holden = allRooms[4].getSceneCard().getRoles()[0];
@@ -25,6 +28,8 @@ public class Deadwood {
       control.upgradeRankCredits(3);
       control.upgradeRankDollars(5);
 
+
+      control.endRoom(allRooms[4]);
       control.endTurn();
       control.endGame();
    }

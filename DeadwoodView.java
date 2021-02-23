@@ -72,11 +72,6 @@ class DeadwoodView {
         System.out.println("You have the role: " + roleName + "\n");
     }
 
-    public void showTakeRoleFail() {
-        System.out.println("Error: You were unable to take the role! \n");
-
-    }
-
     public void printUpgradeError() {
         System.out.println("Error: Cannot upgrade! You are not at the casting office! \n");
     }
@@ -86,11 +81,11 @@ class DeadwoodView {
     }
 
     public void printRehearseError() {
-        System.out.println("Error: Cannot rehearse! You do not currently have a role! \n");
+        System.out.println("Error: Cannot rehearse! Either you have already worked this turn or you do not currently have a role! \n");
     }
 
     public void printActError() {
-        System.out.println("Error: Cannot act! You do not currently have a role! \n");
+        System.out.println("Error: Cannot act! Either you have already worked this turn or you do not currently have a role! \n");
     }
 
     public void printAddRoleError() {
@@ -111,11 +106,11 @@ class DeadwoodView {
     }
     
     public void noBonusPayment() {
-        System.out.println("No player was on card, so no bonuses where given");
+        System.out.println("No player was on card, so no bonuses were given \n");
     }
 
     public void showEndTurn() {
-        System.out.println("Turn Ended, next player's turn.");
+        System.out.println("Turn Ended, next player's turn. \n");
     }
 
     public void showScore(String name, int score) {
