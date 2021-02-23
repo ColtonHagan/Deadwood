@@ -27,16 +27,13 @@ public class parseData {
             Node roleNode = roleList.item(j);
             String nodeName = roleNode.getNodeName();
             Element roleElement = (Element) roleNode;
-            //scene info
             if(nodeName.equals("scene")) {
                cardDescription = roleNode.getTextContent();
                sceneNumber = Integer.parseInt(roleElement.getAttribute("number"));
-            //if role create role
             } else {
                parseRole(roles, cardNode, roleElement, false);
             }
          }
-         //add sceneCard to libary
          int budget = Integer.parseInt(cardElement.getAttribute("budget"));
          String name = cardElement.getAttribute("name");
          Role[] roleArray = Arrays.copyOf(roles.toArray(), roles.toArray().length, Role[].class);
@@ -120,6 +117,7 @@ public class parseData {
                shotCounters = Integer.parseInt(roleElement.getAttribute("number"));
             } 
          }
+         //Creates a blank trailer/office room with no shotcounters/sceneCard
          if(roomNode.getNodeName().equals("trailer")) {
             name = "Trailer";
             i = rooms.length-2;
