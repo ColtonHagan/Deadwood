@@ -7,9 +7,7 @@ class Board {
    public Board() {
       //includes rooms of office and trailer with 0 shot counters
       rooms = new Room[12];
-      //totalRooms = 10;
-      //TESTING, CHANGE BACK FOR FINAL
-      totalRooms = 2;
+      totalRooms = 10;
       currentRooms = totalRooms;
    }
    
@@ -20,7 +18,8 @@ class Board {
       placeScenes(sceneLibray);
       currentRooms = totalRooms;
    }
-   
+
+   // Not used currently but will be used in gui
    public String[] adjacentRooms(Room currentRoom){
       return currentRoom.getAdjacentRooms();
    }
@@ -50,9 +49,5 @@ class Board {
    
    public int getCurrentRooms() {
       return currentRooms;
-   }
-
-   public void setCurrentRoom(int currentRooms) {
-      this.currentRooms = currentRooms;
    }
 }

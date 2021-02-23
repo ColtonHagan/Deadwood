@@ -14,10 +14,12 @@ public class Scenes {
       }
       return getRandomCard();
    }
+
    public void resetLibray() {
       for(SceneCard card : possibleScenes)
          card.setUse(false);
    }
+
    public void createScenes(parseData dataParser) throws Exception {
       dataParser.parseScenes(possibleScenes);
    }

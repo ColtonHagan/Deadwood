@@ -115,6 +115,7 @@ class DeadwoodView {
                 " you do not have enough rank for the role, there is no scene card on location, or the role exists in a different location! \n");
     }
 
+    // This will print all roles given and their name, rank requirement, and on or off card status
     public void printRoles(Role[] roles) {
         if(roles.length > 0) {
             for (Role r : roles) {
@@ -190,10 +191,6 @@ class DeadwoodView {
     public void inputWorkMissingInfo() {
         System.out.println("Please enter role to take");
         System.out.println("Example: \"Work Chef\" \n");
-    }
-
-    public void inputUpgradeWrongPaymentType() {
-        System.out.println("Please enter payment method (Credits or Dollars) \n");
     }
 
     public void inputMoveInvalidRoom() {

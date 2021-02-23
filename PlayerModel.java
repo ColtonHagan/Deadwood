@@ -72,6 +72,7 @@ class PlayerModel {
       return role.getRank();
    }
 
+
    public void updateMoney(int money) {
       this.money = money;
    }
@@ -117,5 +118,4 @@ class PlayerModel {
    public void updateHasRole(boolean hasRole) {
       this.hasRole = hasRole;
    }
-   
 }
