@@ -108,7 +108,6 @@ class GameStateController extends DeadwoodController {
     public void playGame() {
         int currentDays = 0;
         int totalDays = 4;
-        PlayerModel player = gameModel.getCurrentPlayer();
         getView().inputWelcome();
 
         while (currentDays <= totalDays) {
@@ -171,11 +170,11 @@ class GameStateController extends DeadwoodController {
 
                 case "Active":
                     if (userInputArray[1].equals("Player?")) {
-                        if (player.getHasRole()) {
-                                 getView().printPlayerDetails(player.getName(), player.getMoney(), player.getCredits(), player.getRank(),
-                                                              player.getCurrentRole().getName(), player.getCurrentRole().getTagLine());
+                        if (gameModel.getCurrentPlayer().getHasRole()) {
+                                 getView().printPlayerDetails(gameModel.getCurrentPlayer().getName(), gameModel.getCurrentPlayer().getMoney(), gameModel.getCurrentPlayer().getCredits(), gameModel.getCurrentPlayer().getRank(),
+                                         gameModel.getCurrentPlayer().getCurrentRole().getName(), gameModel.getCurrentPlayer().getCurrentRole().getTagLine());
                         } else {
-                                 getView().printPlayerDetailsNoRole(player.getName(), player.getMoney(), player.getCredits(), player.getRank());
+                                 getView().printPlayerDetailsNoRole(gameModel.getCurrentPlayer().getName(), gameModel.getCurrentPlayer().getMoney(), gameModel.getCurrentPlayer().getCredits(), gameModel.getCurrentPlayer().getRank());
                         }
                     } else {
                         getView().inputError();
@@ -183,27 +182,27 @@ class GameStateController extends DeadwoodController {
                     break;
 
                 case "Where":
-                    if (!player.getHasRole()) {
-                        getView().playerLocation(player.getCurrentRoom().getName());
-                    } else if (player.getCurrentRole().getExtra()) {
-                        getView().playerLocationWithExtraRole(player.getCurrentRoom().getName(), player.getCurrentRole().getName());
+                    if (!gameModel.getCurrentPlayer().getHasRole()) {
+                        getView().playerLocation(gameModel.getCurrentPlayer().getCurrentRoom().getName());
+                    } else if (gameModel.getCurrentPlayer().getCurrentRole().getExtra()) {
+                        getView().playerLocationWithExtraRole(gameModel.getCurrentPlayer().getCurrentRoom().getName(), gameModel.getCurrentPlayer().getCurrentRole().getName());
                     } else {
-                        getView().playerLocationWithOnCardRole(player.getCurrentRoom().getName(), player.getCurrentRole().getName(),
-                                player.getCurrentRoom().getSceneCard().getName());
+                        getView().playerLocationWithOnCardRole(gameModel.getCurrentPlayer().getCurrentRoom().getName(), gameModel.getCurrentPlayer().getCurrentRole().getName(),
+                                gameModel.getCurrentPlayer().getCurrentRoom().getSceneCard().getName());
                     }
                     break;
 
                 case "Locations":
                     for (PlayerModel currentPlayer : gameModel.getPlayers()) {
-                        if (currentPlayer == player) {
-                            if (player.getHasRole()) {
-                                 getView().printPlayerDetails(player.getName(), player.getMoney(), player.getCredits(), player.getRank(),
-                                                              player.getCurrentRole().getName(), player.getCurrentRole().getTagLine());
+                        if (currentPlayer == gameModel.getCurrentPlayer()) {
+                            if (gameModel.getCurrentPlayer().getHasRole()) {
+                                 getView().printPlayerDetails(gameModel.getCurrentPlayer().getName(), gameModel.getCurrentPlayer().getMoney(), gameModel.getCurrentPlayer().getCredits(), gameModel.getCurrentPlayer().getRank(),
+                                         gameModel.getCurrentPlayer().getCurrentRole().getName(), gameModel.getCurrentPlayer().getCurrentRole().getTagLine());
                             } else {
-                                 getView().printPlayerDetailsNoRole(player.getName(), player.getMoney(), player.getCredits(), player.getRank());
+                                 getView().printPlayerDetailsNoRole(gameModel.getCurrentPlayer().getName(), gameModel.getCurrentPlayer().getMoney(), gameModel.getCurrentPlayer().getCredits(), gameModel.getCurrentPlayer().getRank());
                             }
                         } else {
-                            if (player.getHasRole()) {
+                            if (gameModel.getCurrentPlayer().getHasRole()) {
                               getView().printInactivePlayerDetails(currentPlayer.getName(), currentPlayer.getMoney(), currentPlayer.getCredits(), currentPlayer.getRank(),
                                                                    currentPlayer.getCurrentRole().getName(), currentPlayer.getCurrentRole().getTagLine());
                             } else {    
