@@ -62,6 +62,7 @@ class GameStateController extends DeadwoodController {
         for (PlayerModel player : gameModel.getPlayers()) {
             if (player.getCurrentRoom() == currentRoom) {
                 player.removeRole();
+                player.updatePracticeChips(0);
             }
         }
     }
@@ -217,6 +218,10 @@ class GameStateController extends DeadwoodController {
                     }
                     break;
 
+                case "Roles":
+                    getView().printRoles(gameModel.getCurrentPlayer().getCurrentRoom().availableRoles());
+                    break;
+
                 case "End":
                     endTurn();
                     break;
@@ -267,6 +272,7 @@ class GameStateController extends DeadwoodController {
           endDay();
         } else {
            clearMoved();
+           clearWorked();
            if (gameModel.getCurrentPlayerInt() + 1 < gameModel.getTotalPlayers()) {
                gameModel.setCurrentPlayerInt(gameModel.getCurrentPlayerInt() + 1);
                updateModel(gameModel.getCurrentPlayer());
@@ -284,6 +290,8 @@ class GameStateController extends DeadwoodController {
             player.updateCurrentRoom(gameModel.getBoard().getTrailer());
             player.removeRole();
             player.updatePracticeChips(0);
+            clearWorked();
+            clearMoved();
         }
     }
 

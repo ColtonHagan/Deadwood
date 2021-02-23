@@ -94,16 +94,26 @@ class DeadwoodView {
     }
 
     public void printRehearseError() {
-        System.out.println("Error: Cannot rehearse! Either you have already acted or you do not currently have a role! \n");
+        System.out.println("Error: Cannot rehearse! Either you have already worked (Act, Rehearse, or just took role) or you do not currently have a role! \n");
     }
 
     public void printActError() {
-        System.out.println("Error: Cannot act! Either you have already acted or you do not currently have a role! \n");
+        System.out.println("Error: Cannot act! Either you have already worked (Act, Rehearse, or just took role) or you do not currently have a role! \n");
     }
 
     public void printAddRoleError() {
         System.out.println("Error: Cannot take role! This could be due to many reasons: You currently have a role, the role is already taken," +
                 " you do not have enough rank for the role, or the role does not exist! \n");
+    }
+
+    public void printRoles(Role[] roles) {
+        if(roles.length > 0) {
+            for (Role r : roles) {
+                System.out.println("Role " + r.getName() + " requiring a rank of " + r.getRank() + ". Off card: " + r.getExtra() + "\n");
+            }
+        } else {
+            System.out.print("There are no roles here! \n");
+        }
     }
 
     public void printPlayerCount(int count) {
@@ -134,12 +144,13 @@ class DeadwoodView {
         System.out.println("WINNER " + name + " with a score of " + score);
     }
 
+
     public void inputWelcome() {
         System.out.println("Welcome to Deadwood!");
     }
 
     public void inputChoose() {
-        System.out.println("Please input one of the following actions: Move, Upgrade, Work, Act, Rehearsing, Active player?, Where, Locations, or End");
+        System.out.println("Please input one of the following actions: Move, Roles, Upgrade, Work, Act, Rehearsing, Active player?, Where, Locations, or End");
     }
 
     public void inputUpgradeMissingInfo() {
