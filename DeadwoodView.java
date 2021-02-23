@@ -126,6 +126,14 @@ class DeadwoodView {
         System.out.println("WINNER " + name + " with a score of " + score);
     }
 
+    public void inputWelcome() {
+        System.out.println("Welcome to Deadwood!");
+    }
+
+    public void inputChoose() {
+        System.out.println("\nPlease input one of the following actions: Upgrade, Work, Act, Rehearsing, Active player?, Where, Locations, or End");
+    }
+
     public void inputUpgradeMissingInfo() {
         System.out.println("Please enter Credits or Dollars and target rank to upgrade to");
     }
@@ -144,6 +152,5 @@ class DeadwoodView {
 
     public void inputError() {
         System.out.println("User input not recognize");
-        System.out.println("Please input one of the following actions : Upgrade, Work, Act, Rehearsing, Active player?, Where, Locations, or End");
     }
 }

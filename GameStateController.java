@@ -109,9 +109,11 @@ class GameStateController extends DeadwoodController {
         int currentDays = 0;
         int totalDays = 4;
         PlayerModel player = gameModel.getCurrentPlayer();
-        while (currentDays <= totalDays) {
-            String[] userInputArray = getInput().split(" ");
+        getView().inputWelcome();
 
+        while (currentDays <= totalDays) {
+            getView().inputChoose();
+            String[] userInputArray = getInput().split(" ");
             switch (userInputArray[0]) {
                 case "Upgrade":
                     if (userInputArray.length == 3) {
