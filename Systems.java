@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 class Systems {
     private PlayerModel model;
 
@@ -16,12 +18,12 @@ class Systems {
 
     // Checking if player has a role
     public boolean checkCanRehearse() {
-        return (model.getHasRole());
+        return (model.getHasRole() && !model.getWorked());
     }
 
     // Checking if player has a role
     public boolean checkCanAct() {
-        return (model.getHasRole());
+        return (model.getHasRole() && !model.getWorked());
     }
 
     /* Checking if
@@ -37,5 +39,9 @@ class Systems {
     // Checking if player is in office
     public boolean checkCanUpgrade() {
         return (model.getCurrentRoom().getName().equals("office"));
+    }
+
+    public boolean checkCanBonus(ArrayList<PlayerModel> playersOnCard) {
+        return (playersOnCard.size() != 0);
     }
 }
