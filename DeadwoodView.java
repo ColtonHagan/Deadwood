@@ -9,12 +9,20 @@ class DeadwoodView {
         System.out.print("The active player is " + name + ". They have $" + money + ", " + credits + " credits and is rank " + rank);
         System.out.print(" they are currently working " + roleName + " \"" + tagLine + "\"\n");
     }
+    
+    public void printPlayerDetailsNoRole(String name, int money, int credits, int rank) {
+        System.out.print("The active player is " + name + ". They have $" + money + ", " + credits + " credits and is rank " + rank);
+    }
 
     public void printInactivePlayerDetails(String name, int money, int credits, int rank, String roleName, String tagLine) {
         System.out.print(name + ". has $" + money + ", " + credits + " credits and is rank " + rank);
         System.out.print(" they are currently working " + roleName + " \"" + tagLine + "\"\n");
     }
 
+    public void printInactivePlayerDetailsNoRole(String name, int money, int credits, int rank) {
+        System.out.print(name + ". has $" + money + ", " + credits + " credits and is rank " + rank);
+    }
+    
     public void playerLocationWithExtraRole(String roomName, String roleName) {
         System.out.println("in " + roomName + " shooting " + roleName);
     }
