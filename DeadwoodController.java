@@ -5,12 +5,11 @@ class DeadwoodController {
     private DeadwoodView view;
     private Systems system;
 
-    public DeadwoodController(PlayerModel model) {
-        this.model = model;
+    public DeadwoodController() {
         view = new DeadwoodView();
+        view.addListener(this);
         Systems system = new Systems(model);
         this.system = system;
-        view.addListener(this);
     }
 
     public void updateModel(PlayerModel model) {
