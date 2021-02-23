@@ -6,8 +6,8 @@ class DeadwoodView {
     }
 
     public void printPlayerDetails(String name, int money, int credits, int rank, String roleName, String tagLine) {
-        System.out.println("The active player is " + name + ". They have $" + money + ", " + credits + " credits and have rank " + rank);
-        System.out.println(" they are currently working " + roleName + " \"" + tagLine + "\"\n");
+        System.out.print("The active player is " + name + ". They have $" + money + ", " + credits + " credits and have rank " + rank);
+        System.out.print(" they are currently working " + roleName + " \"" + tagLine + "\"\n");
     }
     
     public void printPlayerDetailsNoRole(String name, int money, int credits, int rank) {
@@ -15,8 +15,8 @@ class DeadwoodView {
     }
 
     public void printInactivePlayerDetails(String name, int money, int credits, int rank, String roleName, String tagLine) {
-        System.out.println("Player " + name + " has $" + money + ", " + credits + " credits and have rank " + rank);
-        System.out.println(" they are currently working " + roleName + " \"" + tagLine + "\"\n");
+        System.out.print("Player " + name + " has $" + money + ", " + credits + " credits and have rank " + rank);
+        System.out.print(" they are currently working " + roleName + " \"" + tagLine + "\"\n");
     }
 
     public void printInactivePlayerDetailsNoRole(String name, int money, int credits, int rank) {
