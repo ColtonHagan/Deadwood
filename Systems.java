@@ -16,12 +16,12 @@ class Systems {
 
     // Checking if player has a role
     public boolean checkCanRehearse() {
-        return (model.getHasRole() && !model.getWorked());
+        return (model.getHasRole() && model.getWorked());
     }
 
     // Checking if player has a role
     public boolean checkCanAct() {
-        return (model.getHasRole() && !model.getWorked());
+        return (model.getHasRole() && model.getWorked());
     }
 
     /* Checking if

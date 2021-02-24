@@ -3,7 +3,7 @@ import java.util.*;
 class GameStateController extends DeadwoodController {
     private final GameState gameModel;
 
-    public GameStateController(int totalPlayers) throws Exception {
+    public GameStateController(int totalPlayers) {
         this.gameModel = new GameState(totalPlayers);
     }
 
@@ -13,6 +13,7 @@ class GameStateController extends DeadwoodController {
         int credits = 0;
         int days = 4;
 
+        // Picking totalPlayers to set up game for from args.
         if (gameModel.getTotalPlayers() == 2 || gameModel.getTotalPlayers() == 3) {
             days = 3;
         } else if (gameModel.getTotalPlayers() == 5) {
@@ -29,12 +30,13 @@ class GameStateController extends DeadwoodController {
         getView().printPlayerCount(gameModel.getTotalPlayers());
         gameModel.setTotalDays(days);
 
+        // Setting up board from XML
         parseData dataParser = new parseData();
         gameModel.getSceneLibrary().createScenes(dataParser);
         gameModel.getBoard().createBoard(dataParser, gameModel.getSceneLibrary());
 
+        // Creating players with preset names, variable stats based on above totalPlayers
         String[] namesList = {"Blue", "Cyan", "Green", "Orange", "Pink", "Red", "Violet", "Yellow"};
-
         PlayerModel[] players = new PlayerModel[gameModel.getTotalPlayers()];
         for (int i = 0; i < gameModel.getTotalPlayers(); i++) {
             String name = namesList[i];
@@ -44,17 +46,19 @@ class GameStateController extends DeadwoodController {
         gameModel.setAllPlayers(players);
         updateModel(gameModel.getCurrentPlayer());
         createOffice(dataParser);
+
         playGame();
     }
 
+    // Used when shot counter hits zero, for SceneCard ending
     public void endRoom(Room currentRoom) {
         getView().printSceneEnd();
         bonusPayment(currentRoom);
         currentRoom.setScene(null);
         gameModel.getBoard().removeRoom();
-
         gameModel.getCurrentPlayer().getCurrentRoom().clearExtras();
 
+        // Resetting all players on location so they can take a new role.
         for (PlayerModel player : gameModel.getPlayers()) {
             if (player.getCurrentRoom() == currentRoom) {
                 player.removeRole();
@@ -70,6 +74,7 @@ class GameStateController extends DeadwoodController {
         ArrayList<PlayerModel> playersOnCard = new ArrayList<>();
         ArrayList<PlayerModel> playersOffCard = new ArrayList<>();
 
+        // Defines which players are on and off card
         for (Role currentRole : allRoles) {
             if (currentRole.getUsedBy() != null) {
                 if (!currentRole.getExtra()) {
@@ -80,6 +85,7 @@ class GameStateController extends DeadwoodController {
             }
         }
 
+        // Ensures there is a player on card, if not no bonus payment
         if (playersOnCard.size() != 0) {
             Random rand = new Random();
             int bonus;
@@ -105,9 +111,11 @@ class GameStateController extends DeadwoodController {
         }
     }
 
+
     public void playGame() throws Exception {
         getView().inputWelcome();
 
+        // Plays the game until current day reaches totalDays
         while (gameModel.getCurrentDay() <= gameModel.getTotalDays()) {
             getView().inputChoose();
             String[] userInputArray = getInput().split(" ");
@@ -239,6 +247,7 @@ class GameStateController extends DeadwoodController {
         return in.nextLine();
     }
 
+
     public String concatenateArray(String[] array, int startIndex, int endIndex) {
         String combined = array[startIndex];
         for (int i = startIndex + 1; i <= endIndex; i++) {
@@ -247,6 +256,7 @@ class GameStateController extends DeadwoodController {
         return combined;
     }
 
+    // For finding the specific Room from its roomName (given from user input in console)
     public Room roomNameToRoom(String roomName) {
         for (Room room : gameModel.getBoard().allRooms()) {
             if (room.getName().equals(roomName)) {
@@ -256,6 +266,7 @@ class GameStateController extends DeadwoodController {
         return null;
     }
 
+    // For finding the specific Role from its roleName (given from user input in console)
     public Role roleNameToRole(String roleName) {
         for (Room room : gameModel.getBoard().allRooms()) {
             for (Role role : room.availableRoles()) {
@@ -270,6 +281,7 @@ class GameStateController extends DeadwoodController {
     public void endTurn() {
       clearMoved();
       clearWorked();
+      // Sets the player of the next turn to the next player
       if (gameModel.getCurrentPlayerInt() + 1 < gameModel.getTotalPlayers()) {
          gameModel.setCurrentPlayerInt(gameModel.getCurrentPlayerInt() + 1);
          updateModel(gameModel.getCurrentPlayer());
@@ -278,15 +290,20 @@ class GameStateController extends DeadwoodController {
          updateModel(gameModel.getCurrentPlayer());
       }
       getView().showEndTurn(gameModel.getCurrentPlayer().getName());
+
+      // Checks if this is the last Scenecard on board, ends day if true;
       if (gameModel.getBoard().getCurrentRooms() == 1) {
             endDay();
       }
     }
 
-    public void endDay() {;
+    public void endDay() {
+        // Check if not last day
         if(gameModel.getCurrentDay() < gameModel.getTotalDays()) {
             gameModel.getBoard().resetBoard(gameModel.getSceneLibrary());
         }
+
+        // Resets all players for next day and moves them to trailers
         for (PlayerModel player : gameModel.getPlayers()) {
             player.updateCurrentRoom(gameModel.getBoard().getTrailer());
             player.removeRole();
@@ -300,12 +317,13 @@ class GameStateController extends DeadwoodController {
 
     public void endGame() throws Exception {
         getView().showEndGame();
-
         int tieAmount = 1;
         int score;
         int highestScore = 0;
         String player;
         String[] winningPlayers = new String[gameModel.getTotalPlayers()];
+
+        // Logic to find the winning player, can also be a tie
         for (int i = 0; i < gameModel.getTotalPlayers(); i++) {
             PlayerModel currentPlayer = gameModel.getExactPlayer(i);
             score = currentPlayer.getRank() * 5 + currentPlayer.getCredits() + currentPlayer.getMoney();
@@ -321,6 +339,7 @@ class GameStateController extends DeadwoodController {
             }
         }
 
+        // Checks if there was a tie, print multiple winners for tie and single for no tie
         if(tieAmount > 1) {
             getView().printTie();
             for (String s : winningPlayers) {
@@ -329,7 +348,8 @@ class GameStateController extends DeadwoodController {
         } else {
             getView().showWinner(winningPlayers[0], highestScore);
         }
-
+        
+        // Asks to restart the game
         getView().promptRestart();
         String userInput = getInput();
         if(userInput.equals("Yes")) setUpGame();

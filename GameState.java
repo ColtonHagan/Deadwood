@@ -1,72 +1,74 @@
 class GameState {
-   private int currentDay;
-   private int totalDays;
-   private int currentPlayer;
-   private int totalPlayers;
-   private PlayerModel[] players;
-   private Scenes sceneLibray = new Scenes();
-   private Board board = new Board();
-   
-   public GameState (int totalPlayers) throws Exception {
-      this.totalPlayers = totalPlayers;
-      this.currentDay = 1;
-      this.currentPlayer = 0;
-   }
+    private int currentDay;
+    private int totalDays;
+    private int currentPlayer;
+    private final int totalPlayers;
+    private PlayerModel[] players;
+    private final Scenes sceneLibray = new Scenes();
+    private Board board = new Board();
 
-   // Getters
-   public int getCurrentDay() {
-      return currentDay;
-   }
-   
-   public int getTotalPlayers() {
-      return totalPlayers;
-   }
+    public GameState(int totalPlayers) {
+        this.totalPlayers = totalPlayers;
+        this.currentDay = 1;
+        this.currentPlayer = 0;
+    }
 
-   public int getCurrentPlayerInt() {
-      return currentPlayer;
-   }
+    // Getters
+    public int getCurrentDay() {
+        return currentDay;
+    }
 
-   public PlayerModel getCurrentPlayer() {
-      return players[currentPlayer];
-   }
+    public int getTotalPlayers() {
+        return totalPlayers;
+    }
 
-   public PlayerModel getExactPlayer(int i) {
-      return players[i];
-   }
+    public int getCurrentPlayerInt() {
+        return currentPlayer;
+    }
 
-   public int getTotalDays(){
-      return totalDays;
-   }
+    public PlayerModel getCurrentPlayer() {
+        return players[currentPlayer];
+    }
 
-   public Scenes getSceneLibrary() {
-      return sceneLibray;
-   }
-   public Board getBoard() {
-      return board;
-   }
-   public PlayerModel[] getPlayers() {
-      return players;
-   }
+    public PlayerModel getExactPlayer(int i) {
+        return players[i];
+    }
 
-   // Setters and Modifiers
-   public void setCurrentDay(int currentDay){
-      this.currentDay = currentDay;
-   }
+    public int getTotalDays() {
+        return totalDays;
+    }
 
-   public void setTotalDays(int totalDays) {
-      this.totalDays = totalDays;
-   }
+    public Scenes getSceneLibrary() {
+        return sceneLibray;
+    }
 
-   public void setCurrentPlayerInt(int currentPlayer) {
-      this.currentPlayer = currentPlayer;
-   }
+    public Board getBoard() {
+        return board;
+    }
 
-   public void setAllPlayers(PlayerModel[] players) {
-      this.players = players;
-   }
+    public PlayerModel[] getPlayers() {
+        return players;
+    }
 
-   public void setBoard(Board board){
-      this.board = board;
-   }
+    // Setters and Modifiers
+    public void setCurrentDay(int currentDay) {
+        this.currentDay = currentDay;
+    }
+
+    public void setTotalDays(int totalDays) {
+        this.totalDays = totalDays;
+    }
+
+    public void setCurrentPlayerInt(int currentPlayer) {
+        this.currentPlayer = currentPlayer;
+    }
+
+    public void setAllPlayers(PlayerModel[] players) {
+        this.players = players;
+    }
+
+    public void setBoard(Board board) {
+        this.board = board;
+    }
 
 }

@@ -37,11 +37,6 @@ class Board {
         currentRooms = totalRooms;
     }
 
-    // Not used currently but will be used in gui
-    public String[] adjacentRooms(Room currentRoom) {
-        return currentRoom.getAdjacentRooms();
-    }
-
     // Creates the baord from parsed data
     public void createBoard(parseData dataParser, Scenes sceneLibray) throws Exception {
         dataParser.parseBoard(rooms);

@@ -5,6 +5,7 @@ class DeadwoodView {
         this.controller = controller;
     }
 
+    // General info on players here
     public void printPlayerDetails(String name, int money, int credits, int rank, String roleName, String tagLine) {
         System.out.print("The active player is " + name + ". They have $" + money + ", " + credits + " credits and has rank " + rank);
         System.out.println(" they are currently working " + roleName + " \"" + tagLine + "\"\n");
@@ -42,6 +43,7 @@ class DeadwoodView {
         System.out.println(playerName + " is in " + roomName + "\n");
     }
 
+    // Logical prints for acting, rehearsing, upgrading, taking role, and moving
     public void showUpgradeSuccess(int rank, int oldRank) {
         System.out.println("You have succeeded in upgrading!");
         System.out.println("You have upgraded from " + oldRank + " to " + rank + "\n");
@@ -94,6 +96,7 @@ class DeadwoodView {
 
     }
 
+    // Errors for when player does something illegal that System catches
     public void printUpgradeError() {
         System.out.println("Error: Cannot upgrade! You are not at the casting office! \n");
     }
@@ -115,18 +118,7 @@ class DeadwoodView {
                 " you do not have enough rank for the role, there is no scene card on location, or the role exists in a different location! \n");
     }
 
-    // This will print all roles given and their name, rank requirement, and on or off card status
-    public void printRoles(Role[] roles) {
-        if(roles.length > 0) {
-            for (Role r : roles) {
-                System.out.println("Role \"" + r.getName() + "\" requiring a rank of " + r.getRank() + ". Off card: " + r.getExtra());
-            }
-            System.out.println();
-        } else {
-            System.out.println("There are no roles here! \n");
-        }
-    }
-
+    // General player information
     public void printPlayerCount(int count) {
         System.out.println("Amount of players: " + count + "\n");
     }
@@ -135,6 +127,7 @@ class DeadwoodView {
         System.out.println("This game is not playable with the given number of players!");
     }
 
+    // General game info prints
     public void printSceneEnd() {
         System.out.println("The Scene has ended");
     }
@@ -146,7 +139,7 @@ class DeadwoodView {
 
     public void promptRestart(){
         System.out.println("Would you like to restart the game?");
-        System.out.print("Enter \'Yes\' to restart, anything else to end the game: ");
+        System.out.print("Enter 'Yes' to restart, anything else to end the game: ");
     }
 
     public void showWinnerTie(String name, int score) {
@@ -183,7 +176,7 @@ class DeadwoodView {
         System.out.println("WINNER " + name + " with a score of " + score);
     }
 
-
+    // General input
     public void inputWelcome() {
         System.out.println("Welcome to Deadwood!");
     }
@@ -217,5 +210,17 @@ class DeadwoodView {
 
     public void inputError() {
         System.out.println("User input not recognize \n");
+    }
+
+    // This will print all roles given and their name, rank requirement, and on or off card status
+    public void printRoles(Role[] roles) {
+        if(roles.length > 0) {
+            for (Role r : roles) {
+                System.out.println("Role \"" + r.getName() + "\" requiring a rank of " + r.getRank() + ". Off card: " + r.getExtra());
+            }
+            System.out.println();
+        } else {
+            System.out.println("There are no roles here! \n");
+        }
     }
 }
