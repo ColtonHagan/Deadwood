@@ -298,10 +298,12 @@ class GameStateController extends DeadwoodController {
 
     public void endGame() {
         getView().showEndGame();
+
+        int tieAmount = 1;
         int score;
         int highestScore = 0;
         String player;
-        String winningPlayer = "";
+        String[] winningPlayers = new String[gameModel.getTotalPlayers()];
         for (int i = 0; i < gameModel.getTotalPlayers(); i++) {
             PlayerModel currentPlayer = gameModel.getExactPlayer(i);
             score = currentPlayer.getRank() * 5 + currentPlayer.getCredits() + currentPlayer.getMoney();
@@ -309,9 +311,21 @@ class GameStateController extends DeadwoodController {
             getView().showScore(player, score);
             if (score > highestScore) {
                 highestScore = score;
-                winningPlayer = player;
+                winningPlayers[0] = player;
+                tieAmount = 1;
+            } else if (score == highestScore) {
+                winningPlayers[tieAmount] = player;
+                tieAmount += 1;
             }
         }
-        getView().showWinner(winningPlayer, highestScore);
+
+        if(tieAmount > 1) {
+            getView().printTie();
+            for (String s : winningPlayers) {
+                getView().showWinnerTie(s, highestScore);
+            }
+        } else {
+            getView().showWinner(winningPlayers[0], highestScore);
+        }
     }
 }
