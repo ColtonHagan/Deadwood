@@ -37,7 +37,7 @@ class GameStateController extends DeadwoodController {
         gameModel.setTotalDays(days);
 
         // Setting up board from XML
-        parseData dataParser = new parseData();
+        ParseData dataParser = new ParseData();
         gameModel.getSceneLibrary().createScenes(dataParser);
         gameModel.getBoard().createBoard(dataParser, gameModel.getSceneLibrary());
 

@@ -32,7 +32,7 @@ public class Scenes {
     }
 
     // Creates all Scenecards from parsed data from XML
-    public void createScenes(parseData dataParser) throws Exception {
+    public void createScenes(ParseData dataParser) throws Exception {
         dataParser.parseScenes(possibleScenes);
     }
 }

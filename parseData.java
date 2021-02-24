@@ -15,7 +15,7 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public class parseData {
+public class ParseData {
 
     //Creates given array of all Scenes with SceneCards from xml files
     public void parseScenes(SceneCard[] possibleScenes) throws Exception {

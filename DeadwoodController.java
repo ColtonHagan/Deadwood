@@ -48,7 +48,7 @@ class DeadwoodController {
         model.updateCredits(credits);
     }
 
-    public void createOffice(parseData dataParser) throws Exception {
+    public void createOffice(ParseData dataParser) throws Exception {
         model.createOffice(dataParser.parseOffice());
     }
 

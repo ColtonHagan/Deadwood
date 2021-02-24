@@ -44,7 +44,7 @@ class Board {
     }
 
     // Creates the baord from parsed data
-    public void createBoard(parseData dataParser, Scenes sceneLibray) throws Exception {
+    public void createBoard(ParseData dataParser, Scenes sceneLibray) throws Exception {
         dataParser.parseBoard(rooms);
         placeScenes(sceneLibray);
     }
