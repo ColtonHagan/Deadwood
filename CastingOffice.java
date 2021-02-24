@@ -1,3 +1,9 @@
+/*
+Name : Colton Hagan and Steven Le
+Class : CS 345
+Date : 2/23/21
+Program Description : Contains and manages upgrade possibilities
+*/
 public class CastingOffice {
     private int[][] possibleUpgrades;
 

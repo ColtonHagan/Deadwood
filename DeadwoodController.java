@@ -1,3 +1,9 @@
+/*
+Name : Colton Hagan and Steven Le
+Class : CS 345
+Date : 2/23/21
+Program Description : Controls player actions and updates view appropriately
+*/
 import java.util.Random;
 
 class DeadwoodController {

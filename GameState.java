@@ -1,3 +1,9 @@
+/*
+Name : Colton Hagan and Steven Le
+Class : CS 345
+Date : 2/23/21
+Program Description : Contains information about current gamestate
+*/
 class GameState {
    private int currentDay;
    private int totalDays;

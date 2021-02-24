@@ -1,4 +1,9 @@
-//Note most of the functions in this should be combined into several smaller functions, with one controller
+/*
+Name : Colton Hagan and Steven Le
+Class : CS 345
+Date : 2/23/21
+Program Description : Parses data from xml file into a workable form
+*/
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;

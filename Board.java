@@ -1,3 +1,9 @@
+/*
+Name : Colton Hagan and Steven Le
+Class : CS 345
+Date : 2/23/21
+Program Description : Contains/manages information about the deadwood GameBoard and all that is contained within
+*/
 class Board {
    private Room[] rooms;
    private int totalRooms;

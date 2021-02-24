@@ -1,3 +1,9 @@
+/*
+Name : Colton Hagan and Steven Le
+Class : CS 345
+Date : 2/23/21
+Program Description : Contains/manages information about a single room and all that is contained within
+*/
 public class Room {
    private int totalShotCounters;
    private int currentShotCounters;

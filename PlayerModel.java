@@ -1,3 +1,9 @@
+/*
+Name : Colton Hagan and Steven Le
+Class : CS 345
+Date : 2/23/21
+Program Description : Contains information about a single player
+*/
 class PlayerModel {
    private String name;
    private int money;

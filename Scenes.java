@@ -1,3 +1,9 @@
+/*
+Name : Colton Hagan and Steven Le
+Class : CS 345
+Date : 2/23/21
+Program Description : Contains/manages all possible sceneCards in the game
+*/
 import java.util.Random;
 public class Scenes {
    private SceneCard[] possibleScenes;

@@ -1,3 +1,9 @@
+/*
+Name : Colton Hagan and Steven Le
+Class : CS 345
+Date : 2/23/21
+Program Description : Prints statements about the game
+*/
 class DeadwoodView {
     DeadwoodController controller;
 

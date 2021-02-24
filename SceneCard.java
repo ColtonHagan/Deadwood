@@ -1,3 +1,9 @@
+/*
+Name : Colton Hagan and Steven Le
+Class : CS 345
+Date : 2/23/21
+Program Description : Contains information about a single sceneCard
+*/
 public class SceneCard {
    private int budget;
    private String name;
