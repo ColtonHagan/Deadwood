@@ -5,124 +5,124 @@ Date : 2/23/21
 Program Description : Contains information about a single player
 */
 class PlayerModel {
-   private String name;
-   private int money;
-   private int credits;
-   private int rank;
-   private int practiceChips;
-   private boolean moved;
-   private boolean worked;
-   private boolean hasRole;
-   private Room currentRoom;
-   private Role role;
-   private CastingOffice office;
+    private final String name;
+    private int money;
+    private int credits;
+    private int rank;
+    private int practiceChips;
+    private boolean moved;
+    private boolean worked;
+    private boolean hasRole;
+    private Room currentRoom;
+    private Role role;
+    private CastingOffice office;
 
 
-   public PlayerModel(String name, int money, int credits, int rank, Room currentRoom) {
-      this.name = name;
-      this.money = money;
-      this.credits = credits;
-      this.rank = rank;
-      this.role = null;
-      this.currentRoom = currentRoom;
-      this.hasRole = false;
-      this.moved = false;
-      this.worked = false;
-   }
+    public PlayerModel(String name, int money, int credits, int rank, Room currentRoom) {
+        this.name = name;
+        this.money = money;
+        this.credits = credits;
+        this.rank = rank;
+        this.role = null;
+        this.currentRoom = currentRoom;
+        this.hasRole = false;
+        this.moved = false;
+        this.worked = false;
+    }
 
-   // Getters
-   public int getMoney() {
-      return money;
-   }
-   
-   public int getCredits() {
-      return credits;
-   }
-   
-   public CastingOffice getOffice() {
-      return office;
-   }
-   
-   public int getRank() {
-      return rank;
-   }
-   
-   public int getPracticeChips() {
-      return practiceChips;
-   }
-   
-   public Room getCurrentRoom() {
-      return currentRoom;
-   }
+    // Getters
+    public int getMoney() {
+        return money;
+    }
 
-   public Role getCurrentRole() {
-      return role;
-   }
+    public int getCredits() {
+        return credits;
+    }
 
-   public boolean getHasRole(){
-      return hasRole;
-   }
-   
-   public String getName() {
-      return name;
-   }
+    public CastingOffice getOffice() {
+        return office;
+    }
 
-   public boolean getMoved() {
-      return moved;
-   }
+    public int getRank() {
+        return rank;
+    }
 
-   public boolean getWorked(){
-      return worked;
-   }
-   
-   public int getRoleRank() {
-      return role.getRank();
-   }
+    public int getPracticeChips() {
+        return practiceChips;
+    }
 
-   // Setters and Modifiers
-   public void updateMoney(int money) {
-      this.money = money;
-   }
+    public Room getCurrentRoom() {
+        return currentRoom;
+    }
 
-   public void updateCredits(int credits) {
-      this.credits = credits;
-   }
+    public Role getCurrentRole() {
+        return role;
+    }
 
-   public void updateRank(int rank) {
-      this.rank = rank;
-   }
+    public boolean getHasRole() {
+        return hasRole;
+    }
 
-   public void updateMoved(boolean moved){
-      this.moved = moved;
-   }
+    public String getName() {
+        return name;
+    }
 
-   public void updateWorked(boolean worked){
-      this.worked = worked;
-   }
+    public boolean getMoved() {
+        return moved;
+    }
 
-   public void updateHasRole(boolean hasRole) {
-      this.hasRole = hasRole;
-   }
+    public boolean getWorked() {
+        return !worked;
+    }
 
-   public void updatePracticeChips(int practiceChips) {
-      this.practiceChips = practiceChips;
-   }
+    public int getRoleRank() {
+        return role.getRank();
+    }
 
-   public void updateCurrentRoom(Room currentRoom) {
-      this.currentRoom = currentRoom;
-   }
+    // Setters and Modifiers
+    public void updateMoney(int money) {
+        this.money = money;
+    }
 
-   public void takeRole(Role role) {
-      this.role = role;
-      this.hasRole = true;
-   }
+    public void updateCredits(int credits) {
+        this.credits = credits;
+    }
 
-   public void removeRole() {
-      this.role = null;
-      this.hasRole = false;
-   }
-   
-   public void createOffice(int[][] upgrades) {
-      office = new CastingOffice(upgrades);
-   }
+    public void updateRank(int rank) {
+        this.rank = rank;
+    }
+
+    public void updateMoved(boolean moved) {
+        this.moved = moved;
+    }
+
+    public void updateWorked(boolean worked) {
+        this.worked = worked;
+    }
+
+    public void updateHasRole(boolean hasRole) {
+        this.hasRole = hasRole;
+    }
+
+    public void updatePracticeChips(int practiceChips) {
+        this.practiceChips = practiceChips;
+    }
+
+    public void updateCurrentRoom(Room currentRoom) {
+        this.currentRoom = currentRoom;
+    }
+
+    public void takeRole(Role role) {
+        this.role = role;
+        this.hasRole = true;
+    }
+
+    public void removeRole() {
+        this.role = null;
+        this.hasRole = false;
+    }
+
+    public void createOffice(int[][] upgrades) {
+        office = new CastingOffice(upgrades);
+    }
 }

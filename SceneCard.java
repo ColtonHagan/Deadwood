@@ -5,57 +5,67 @@ Date : 2/23/21
 Program Description : Contains information about a single sceneCard
 */
 public class SceneCard {
-   private int budget;
-   private String name;
-   private String description;
-   private Role[] roles;
-   private boolean inUse = false; //if the card has been played on the board or not
-   private boolean flipped = false;
-   private int sceneNumber;
-   
-   public SceneCard (String name, String description, int budget, int sceneNumber, Role[] roles) {
-      this.name = name;
-      this.description = description;
-      this.budget = budget;
-      this.roles = roles;
-      this.sceneNumber = sceneNumber;
-   }
-   
-   public boolean playerOn() {
-      return true;
-   }
+    private final int budget;
+    private final int sceneNumber;
+    private boolean inUse = false; //if the card has been played on the board or not
+    private boolean flipped = false;
+    private final String name;
+    private final String description; // To be used in gui
+    private final Role[] roles;
 
-   public boolean hasRole(Role role) {
-      for(Role r : roles){
-         if(r.equals(role)){
-            return true;
-         }
-      }
-      return false;
-   }
+    public SceneCard(String name, String description, int budget, int sceneNumber, Role[] roles) {
+        this.name = name;
+        this.description = description;
+        this.budget = budget;
+        this.roles = roles;
+        this.sceneNumber = sceneNumber;
+    }
 
-   public int getBudget () {
-      return budget;
-   }
-   public Role[] getRoles () {
-      return roles;
-   }
-   public String getName () {
-      return name;
-   }
-   public int getSceneNumber() {
-      return sceneNumber;
-   }
-   public void setUse(boolean use) {
-      inUse = use;
-   }
-   public boolean getUse() {
-      return inUse;
-   }
-   public boolean getFlip() {
-      return flipped;
-   }
-   public void setFlip(boolean flip) {
-      flipped = flip;
-   }
+    // Getters
+    public int getBudget() {
+        return budget;
+    }
+
+    public Role[] getRoles() {
+        return roles;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public int getSceneNumber() {
+        return sceneNumber;
+    }
+
+    public boolean getUse() {
+        return inUse;
+    }
+
+    public boolean getFlip() {
+        return flipped;
+    }
+
+    // Setters and modifiers
+    public void setUse(boolean use) {
+        inUse = use;
+    }
+
+    public void setFlip(boolean flip) {
+        flipped = flip;
+    }
+
+    public boolean playerOn() {
+        return true;
+    }
+
+    // Checks if the role exists on this scenecard
+    public boolean hasRole(Role role) {
+        for (Role r : roles) {
+            if (r.equals(role)) {
+                return true;
+            }
+        }
+        return false;
+    }
 }

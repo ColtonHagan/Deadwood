@@ -8,14 +8,13 @@ import java.util.Random;
 
 class DeadwoodController {
     private PlayerModel model;
-    private DeadwoodView view;
-    private Systems system;
+    private final DeadwoodView view;
+    private final Systems system;
 
     public DeadwoodController() {
         view = new DeadwoodView();
         view.addListener(this);
-        Systems system = new Systems(model);
-        this.system = system;
+        this.system = new Systems(model);
     }
 
     // Getters
@@ -55,10 +54,15 @@ class DeadwoodController {
 
     // Important player action classes: Covers upgrading rank, moving, roles, acting, and rehearsing
     public void upgradeRankCredits(int targetUpgrade) {
+        // System check to ensure upgrade is legal (Must be in office)
         if (system.checkCanUpgrade()) {
             CastingOffice office = model.getOffice();
+
+            // Ensuring the rank up logic is legal (Can't upgrade to rank 7 or rank down)
             if (system.rankPossible(model.getRank(), targetUpgrade)) {
                 int cost = office.costCredits(targetUpgrade);
+
+                // Checking that there is enough credits to rank up
                 if (model.getCredits() >= cost) {
                     view.showUpgradeSuccess(targetUpgrade, model.getRank());
                     model.updateRank(targetUpgrade);
@@ -75,10 +79,15 @@ class DeadwoodController {
     }
 
     public void upgradeRankDollars(int targetUpgrade) {
+        // System check to ensure upgrade is legal (Must be in office)
         if (system.checkCanUpgrade()) {
             CastingOffice office = model.getOffice();
+
+            // Ensuring the rank up logic is legal (Can't upgrade to rank 7 or rank down)
             if (system.rankPossible(model.getRank(), targetUpgrade)) {
                 int cost = office.costDollars(targetUpgrade);
+
+                // Checking that there is enough cash to rank up
                 if (model.getMoney() >= cost) {
                     model.updateRank(targetUpgrade);
                     updateMoney(model.getMoney() - cost);
@@ -93,9 +102,12 @@ class DeadwoodController {
     }
 
     public void move(Room room) {
+        // System check to ensure move is legal
         if (system.checkCanMove()) {
             boolean checkMoved = false;
             String roomName = room.getName();
+
+            // Checking that room is adjacent to at least one of the rooms, then move if true
             for (String s : model.getCurrentRoom().getAdjacentRooms()) {
                 if (roomName.equals(s)) {
                     model.updateCurrentRoom(room);
@@ -104,10 +116,11 @@ class DeadwoodController {
                 }
             }
 
+            // Flipping scene card if the player moved and it was unflipped, printing results via view
             if (checkMoved) {
                 model.updateMoved(true);
-                if(!(model.getCurrentRoom().getSceneCard() == null))
-                model.getCurrentRoom().getSceneCard().setFlip(true);
+                if (!(model.getCurrentRoom().getSceneCard() == null))
+                    model.getCurrentRoom().getSceneCard().setFlip(true);
                 view.showMoveSuccess(model.getCurrentRoom().getName());
             } else {
                 view.showMoveFail(model.getCurrentRoom().getName());
@@ -117,12 +130,13 @@ class DeadwoodController {
         }
     }
 
+    // System check not here, is done at GameStateController instead, already ensured taking role is legal
     public void addRole(Role role) {
-            model.takeRole(role);
-            role.setUsedBy(model);
-            view.showTakeRoleSuccess(role.getName());
-            model.updateHasRole(true);
-            model.updateWorked(true);
+        model.takeRole(role);
+        role.setUsedBy(model);
+        view.showTakeRoleSuccess(role.getName());
+        model.updateHasRole(true);
+        model.updateWorked(true);
     }
 
     public void removeRole() {
@@ -130,8 +144,11 @@ class DeadwoodController {
     }
 
     public void rehearse() {
+        // Ensuring rehearsal is legal (Must have role... etc)
         if (system.checkCanRehearse()) {
             int budget = model.getCurrentRoom().getSceneCard().getBudget();
+
+            // Check if guaranteed to succeed next act
             if (model.getPracticeChips() + 1 >= budget) {
                 view.showRehearsalFail(model.getPracticeChips());
             } else {
@@ -148,7 +165,6 @@ class DeadwoodController {
         Random rand = new Random();
         return rand.nextInt(6) + 1;
     }
-
 
     public void act() {
         int budget = model.getCurrentRoom().getSceneCard().getBudget();

@@ -22,12 +22,12 @@ class Systems {
 
     // Checking if player has a role
     public boolean checkCanRehearse() {
-        return (model.getHasRole() && !model.getWorked());
+        return (model.getHasRole() && model.getWorked());
     }
 
     // Checking if player has a role
     public boolean checkCanAct() {
-        return (model.getHasRole() && !model.getWorked());
+        return (model.getHasRole() && model.getWorked());
     }
 
     /* Checking if
@@ -38,9 +38,9 @@ class Systems {
      */
     public boolean checkCanAddRole(Role role) {
         // This makes sure there is a scene card. No scene card, no roles to take.
-        if(!(model.getCurrentRoom().getSceneCard() == null)) {
+        if (!(model.getCurrentRoom().getSceneCard() == null)) {
             boolean onCard = false;
-            if(model.getCurrentRoom().getSceneCard().hasRole(role)) {
+            if (model.getCurrentRoom().getSceneCard().hasRole(role)) {
                 onCard = true;
             }
             return (!model.getHasRole() && role.getUsedBy() == null && model.getRank() >= role.getRank() && (onCard || (model.getCurrentRoom().hasRole(role))));
