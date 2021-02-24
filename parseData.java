@@ -16,16 +16,19 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 public class parseData {
+
+    //Creates given array of all Scenes with SceneCards from xml files
     public void parseScenes(SceneCard[] possibleScenes) throws Exception {
         NodeList cardList = getOuterNodes("cards.xml", "card");
         for (int i = 0; i < cardList.getLength(); i++) {
             String cardDescription = "";
             int sceneNumber = 0;
             ArrayList<Role> roles = new ArrayList<Role>();
-
             Node cardNode = cardList.item(i);
             NodeList roleList = getInnerNodes(cardNode);
             Element cardElement = (Element) cardNode;
+            
+            //Finds roles and description/sceneNumbers on a SceneCard
             for (int j = 0; j < roleList.getLength(); j++) {
                 Node roleNode = roleList.item(j);
                 String nodeName = roleNode.getNodeName();
@@ -44,6 +47,7 @@ public class parseData {
         }
     }
 
+    //Creates role from given node information
     public void parseRole(ArrayList<Role> roles, Node cardNode, Element roleElement, boolean extra) {
         String name = roleElement.getAttribute("name");
         String line = cardNode.getChildNodes().item(1).getTextContent().trim();
@@ -51,7 +55,8 @@ public class parseData {
         Role newRole = new Role(name, line, rank, extra);
         roles.add(newRole);
     }
-
+    
+    //Removes empty children of given node
     public void removeEmptyNodes(Node node) {
         NodeList list = node.getChildNodes();
         for (int i = 0; i < list.getLength(); i++) {
@@ -60,7 +65,8 @@ public class parseData {
             }
         }
     }
-
+   
+    //Parses initial nodes/tags of a Document 
     public NodeList getOuterNodes(String fileName, String tagName) throws Exception {
         DocumentBuilderFactory myDomFactory = DocumentBuilderFactory.newInstance();
         DocumentBuilder myBuilder = myDomFactory.newDocumentBuilder();
@@ -68,11 +74,13 @@ public class parseData {
         return myDoc.getElementsByTagName(tagName);
     }
 
+    //Removes empty nodes and returns children of a node
     public NodeList getInnerNodes(Node baseNode) {
         removeEmptyNodes(baseNode);
         return baseNode.getChildNodes();
     }
 
+    //Parses possible upgrade from xml file
     public int[][] parseOffice() throws Exception {
         NodeList upgradeList = getOuterNodes("board.xml", "upgrade");
         int[][] possibleUpgrades = new int[5][3];
@@ -88,7 +96,8 @@ public class parseData {
         }
         return possibleUpgrades;
     }
-
+    
+    //Creates array of rooms from XML files
     public void parseRooms(NodeList itemList, Room[] rooms) {
         ArrayList<Role> roles = new ArrayList<Role>();
         ArrayList<String> neighbors = new ArrayList<String>();
@@ -105,7 +114,8 @@ public class parseData {
                 NodeList roleList = getInnerNodes(roomInfoNode);
                 String nodeName = roomInfoNode.getNodeName();
                 Element roomInfoElement = (Element) roomInfoNode;
-
+                
+                //Finds adjecent room, roles, shot countesr
                 if (nodeName.equals("neighbors")) {
                     for (int k = 0; k < roleList.getLength(); k++) {
                         Element roleElement = (Element) roleList.item(k);
@@ -122,7 +132,8 @@ public class parseData {
                     shotCounters = Integer.parseInt(roleElement.getAttribute("number"));
                 }
             }
-            //Creates a blank trailer/office room with no shotcounters/sceneCard
+            
+            //Creates a blank trailer/office room with no shotcounters/sceneCard from xml
             if (roomNode.getNodeName().equals("trailer")) {
                 name = "trailer";
                 i = rooms.length - 2;
@@ -139,7 +150,8 @@ public class parseData {
             neighbors.clear();
         }
     }
-
+    
+    //Creates "regular" set roomes along with office annd trailer
     public void parseBoard(Room[] rooms) throws Exception {
         parseRooms(getOuterNodes("board.xml", "set"), rooms);
         parseRooms(getOuterNodes("board.xml", "office"), rooms);
