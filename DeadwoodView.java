@@ -144,6 +144,11 @@ class DeadwoodView {
         System.out.println("The winners are:");
     }
 
+    public void promptRestart(){
+        System.out.println("Would you like to restart the game?");
+        System.out.print("Enter \'Yes\' to restart, anything else to end the game: ");
+    }
+
     public void showWinnerTie(String name, int score) {
         System.out.println(name + " with a score of " + score);
     }

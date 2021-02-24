@@ -105,7 +105,7 @@ class GameStateController extends DeadwoodController {
         }
     }
 
-    public void playGame() {
+    public void playGame() throws Exception {
         getView().inputWelcome();
 
         while (gameModel.getCurrentDay() <= gameModel.getTotalDays()) {
@@ -298,7 +298,7 @@ class GameStateController extends DeadwoodController {
         gameModel.setCurrentDay(gameModel.getCurrentDay() + 1);
     }
 
-    public void endGame() {
+    public void endGame() throws Exception {
         getView().showEndGame();
 
         int tieAmount = 1;
@@ -329,5 +329,9 @@ class GameStateController extends DeadwoodController {
         } else {
             getView().showWinner(winningPlayers[0], highestScore);
         }
+
+        getView().promptRestart();
+        String userInput = getInput();
+        if(userInput.equals("Yes")) setUpGame();
     }
 }
