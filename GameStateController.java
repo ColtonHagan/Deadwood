@@ -283,8 +283,10 @@ class GameStateController extends DeadwoodController {
       }
     }
 
-    public void endDay() {
-        gameModel.getBoard().resetBoard(gameModel.getSceneLibrary());
+    public void endDay() {;
+        if(gameModel.getCurrentDay() < gameModel.getTotalDays()) {
+            gameModel.getBoard().resetBoard(gameModel.getSceneLibrary());
+        }
         for (PlayerModel player : gameModel.getPlayers()) {
             player.updateCurrentRoom(gameModel.getBoard().getTrailer());
             player.removeRole();
