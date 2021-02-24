@@ -25,12 +25,6 @@ public class Scenes {
         return getRandomCard();
     }
 
-    // Resets all scenecards back to false
-    public void resetLibray() {
-        for (SceneCard card : possibleScenes)
-            card.setUse(false);
-    }
-
     // Creates all Scenecards from parsed data from XML
     public void createScenes(ParseData dataParser) throws Exception {
         dataParser.parseScenes(possibleScenes);

@@ -48,7 +48,7 @@ public class ParseData {
     }
 
     //Creates role from given node information
-    public void parseRole(ArrayList<Role> roles, Node cardNode, Element roleElement, boolean extra) {
+    private void parseRole(ArrayList<Role> roles, Node cardNode, Element roleElement, boolean extra) {
         String name = roleElement.getAttribute("name");
         String line = cardNode.getChildNodes().item(1).getTextContent().trim();
         int rank = Integer.parseInt(roleElement.getAttribute("level"));
@@ -57,7 +57,7 @@ public class ParseData {
     }
     
     //Removes empty children of given node
-    public void removeEmptyNodes(Node node) {
+    private void removeEmptyNodes(Node node) {
         NodeList list = node.getChildNodes();
         for (int i = 0; i < list.getLength(); i++) {
             if (list.item(i).getChildNodes().getLength() == 0) {
@@ -67,7 +67,7 @@ public class ParseData {
     }
    
     //Parses initial nodes/tags of a Document 
-    public NodeList getOuterNodes(String fileName, String tagName) throws Exception {
+    private NodeList getOuterNodes(String fileName, String tagName) throws Exception {
         DocumentBuilderFactory myDomFactory = DocumentBuilderFactory.newInstance();
         DocumentBuilder myBuilder = myDomFactory.newDocumentBuilder();
         Document myDoc = myBuilder.parse(fileName);
@@ -75,7 +75,7 @@ public class ParseData {
     }
 
     //Removes empty nodes and returns children of a node
-    public NodeList getInnerNodes(Node baseNode) {
+    private NodeList getInnerNodes(Node baseNode) {
         removeEmptyNodes(baseNode);
         return baseNode.getChildNodes();
     }
@@ -98,7 +98,7 @@ public class ParseData {
     }
     
     //Creates array of rooms from XML files
-    public void parseRooms(NodeList itemList, Room[] rooms) {
+    private void parseRooms(NodeList itemList, Room[] rooms) {
         ArrayList<Role> roles = new ArrayList<Role>();
         ArrayList<String> neighbors = new ArrayList<String>();
         int[][] possibleUpgrades = new int[5][3];
