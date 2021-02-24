@@ -1,4 +1,5 @@
 # Deadwood
 
-Compile Deadwood.java for the program to run
+Compile then run Deadwood.java to run the program
+
 

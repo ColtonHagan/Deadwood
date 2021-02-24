@@ -143,6 +143,7 @@ class DeadwoodController {
         return rand.nextInt(6) + 1;
     }
 
+
     public void act() {
         int budget = model.getCurrentRoom().getSceneCard().getBudget();
         if ((rollDice() + model.getPracticeChips()) >= budget) {

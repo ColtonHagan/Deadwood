@@ -49,7 +49,7 @@ class DeadwoodView {
 
     public void showUpgradeFail(int rank) {
         System.out.println("You can not upgrade to rank " + rank);
-        System.out.println("Either you need more money / credits, your rank is higher than the chosen rank, or the chosen rank is greater then 6  \n");
+        System.out.println("Either you need more money / credits, or your rank is higher than the chosen rank \n");
     }
 
     public void showActingSuccess(int moneyGained, int creditsGained) {
@@ -137,6 +137,15 @@ class DeadwoodView {
 
     public void printSceneEnd() {
         System.out.println("The Scene has ended");
+    }
+
+    public void printTie() {
+        System.out.println("\nThere was a tie!");
+        System.out.println("The winners are:");
+    }
+
+    public void showWinnerTie(String name, int score) {
+        System.out.println(name + " with a score of " + score);
     }
 
     public void showBonusPayment(String playerName, String roleType, int bonus) {
