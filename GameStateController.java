@@ -8,9 +8,11 @@ import java.util.*;
 
 class GameStateController extends DeadwoodController {
     private final GameState gameModel;
+    //private final BoardLayersListener board;
 
     public GameStateController(int totalPlayers) {
         this.gameModel = new GameState(totalPlayers);
+        //this.board = new BoardLayersListener();
     }
 
     public void setUpGame() throws Exception {
