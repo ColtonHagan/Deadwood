@@ -115,7 +115,6 @@ public class BoardLayersListener extends JFrame {
         bPane.add(bMove, new Integer(2));
     }
 
-
     // This class implements Mouse Events
     class boardMouseListener implements MouseListener {
         public void mouseClicked(MouseEvent e) {
