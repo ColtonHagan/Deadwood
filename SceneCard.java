@@ -35,6 +35,10 @@ public class SceneCard {
     public String getName() {
         return name;
     }
+    
+    public String getImage() {
+       return image;
+    }
 
     public int getSceneNumber() {
         return sceneNumber;

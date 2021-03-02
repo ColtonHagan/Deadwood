@@ -37,7 +37,7 @@ public class ParseData {
                     cardDescription = roleNode.getTextContent().trim();
                     sceneNumber = Integer.parseInt(roleElement.getAttribute("number"));
                 } else {
-                    parseRole(roles, cardNode, roleElement, false);
+                    parseRole(roles, roleNode, roleElement, false);
                 }
             }
             int budget = Integer.parseInt(cardElement.getAttribute("budget"));
@@ -131,7 +131,7 @@ public class ParseData {
                 } else if (nodeName.equals("parts")) {
                     for (int k = 0; k < roleList.getLength(); k++) {
                         Element roleElement = (Element) roleList.item(k);
-                        parseRole(roles, roomInfoNode, roleElement, true);
+                        parseRole(roles, roleList.item(k), roleElement, true);
                     }
                 } else if (nodeName.equals("takes")) {
                     Element roleElement = (Element) roleList.item(0);
