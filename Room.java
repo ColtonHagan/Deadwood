@@ -11,13 +11,15 @@ public class Room {
     private SceneCard sceneCard;
     private final String[] adjacentRooms;
     private final String name;
+    private final int[] cords;
 
-    public Room(String name, int shotCounters, Role[] extraRoles, String[] adjacentRooms) {
+    public Room(String name, int shotCounters, Role[] extraRoles, String[] adjacentRooms, int[] cords) {
         this.name = name;
         totalShotCounters = shotCounters;
         currentShotCounters = shotCounters;
         this.extraRoles = extraRoles;
         this.adjacentRooms = adjacentRooms;
+        this.cords = cords;
     }
 
     // Getters

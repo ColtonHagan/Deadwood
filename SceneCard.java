@@ -12,13 +12,15 @@ public class SceneCard {
     private final String name;
     private final String description; // To be used in gui
     private final Role[] roles;
+    private final String image;
 
-    public SceneCard(String name, String description, int budget, int sceneNumber, Role[] roles) {
+    public SceneCard(String name, String description, int budget, int sceneNumber, Role[] roles, String image) {
         this.name = name;
         this.description = description;
         this.budget = budget;
         this.roles = roles;
         this.sceneNumber = sceneNumber;
+        this.image = image;
     }
 
     // Getters
