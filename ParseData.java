@@ -34,7 +34,7 @@ public class ParseData {
                 String nodeName = roleNode.getNodeName();
                 Element roleElement = (Element) roleNode;
                 if (nodeName.equals("scene")) {
-                    cardDescription = roleNode.getTextContent();
+                    cardDescription = roleNode.getTextContent().trim();
                     sceneNumber = Integer.parseInt(roleElement.getAttribute("number"));
                 } else {
                     parseRole(roles, cardNode, roleElement, false);
@@ -42,17 +42,23 @@ public class ParseData {
             }
             int budget = Integer.parseInt(cardElement.getAttribute("budget"));
             String name = cardElement.getAttribute("name");
+            String image = cardElement.getAttribute("img");
             Role[] roleArray = Arrays.copyOf(roles.toArray(), roles.toArray().length, Role[].class);
-            possibleScenes[i] = new SceneCard(name, cardDescription, budget, sceneNumber, roleArray);
+            possibleScenes[i] = new SceneCard(name, cardDescription, budget, sceneNumber, roleArray, image);
         }
     }
 
     //Creates role from given node information
     private void parseRole(ArrayList<Role> roles, Node cardNode, Element roleElement, boolean extra) {
+        int[] cords = new int[2];
         String name = roleElement.getAttribute("name");
-        String line = cardNode.getChildNodes().item(1).getTextContent().trim();
+        NodeList roleInfo = getInnerNodes(cardNode);
+        Element areaElement = (Element) roleInfo.item(0);
+        cords[0] = Integer.parseInt(areaElement.getAttribute("x"));
+        cords[1] = Integer.parseInt(areaElement.getAttribute("y"));
+        String line = roleInfo.item(1).getTextContent().trim();
         int rank = Integer.parseInt(roleElement.getAttribute("level"));
-        Role newRole = new Role(name, line, rank, extra);
+        Role newRole = new Role(name, line, rank, extra, cords);
         roles.add(newRole);
     }
     
@@ -104,6 +110,7 @@ public class ParseData {
         int[][] possibleUpgrades = new int[5][3];
         int shotCounters = 0;
         String name = "";
+        int[] cords = new int[2];
 
         for (int i = 0; i < itemList.getLength(); i++) {
             Node roomNode = itemList.item(i);
@@ -125,11 +132,13 @@ public class ParseData {
                     for (int k = 0; k < roleList.getLength(); k++) {
                         Element roleElement = (Element) roleList.item(k);
                         parseRole(roles, roomInfoNode, roleElement, true);
-                        ;
                     }
                 } else if (nodeName.equals("takes")) {
                     Element roleElement = (Element) roleList.item(0);
                     shotCounters = Integer.parseInt(roleElement.getAttribute("number"));
+                } else if (nodeName.equals("area")) {
+                    cords[0] = Integer.parseInt(roomInfoElement.getAttribute("x"));
+                    cords[1] = Integer.parseInt(roomInfoElement.getAttribute("y"));
                 }
             }
             
@@ -145,7 +154,7 @@ public class ParseData {
             }
             Role[] roleArray = Arrays.copyOf(roles.toArray(), roles.toArray().length, Role[].class);
             String[] neighborsArray = Arrays.copyOf(neighbors.toArray(), neighbors.toArray().length, String[].class);
-            rooms[i] = new Room(name, shotCounters, roleArray, neighborsArray);
+            rooms[i] = new Room(name, shotCounters, roleArray, neighborsArray, cords);
             roles.clear();
             neighbors.clear();
         }

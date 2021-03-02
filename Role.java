@@ -10,12 +10,14 @@ public class Role {
     private final boolean isExtra;
     private final String name;
     private final String tagLine;
+    private final int[] cords;
 
-    public Role(String name, String tagLine, int rank, boolean isExtra) {
+    public Role(String name, String tagLine, int rank, boolean isExtra, int[] cords) {
         this.name = name;
         this.tagLine = tagLine;
         this.rank = rank;
         this.isExtra = isExtra;
+        this.cords = cords;
         usedBy = null;
     }
 
