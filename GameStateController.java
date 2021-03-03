@@ -8,11 +8,13 @@ import java.util.*;
 
 class GameStateController extends DeadwoodController {
     private final GameState gameModel;
-    //private final BoardLayersListener board;
+    private final BoardLayersListener boardView;
 
-    public GameStateController(int totalPlayers) {
+    public GameStateController() {
+        this.boardView = new BoardLayersListener();
+        boardView.setVisible(true);
+        int totalPlayers = boardView.getTotalPlayers();
         this.gameModel = new GameState(totalPlayers);
-        //this.board = new BoardLayersListener();
     }
 
     public void setUpGame() throws Exception {
@@ -20,7 +22,6 @@ class GameStateController extends DeadwoodController {
         int money = 0;
         int credits = 0;
         int days = 4;
-
         // Picking totalPlayers to set up game for from args.
         if (gameModel.getTotalPlayers() == 2 || gameModel.getTotalPlayers() == 3) {
             days = 3;
@@ -44,10 +45,16 @@ class GameStateController extends DeadwoodController {
         gameModel.getBoard().createBoard(dataParser, gameModel.getSceneLibrary());
 
         // Creating players with preset names, variable stats based on above totalPlayers
-        String[] namesList = {"Blue", "Cyan", "Green", "Orange", "Pink", "Red", "Violet", "Yellow"};
+        // String[] namesList = {"Blue", "Cyan", "Green", "Orange", "Pink", "Red", "Violet", "Yellow"};
+        //for (int i = 0; i < gameModel.getTotalPlayers(); i++) {
+        //    String name = namesList[i];
+        //    players[i] = new PlayerModel(name, money, credits, rank, gameModel.getBoard().getTrailer());
+        //}
+
+        // With inputted names
         PlayerModel[] players = new PlayerModel[gameModel.getTotalPlayers()];
         for (int i = 0; i < gameModel.getTotalPlayers(); i++) {
-            String name = namesList[i];
+            String name = boardView.createPlayers(i);
             players[i] = new PlayerModel(name, money, credits, rank, gameModel.getBoard().getTrailer());
         }
 
