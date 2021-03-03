@@ -34,6 +34,10 @@ public class Room {
     public SceneCard getSceneCard() {
         return sceneCard;
     }
+    
+    public int[] getCords() {
+      return cords;
+    }
 
     public int getShotCounters() {
         return currentShotCounters;

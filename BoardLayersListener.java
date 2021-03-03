@@ -18,7 +18,7 @@ public class BoardLayersListener extends JFrame {
 
     // JLabels
     JLabel boardlabel;
-    JLabel cardlabel;
+    JLabel[] cardlabel;
     JLabel playerlabel;
     JLabel mLabel;
 
@@ -33,10 +33,10 @@ public class BoardLayersListener extends JFrame {
     // Constructor
     public BoardLayersListener() {
         super("Deadwood");
+        cardlabel = new JLabel[10];
         createBoard();
-        createScenes();
-        createPlayers();
-        createButtons();
+        //createPlayers();
+        //createButtons();
     }
 
     public void createBoard() {
@@ -62,16 +62,16 @@ public class BoardLayersListener extends JFrame {
         // setPreferredSize(new Dimension(1280,720));
     }
 
-    public void createScenes() {
+    public void createScenes(int[] cords, String image, int roomNumber) {
         // Add a scene card to this room
-        cardlabel = new JLabel();
-        ImageIcon cIcon = new ImageIcon("01.png");
-        cardlabel.setIcon(cIcon);
-        cardlabel.setBounds(20, 65, cIcon.getIconWidth() + 2, cIcon.getIconHeight());
-        cardlabel.setOpaque(true);
-
+        cardlabel[roomNumber] = new JLabel();
+        ImageIcon cIcon = new ImageIcon("cards/" + image);
+        cardlabel[roomNumber].setIcon(cIcon);
+        cardlabel[roomNumber].setBounds(cords[0], cords[1], cIcon.getIconWidth() + 2, cIcon.getIconHeight());
+        cardlabel[roomNumber].setOpaque(true);
+                
         // Add the card to the lower layer
-        bPane.add(cardlabel, new Integer(1));
+        bPane.add(cardlabel[roomNumber], new Integer(1));
     }
 
     public void createPlayers() {
@@ -140,7 +140,7 @@ public class BoardLayersListener extends JFrame {
         public void mouseExited(MouseEvent e) {
         }
     }
-
+   /*
     public static void main(String[] args) {
 
         BoardLayersListener board = new BoardLayersListener();
@@ -148,5 +148,5 @@ public class BoardLayersListener extends JFrame {
 
         // Take input from the user about number of players
         JOptionPane.showInputDialog(board, "How many players?");
-    }
+    }*/
 }

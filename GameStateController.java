@@ -1,365 +1,176 @@
 /*
-Name : Colton Hagan and Steven Le
-Class : CS 345
-Date : 2/23/21
-Program Description : Controls how/when game progresses
+
+   Deadwood GUI helper file
+   Author: Moushumi Sharmin
+   This file shows how to create a simple GUI using Java Swing and Awt Library
+   Classes Used: JFrame, JLabel, JButton, JLayeredPane
+
 */
-import java.util.*;
 
-class GameStateController extends DeadwoodController {
-    private final GameState gameModel;
-    //private final BoardLayersListener board;
+import java.awt.*;
+import javax.swing.*;
+import javax.swing.ImageIcon;
+import javax.imageio.ImageIO;
+import java.awt.event.*;
+import javax.swing.JOptionPane;
 
-    public GameStateController(int totalPlayers) {
-        this.gameModel = new GameState(totalPlayers);
-        //this.board = new BoardLayersListener();
+class BoardLayersListener extends JFrame {
+
+    // JLabels
+    JLabel boardlabel;
+    JLabel cardlabel;
+    JLabel[] playerlabel;
+    JLabel mLabel;
+
+    //JButtons
+    JButton bAct;
+    JButton bRehearse;
+    JButton bMove;
+
+    // JLayered Pane
+    JLayeredPane bPane;
+
+    // Constructor
+    public BoardLayersListener() {
+        super("Deadwood");
+        createBoard();
+        createScenes();
+        createButtons();
     }
 
-    public void setUpGame() throws Exception {
-        int rank = 1;
-        int money = 0;
-        int credits = 0;
-        int days = 4;
+    public void createBoard() {
+        // Set the title of the JFrame
+        // Set the exit option for the JFrame
+        setDefaultCloseOperation(EXIT_ON_CLOSE);
 
-        // Picking totalPlayers to set up game for from args.
-        if (gameModel.getTotalPlayers() == 2 || gameModel.getTotalPlayers() == 3) {
-            days = 3;
-        } else if (gameModel.getTotalPlayers() == 5) {
-            credits = 2;
-        } else if (gameModel.getTotalPlayers() == 6) {
-            credits = 4;
-        } else if (gameModel.getTotalPlayers() == 7 || gameModel.getTotalPlayers() == 8) {
-            rank = 2;
-        } else if (gameModel.getTotalPlayers() < 2 || gameModel.getTotalPlayers() > 8) {
-            getView().printUnsupportedPlayers();
-            return;
-        }
+        // Create the JLayeredPane to hold the display, cards, dice and buttons
+        bPane = getLayeredPane();
 
-        getView().printPlayerCount(gameModel.getTotalPlayers());
-        gameModel.setTotalDays(days);
+        // Create the deadwood board
+        boardlabel = new JLabel();
+        ImageIcon icon = new ImageIcon("board.jpg");
+        boardlabel.setIcon(icon);
+        boardlabel.setBounds(0, 0, icon.getIconWidth(), icon.getIconHeight());
 
-        // Setting up board from XML
-        ParseData dataParser = new ParseData();
-        gameModel.getSceneLibrary().createScenes(dataParser);
-        gameModel.getBoard().createBoard(dataParser, gameModel.getSceneLibrary());
+        // Add the board to the lowest layer
+        bPane.add(boardlabel, new Integer[0]);
 
-        // Creating players with preset names, variable stats based on above totalPlayers
-        String[] namesList = {"Blue", "Cyan", "Green", "Orange", "Pink", "Red", "Violet", "Yellow"};
-        PlayerModel[] players = new PlayerModel[gameModel.getTotalPlayers()];
-        for (int i = 0; i < gameModel.getTotalPlayers(); i++) {
-            String name = namesList[i];
-            players[i] = new PlayerModel(name, money, credits, rank, gameModel.getBoard().getTrailer());
-        }
-
-        gameModel.setAllPlayers(players);
-        updateModel(gameModel.getCurrentPlayer());
-        createOffice(dataParser);
-
-        playGame();
+        // Set the size of the GUI
+        setSize(icon.getIconWidth() + 200, icon.getIconHeight());
+        // setPreferredSize(new Dimension(icon.getIconWidth()+200,icon.getIconHeight()));
+        // setPreferredSize(new Dimension(1280,720));
     }
 
-    // Used when shot counter hits zero, for SceneCard ending
-    public void endRoom(Room currentRoom) {
-        getView().printSceneEnd();
-        bonusPayment(currentRoom);
-        currentRoom.setScene(null);
-        gameModel.getBoard().removeRoom();
-        gameModel.getCurrentPlayer().getCurrentRoom().clearExtras();
+    public void createScenes() {
+        // Add a scene card to this room
+        cardlabel = new JLabel();
+        ImageIcon cIcon = new ImageIcon("01.png");
+        cardlabel.setIcon(cIcon);
+        cardlabel.setBounds(20, 65, cIcon.getIconWidth() + 2, cIcon.getIconHeight());
+        cardlabel.setOpaque(true);
 
-        // Resetting all players on location so they can take a new role.
-        for (PlayerModel player : gameModel.getPlayers()) {
-            if (player.getCurrentRoom() == currentRoom) {
-                player.removeRole();
-                player.updateHasRole(false);
-                player.updatePracticeChips(0);
+        // Add the card to the lower layer
+        bPane.add(cardlabel, new Integer[1]);
+    }
+
+    public int getTotalPlayers() {
+        // Add a dice to represent a player.
+        // Role for Crusty the prospector. The x and y co-ordiantes are taken from Board.xml file
+
+        Integer[] options = {2, 3, 4, 5, 6, 7, 8};
+        int n = (Integer)JOptionPane.showInputDialog(boardlabel, "How many players? (2-8)",
+                "Total Players", JOptionPane.QUESTION_MESSAGE, null, options, options[2]);
+        playerlabel = new JLabel[n];
+
+        ImageIcon[] pIcon = new ImageIcon[n];
+        String[] diceChoices = {"b1.png", "c1.png", "g1.png", "o1.png", "p1.png", "r1.png", "v1.png", "w1.png", "y1.png"};
+        for(int i = 0; i < n; i++) {
+            playerlabel[i] = new JLabel();
+            pIcon[i] = new ImageIcon(diceChoices[i]);
+            playerlabel[i].setIcon(pIcon[i]);
+
+            //playerlabel.setBounds(114,227,pIcon.getIconWidth(),pIcon.getIconHeight());
+            //playerlabel[playerNumber].setBounds(114, 227, 46, 46);
+            if(i < 4) {
+                playerlabel[i].setBounds(991 + (46*i), 248, 46, 46);
+            } else {
+                playerlabel[i].setBounds(991 + (46*(i - 4)), 294, 46, 46);
             }
+
+            playerlabel[i].setOpaque(true);
+            playerlabel[i].setVisible(true);
+            bPane.add(playerlabel[i], new Integer[3]);
         }
-        gameModel.getCurrentPlayer().updateMoved(true);
+        return n;
     }
 
-    public void bonusPayment(Room currentRoom) {
-        Role[] allRoles = currentRoom.availableRoles();
-        ArrayList<PlayerModel> playersOnCard = new ArrayList<>();
-        ArrayList<PlayerModel> playersOffCard = new ArrayList<>();
-
-        // Defines which players are on and off card
-        for (Role currentRole : allRoles) {
-            if (currentRole.getUsedBy() != null) {
-                if (!currentRole.getExtra()) {
-                    playersOnCard.add(currentRole.getUsedBy());
-                } else {
-                    playersOffCard.add(currentRole.getUsedBy());
-                }
-            }
-        }
-
-        // Ensures there is a player on card, if not no bonus payment
-        if (playersOnCard.size() != 0) {
-            Random rand = new Random();
-            int bonus;
-            Integer[] diceRolls = new Integer[currentRoom.getSceneCard().getBudget()];
-            for (int i = 0; i < diceRolls.length; i++) {
-                diceRolls[i] = rand.nextInt(6) + 1;
-            }
-            Arrays.sort(diceRolls, Collections.reverseOrder());
-            playersOnCard.sort(Comparator.comparing(PlayerModel::getRoleRank));
-            Collections.reverse(playersOnCard);
-            for (int i = 0; i < playersOnCard.size(); i++) {
-                bonus = diceRolls[i];
-                playersOnCard.get(i).updateMoney(playersOnCard.get(i).getMoney() + diceRolls[i]);
-                getView().showBonusPayment(playersOnCard.get(i).getName(), "on card", bonus);
-            }
-            for (int i = 0; i < playersOffCard.size(); i++) {
-                bonus = playersOffCard.get(i).getCurrentRole().getRank();
-                playersOffCard.get(i).updateMoney(playersOffCard.get(i).getCurrentRole().getRank() + playersOffCard.get(i).getMoney());
-                getView().showBonusPayment(playersOffCard.get(i).getName(), "extra", bonus);
-            }
-        } else {
-            getView().noBonusPayment();
-        }
+    public String createPlayers(int playerNumber) {
+        String s = JOptionPane.showInputDialog(boardlabel, "Player number " + (playerNumber + 1) + ", Enter your name");
+        return s;
     }
 
+    public void createButtons() {
+        // Create the Menu for action buttons
+        mLabel = new JLabel("MENU");
+        mLabel.setBounds(boardlabel.getWidth() + 40, 0, 100, 20);
+        bPane.add(mLabel, new Integer[2]);
 
-    public void playGame() throws Exception {
-        getView().inputWelcome();
+        // Create Action buttons
+        bAct = new JButton("ACT");
+        bAct.setBackground(Color.white);
+        bAct.setBounds(boardlabel.getWidth() + 10, 30, 100, 20);
+        bAct.addMouseListener(new boardMouseListener());
 
-        // Plays the game until current day reaches totalDays
-        while (gameModel.getCurrentDay() <= gameModel.getTotalDays()) {
-            getView().inputChoose();
-            String[] userInputArray = getInput().split(" ");
-            switch (userInputArray[0]) {
-                case "Upgrade":
-                    if (userInputArray.length == 3) {
-                        int targetRank = Integer.parseInt(userInputArray[2]);
-                        if (userInputArray[1].equals("Credits")) {
-                            upgradeRankCredits(targetRank);
-                        } else if (userInputArray[1].equals("Dollars")) {
-                            upgradeRankDollars(targetRank);
-                        } else {
-                            getView().inputUpgradeMissingInfo();
-                        }
-                    } else {
-                        getView().inputUpgradeMissingInfo();
-                    }
-                    break;
+        bRehearse = new JButton("REHEARSE");
+        bRehearse.setBackground(Color.white);
+        bRehearse.setBounds(boardlabel.getWidth() + 10, 60, 100, 20);
+        bRehearse.addMouseListener(new boardMouseListener());
 
-                case "Move":
-                    if (userInputArray.length > 1) {
-                        String roomName = concatenateArray(userInputArray, 1, userInputArray.length - 1);
-                        Room room = roomNameToRoom(roomName);
-                        if (room != null) {
-                            move(room);
-                        } else {
-                            getView().inputMoveInvalidRoom();
-                        }
-                    } else {
-                        getView().inputMoveMissingInfo();
-                    }
-                    break;
+        bMove = new JButton("MOVE");
+        bMove.setBackground(Color.white);
+        bMove.setBounds(boardlabel.getWidth() + 10, 90, 100, 20);
+        bMove.addMouseListener(new boardMouseListener());
 
-                case "Work":  //take role
-                    if (userInputArray.length > 1) {
-                        String roleName = concatenateArray(userInputArray, 1, userInputArray.length - 1);
-                        Role role = roleNameToRole(roleName);
-
-                        if (role != null) {
-                            if (getSystem().checkCanAddRole(role)) {
-                                addRole(role);
-                                role.setUsedBy(gameModel.getCurrentPlayer());
-                            } else {
-                                getView().printAddRoleError();
-                            }
-                        } else {
-                            getView().inputWorkInvalidRole();
-                        }
-                    } else {
-                        getView().inputWorkMissingInfo();
-                    }
-                    break;
-
-                case "Act":
-                    if (getSystem().checkCanAct()) {
-                        act();
-                        if (gameModel.getCurrentPlayer().getCurrentRoom().getShotCounters() == 0) {
-                            endRoom(gameModel.getCurrentPlayer().getCurrentRoom());
-                        }
-                    } else {
-                        getView().printActError();
-                    }
-                    break;
-
-                case "Rehearsing":
-                    rehearse();
-                    break;
-
-                case "Active":
-                    if (userInputArray[1].equals("Player?")) {
-                        if (gameModel.getCurrentPlayer().getHasRole()) {
-                            getView().printPlayerDetails(gameModel.getCurrentPlayer().getName(), gameModel.getCurrentPlayer().getMoney(), gameModel.getCurrentPlayer().getCredits(), gameModel.getCurrentPlayer().getRank(),
-                                    gameModel.getCurrentPlayer().getCurrentRole().getName(), gameModel.getCurrentPlayer().getCurrentRole().getTagLine());
-                        } else {
-                            getView().printPlayerDetailsNoRole(gameModel.getCurrentPlayer().getName(), gameModel.getCurrentPlayer().getMoney(), gameModel.getCurrentPlayer().getCredits(), gameModel.getCurrentPlayer().getRank());
-                        }
-                    } else {
-                        getView().inputError();
-                    }
-                    break;
-
-                case "Where":
-                    if (!gameModel.getCurrentPlayer().getHasRole()) {
-                        getView().playerLocation(gameModel.getCurrentPlayer().getCurrentRoom().getName());
-                    } else if (gameModel.getCurrentPlayer().getCurrentRole().getExtra()) {
-                        getView().playerLocationWithExtraRole(gameModel.getCurrentPlayer().getCurrentRoom().getName(), gameModel.getCurrentPlayer().getCurrentRole().getName());
-                    } else {
-                        getView().playerLocationWithOnCardRole(gameModel.getCurrentPlayer().getCurrentRoom().getName(), gameModel.getCurrentPlayer().getCurrentRole().getName(),
-                                gameModel.getCurrentPlayer().getCurrentRoom().getSceneCard().getName());
-                    }
-                    break;
-
-                case "Locations":
-                    for (PlayerModel currentPlayer : gameModel.getPlayers()) {
-                        if (currentPlayer == gameModel.getCurrentPlayer()) {
-                            if (gameModel.getCurrentPlayer().getHasRole()) {
-                                getView().activePlayerLocationWithRole(currentPlayer.getName(), currentPlayer.getCurrentRoom().getName(), currentPlayer.getCurrentRole().getName());
-                            } else {
-                                getView().activePlayerLocation(currentPlayer.getName(), currentPlayer.getCurrentRoom().getName());
-                            }
-                        } else {
-                            if (currentPlayer.getHasRole()) {
-                                getView().inactivePlayerLocationWithRole(currentPlayer.getName(), currentPlayer.getCurrentRoom().getName(), currentPlayer.getCurrentRole().getName());
-                            } else {
-                                getView().inactivePlayerLocation(currentPlayer.getName(),currentPlayer.getCurrentRoom().getName());
-                            }
-                        }
-                    }
-                    break;
-
-                case "Roles":
-                    getView().printRoles(gameModel.getCurrentPlayer().getCurrentRoom().availableRoles());
-                    break;
-
-                case "End":
-                    endTurn();
-                    break;
-
-                default:
-                    getView().inputError();
-                    break;
-            }
-        }
-        endGame();
+        // Place the action buttons in the top layer
+        bPane.add(bAct, new Integer[2]);
+        bPane.add(bRehearse, new Integer[2]);
+        bPane.add(bMove, new Integer[2]);
     }
 
-    public String getInput() {
-        Scanner in = new Scanner(System.in);
-        return in.nextLine();
-    }
-
-
-    public String concatenateArray(String[] array, int startIndex, int endIndex) {
-        String combined = array[startIndex];
-        for (int i = startIndex + 1; i <= endIndex; i++) {
-            combined += " " + array[i];
-        }
-        return combined;
-    }
-
-    // For finding the specific Room from its roomName (given from user input in console)
-    public Room roomNameToRoom(String roomName) {
-        for (Room room : gameModel.getBoard().allRooms()) {
-            if (room.getName().equals(roomName)) {
-                return room;
-            }
-        }
-        return null;
-    }
-
-    // For finding the specific Role from its roleName (given from user input in console)
-    public Role roleNameToRole(String roleName) {
-        for (Room room : gameModel.getBoard().allRooms()) {
-            for (Role role : room.availableRoles()) {
-                if (role.getName().equals(roleName)) {
-                    return role;
-                }
-            }
-        }
-        return null;
-    }
-
-    public void endTurn() {
-      clearMoved();
-      clearWorked();
-      // Sets the player of the next turn to the next player
-      if (gameModel.getCurrentPlayerInt() + 1 < gameModel.getTotalPlayers()) {
-         gameModel.setCurrentPlayerInt(gameModel.getCurrentPlayerInt() + 1);
-         updateModel(gameModel.getCurrentPlayer());
-      } else {
-         gameModel.setCurrentPlayerInt(0);
-         updateModel(gameModel.getCurrentPlayer());
-      }
-      getView().showEndTurn(gameModel.getCurrentPlayer().getName());
-
-      // Checks if this is the last Scenecard on board, ends day if true;
-      if (gameModel.getBoard().getCurrentRooms() == 1) {
-            endDay();
-      }
-    }
-
-    public void endDay() {
-        // Check if not last day
-        if(gameModel.getCurrentDay() < gameModel.getTotalDays()) {
-            gameModel.getBoard().resetBoard(gameModel.getSceneLibrary());
-        }
-
-        // Resets all players for next day and moves them to trailers
-        for (PlayerModel player : gameModel.getPlayers()) {
-            player.updateCurrentRoom(gameModel.getBoard().getTrailer());
-            player.removeRole();
-            player.updatePracticeChips(0);
-            clearWorked();
-            clearMoved();
-        }
-        getView().showEndDay();
-        gameModel.setCurrentDay(gameModel.getCurrentDay() + 1);
-    }
-
-    public void endGame() throws Exception {
-        getView().showEndGame();
-        int tieAmount = 1;
-        int score;
-        int highestScore = 0;
-        String player;
-        String[] winningPlayers = new String[gameModel.getTotalPlayers()];
-
-        // Logic to find the winning player, can also be a tie
-        for (int i = 0; i < gameModel.getTotalPlayers(); i++) {
-            PlayerModel currentPlayer = gameModel.getExactPlayer(i);
-            score = currentPlayer.getRank() * 5 + currentPlayer.getCredits() + currentPlayer.getMoney();
-            player = currentPlayer.getName();
-            getView().showScore(player, score);
-            if (score > highestScore) {
-                highestScore = score;
-                winningPlayers[0] = player;
-                tieAmount = 1;
-            } else if (score == highestScore) {
-                winningPlayers[tieAmount] = player;
-                tieAmount += 1;
+    // This class implements Mouse Events
+    class boardMouseListener implements MouseListener {
+        public void mouseClicked(MouseEvent e) {
+            if (e.getSource() == bAct) {
+                playerlabel[0].setVisible(true);
+                System.out.println("Acting is Selected\n");
+            } else if (e.getSource() == bRehearse) {
+                System.out.println("Rehearse is Selected\n");
+            } else if (e.getSource() == bMove) {
+                System.out.println("Move is Selected\n");
             }
         }
 
-        // Checks if there was a tie, print multiple winners for tie and single for no tie
-        if(tieAmount > 1) {
-            getView().printTie();
-            for (String s : winningPlayers) {
-                getView().showWinnerTie(s, highestScore);
-            }
-        } else {
-            getView().showWinner(winningPlayers[0], highestScore);
+        public void mousePressed(MouseEvent e) {
         }
-        
-        // Asks to restart the game
-        getView().promptRestart();
-        String userInput = getInput();
-        if(userInput.equals("Yes")) setUpGame();
+
+        public void mouseReleased(MouseEvent e) {
+        }
+
+        public void mouseEntered(MouseEvent e) {
+        }
+
+        public void mouseExited(MouseEvent e) {
+        }
     }
+/*
+    public static void main(String[] args) {
+
+        BoardLayersListener board = new BoardLayersListener();
+        board.setVisible(true);
+
+        // Take input from the user about number of players
+        JOptionPane.showInputDialog(board, "How many players?");
+    }
+
+ */
 }

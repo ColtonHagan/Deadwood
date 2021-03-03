@@ -39,20 +39,22 @@ class Board {
         for (Room room : rooms) {
             room.resetShotCounters();
         }
-        placeScenes(sceneLibray);
+        //placeScenes(sceneLibray);
         currentRooms = totalRooms;
     }
 
     // Creates the baord from parsed data
-    public void createBoard(ParseData dataParser, Scenes sceneLibray) throws Exception {
+    public void createBoard(ParseData dataParser, Scenes sceneLibray, BoardLayersListener boardListener) throws Exception {
         dataParser.parseBoard(rooms);
-        placeScenes(sceneLibray);
+        placeScenes(sceneLibray, boardListener);
     }
 
     // Sets the new scenes on day end
-    public void placeScenes(Scenes sceneLibray) {
+    public void placeScenes(Scenes sceneLibray, BoardLayersListener boardListener) {
         for (int i = 0; i < rooms.length - 2; i++) {
-            rooms[i].setScene(sceneLibray.getRandomCard());
+            SceneCard randomCard = sceneLibray.getRandomCard();
+            boardListener.createScenes(rooms[i].getCords(),randomCard.getImage(), i);
+            rooms[i].setScene(randomCard);
         }
     }
 
