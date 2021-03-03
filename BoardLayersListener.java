@@ -72,6 +72,24 @@ public class BoardLayersListener extends JFrame {
         // Add the card to the lower layer
         bPane.add(cardlabel[roomNumber], new Integer(1));
     }
+    
+    public void playerDisplay(String name, int credits, int dollars, int rank) {
+        JLabel nameLabel = new JLabel("Name: " + name);
+        nameLabel.setBounds(boardlabel.getWidth() + 20, bMove.getBounds().y + 30, 100, 20); //location of this may change if move button is no longer smallest button
+        bPane.add(nameLabel, new Integer[2]);
+        
+        JLabel moneyLabel = new JLabel("Dollars: " + dollars);
+        moneyLabel.setBounds(boardlabel.getWidth() + 30, nameLabel.getBounds().y + 30, 100, 20);
+        bPane.add(moneyLabel, new Integer[2]);
+        
+        JLabel creditLabel = new JLabel("Credits: " + credits);
+        creditLabel.setBounds(boardlabel.getWidth() + 30, moneyLabel.getBounds().y + 30, 100, 20);
+        bPane.add(creditLabel, new Integer[2]);
+        
+        JLabel rankLabel = new JLabel("Rank: " + rank);
+        rankLabel.setBounds(boardlabel.getWidth() + 30, creditLabel.getBounds().y + 30, 100, 20);
+        bPane.add(rankLabel, new Integer[2]);
+    }
 
     public int getTotalPlayers() {
         // Add a dice to represent a player.
