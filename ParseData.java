@@ -45,6 +45,7 @@ class ParseData {
             String image = cardElement.getAttribute("img");
             Role[] roleArray = Arrays.copyOf(roles.toArray(), roles.toArray().length, Role[].class);
             possibleScenes[i] = new SceneCard(name, cardDescription, budget, sceneNumber, roleArray, image);
+            roles.clear();
         }
     }
 
@@ -154,7 +155,8 @@ class ParseData {
             }
             Role[] roleArray = Arrays.copyOf(roles.toArray(), roles.toArray().length, Role[].class);
             String[] neighborsArray = Arrays.copyOf(neighbors.toArray(), neighbors.toArray().length, String[].class);
-            rooms[i] = new Room(name, shotCounters, roleArray, neighborsArray, cords);
+            int[] cordsCopy = Arrays.copyOf(cords, cords.length);
+            rooms[i] = new Room(name, shotCounters, roleArray, neighborsArray, cordsCopy);
             roles.clear();
             neighbors.clear();
         }
