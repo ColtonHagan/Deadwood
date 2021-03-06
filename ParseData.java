@@ -59,7 +59,8 @@ class ParseData {
         cords[1] = Integer.parseInt(areaElement.getAttribute("y"));
         String line = roleInfo.item(1).getTextContent().trim();
         int rank = Integer.parseInt(roleElement.getAttribute("level"));
-        Role newRole = new Role(name, line, rank, extra, cords);
+        int[] cordsCopy = Arrays.copyOf(cords, cords.length);
+        Role newRole = new Role(name, line, rank, extra, cordsCopy);
         roles.add(newRole);
     }
     
