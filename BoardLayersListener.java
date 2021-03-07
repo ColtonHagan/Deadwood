@@ -100,7 +100,7 @@ public class BoardLayersListener extends JFrame {
     }
     
     public void removeShotCounter(int roomNumber) {
-      for(int i = shotlabel[roomNumber].length - 1; i >= 0; i--) {
+      for(int i = 0; i < shotlabel[roomNumber].length; i++) {
          if(shotlabel[roomNumber][i].getIcon() != null) {
             shotlabel[roomNumber][i].setIcon(null);
             break;

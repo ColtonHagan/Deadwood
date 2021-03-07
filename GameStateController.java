@@ -98,11 +98,13 @@ class GameStateController extends DeadwoodController {
         gameModel.getCurrentPlayer().getCurrentRoom().clearExtras();
 
         // Resetting all players on location so they can take a new role.
-        for (PlayerModel player : gameModel.getPlayers()) {
+        for (int i = 0; i < gameModel.getPlayers().length; i++) {
+            PlayerModel player = gameModel.getPlayers()[i];
             if (player.getCurrentRoom() == currentRoom) {
-                player.removeRole();
-                player.updateHasRole(false);
-                player.updatePracticeChips(0);
+               player.removeRole();
+               player.updateHasRole(false);
+               player.updatePracticeChips(0);
+               boardView.displayMove(i,gameModel.getCurrentPlayer().getCurrentRoom().getCords());
             }
         }
         gameModel.getCurrentPlayer().updateMoved(true);
@@ -405,7 +407,9 @@ class GameStateController extends DeadwoodController {
             if (e.getSource() == boardView.bAct) {
                 System.out.println("Act is Selected\n");
                 if (getSystem().checkCanAct()) {
-                    act();
+                    if(act()) {
+                        boardView.removeShotCounter(gameModel.getCurrentPlayer().getCurrentRoom().getRoomNumber());
+                    }
                     if (gameModel.getCurrentPlayer().getCurrentRoom().getShotCounters() == 0) {
                         endRoom(gameModel.getCurrentPlayer().getCurrentRoom());
                     }
