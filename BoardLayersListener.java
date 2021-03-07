@@ -150,7 +150,7 @@ public class BoardLayersListener extends JFrame {
             playerlabel[i].setIcon(pIcon[i]);
 
             playerlabel[i].setBounds(0, 0, 46, 46);
-            playerlabel[i].setOpaque(true);
+            playerlabel[i].setOpaque(false);
             playerlabel[i].setVisible(false);
             bPane.add(playerlabel[i], new Integer[3]);
         }
