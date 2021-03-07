@@ -31,12 +31,13 @@ public class BoardLayersListener extends JFrame {
     //JButtons
     JButton bAct;
     JButton bRehearse;
-    JButton bUpgrade;
-    JButton bWork;
     JButton bMove;
+    JButton bWork;
+    JButton bUpgrade;
     JButton[] bRooms;
     JButton[] bRoles;
     JButton[] bPlayerCount;
+    JButton[] bTakeRole;
 
     // JLayered Pane
     JLayeredPane bPane;
@@ -166,6 +167,12 @@ public class BoardLayersListener extends JFrame {
         return n;
     }
 
+    public void updatePlayerIcon(int playerNumber, int rank) {
+        String[] diceChoices = {"b", "c", "g", "o", "p", "r", "v", "w", "y"};
+        ImageIcon pIcon = new ImageIcon("dice/" + diceChoices[playerNumber] + rank + ".png");
+        playerlabel[playerNumber].setIcon(pIcon);
+    }
+
     public String createPlayers(int playerNumber) {
         String s = JOptionPane.showInputDialog(boardlabel, "Player number " + (playerNumber + 1) + ", Enter your name");
         return s;
@@ -197,7 +204,20 @@ public class BoardLayersListener extends JFrame {
             bRooms[i].setBounds(boardlabel.getWidth() + 10, 30 + (i * 20), 100, 20);
             bPane.add(bRooms[i], new Integer[2]);
         }
+    }
 
+    public void createButtonsRoles(String[] roles) {
+        mLabel = new JLabel("Choose Role");
+        mLabel.setBounds(boardlabel.getWidth() + 40, 0, 100, 20);
+        bPane.add(mLabel, new Integer[2]);
+
+        bRoles = new JButton[roles.length];
+        for (int i = 0; i < roles.length; i++) {
+            bRoles[i] = new JButton(roles[i]);
+            bRoles[i].setBackground(Color.white);
+            bRoles[i].setBounds(boardlabel.getWidth() + 10, 30 + (i * 20), 100, 20);
+            bPane.add(bRoles[i], new Integer[2]);
+        }
     }
 
     public void createButtons() {
@@ -216,6 +236,10 @@ public class BoardLayersListener extends JFrame {
         bRehearse.setBounds(boardlabel.getWidth() + 10, 50, 100, 20);
 
         // Default set
+        bMove = new JButton("Move");
+        bMove.setBackground(Color.white);
+        bMove.setBounds(boardlabel.getWidth() + 10, 90, 100, 20);
+
         bWork = new JButton("Work");
         bWork.setBackground(Color.white);
         bWork.setBounds(boardlabel.getWidth() + 10, 30, 100, 20);
@@ -224,11 +248,19 @@ public class BoardLayersListener extends JFrame {
         bUpgrade.setBackground(Color.white);
         bUpgrade.setBounds(boardlabel.getWidth() + 10, 60, 100, 20);
 
-        bMove = new JButton("Move");
-        bMove.setBackground(Color.white);
-        bMove.setBounds(boardlabel.getWidth() + 10, 90, 100, 20);
+        // Initialize for rooms and roles
+        bRooms = new JButton[0];
+        bRoles = new JButton[0];
 
-        bRooms = new JButton[4];
+        // Prompt set
+        bTakeRole = new JButton[2];
+        bTakeRole[0] = new JButton("Yes");
+        bTakeRole[0].setBackground(Color.white);
+        bTakeRole[0].setBounds(boardlabel.getWidth() + 10, 30, 100, 20);
+
+        bTakeRole[1] = new JButton("No");
+        bTakeRole[1].setBackground(Color.white);
+        bTakeRole[1].setBounds(boardlabel.getWidth() + 10, 50, 100, 20);
 
         // Place the action buttons in the top layer
         bPane.add(bAct, new Integer[2]);
@@ -236,10 +268,14 @@ public class BoardLayersListener extends JFrame {
         bPane.add(bMove, new Integer[2]);
         bPane.add(bWork, new Integer[2]);
         bPane.add(bUpgrade, new Integer[2]);
+        bPane.add(bTakeRole[0], new Integer[2]);
+        bPane.add(bTakeRole[1], new Integer[2]);
 
         // Hide a few buttons
         bAct.setVisible(false);
         bRehearse.setVisible(false);
+        bTakeRole[0].setVisible(false);
+        bTakeRole[1].setVisible(false);
     }
 
     public void hideAll() {
@@ -251,6 +287,19 @@ public class BoardLayersListener extends JFrame {
         mLabel.setVisible(false);
     }
 
+    public void hideRoles() {
+        for (JButton b : bRoles) {
+            b.setVisible(false);
+        }
+        mLabel.setVisible(false);
+    }
+
+    public void hideRooms() {
+        for (JButton b : bRooms) {
+            b.setVisible(false);
+        }
+        mLabel.setVisible(false);
+    }
     public void hideButtonsPlayerCount() {
         for (JButton b : bPlayerCount) {
             b.setVisible(false);
@@ -258,10 +307,23 @@ public class BoardLayersListener extends JFrame {
         mLabel.setVisible(false);
     }
 
-    public void setButtonsDefault() {
+    public void showButtonsDefault() {
         bMove.setVisible(true);
         bWork.setVisible(true);
         bUpgrade.setVisible(true);
-        mLabel.setVisible(true);
+
+        mLabel = new JLabel("Choose Action");
+        mLabel.setBounds(boardlabel.getWidth() + 40, 0, 100, 20);
+        bPane.add(mLabel, new Integer[2]);
+    }
+
+    public void showPromptTakeRole() {
+        // Create the Menu for action buttons
+        mLabel = new JLabel("Take a Role?");
+        mLabel.setBounds(boardlabel.getWidth() + 40, 0, 100, 20);
+        bPane.add(mLabel, new Integer[2]);
+
+        bTakeRole[0].setVisible(true);
+        bTakeRole[1].setVisible(true);
     }
 }

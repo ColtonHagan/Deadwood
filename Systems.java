@@ -20,15 +20,20 @@ class Systems {
         return (!model.getMoved() && !model.getHasRole());
     }
 
-    // Checking if player has a role
+    // Checking if player has a role, if they do return true since they can rehearse
     public boolean checkCanRehearse() {
         int budget = model.getCurrentRoom().getSceneCard().getBudget();
         return (model.getHasRole() && model.getWorked() && !(model.getPracticeChips() + 1 >= budget));
     }
 
-    // Checking if player has a role
+    // Checking if player has a role, if they do return true since they can act
     public boolean checkCanAct() {
         return (model.getHasRole() && model.getWorked());
+    }
+
+    //Checking if model has a role, if they do return false since cannot take roles
+    public boolean checkCanAddRole() {
+        return !model.getHasRole();
     }
 
     /* Checking if
@@ -37,14 +42,14 @@ class Systems {
      * 3) model has sufficient rank for role
      * 4) role exists in room, on or off card
      */
-    public boolean checkCanAddRole(Role role) {
+    public boolean checkRoleValid(Role role) {
         // This makes sure there is a scene card. No scene card, no roles to take.
         if (!(model.getCurrentRoom().getSceneCard() == null)) {
             boolean onCard = false;
             if (model.getCurrentRoom().getSceneCard().hasRole(role)) {
                 onCard = true;
             }
-            return (!model.getHasRole() && role.getUsedBy() == null && model.getRank() >= role.getRank() && (onCard || (model.getCurrentRoom().hasRole(role))));
+            return (role.getUsedBy() == null && model.getRank() >= role.getRank() && (onCard || (model.getCurrentRoom().hasRole(role))));
         } else {
             return false;
         }
