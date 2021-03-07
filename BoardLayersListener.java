@@ -199,7 +199,7 @@ public class BoardLayersListener extends JFrame {
             } else {
                updatePlayerIcon(i, 2);
             }
-            bPane.add(playerlabel[i], new Integer[3]);
+            bPane.add(playerlabel[i], new Integer[4]);
         }
         return n;
     }

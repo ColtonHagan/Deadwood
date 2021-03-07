@@ -338,10 +338,6 @@ class GameStateController extends DeadwoodController {
     }
 
     public void endDay() throws Exception {
-        // Check if not last day
-        if (gameModel.getCurrentDay() < gameModel.getTotalDays()) {
-            gameModel.getBoard().resetBoard(gameModel.getSceneLibrary(), boardView);
-        }
 
         // Resets all players for next day and moves them to trailers
         for (int i = 0; i < gameModel.getPlayers().length; i++) {
@@ -353,6 +349,12 @@ class GameStateController extends DeadwoodController {
             clearWorked();
             clearMoved();
         }
+        
+        // Check if not last day
+        if (gameModel.getCurrentDay() < gameModel.getTotalDays()) {
+            gameModel.getBoard().resetBoard(gameModel.getSceneLibrary(), boardView);
+        }
+        
         getView().showEndDay();
         gameModel.setCurrentDay(gameModel.getCurrentDay() + 1);
 
