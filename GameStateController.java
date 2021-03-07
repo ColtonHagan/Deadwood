@@ -75,6 +75,7 @@ class GameStateController extends DeadwoodController {
 
         // Button Setup
         boardView.createButtons();
+        boardView.playerDisplay(gameModel.getCurrentPlayer().getName(), gameModel.getCurrentPlayer().getMoney(), gameModel.getCurrentPlayer().getCredits());
         boardView.bAct.addMouseListener(new boardMouseListener());
         boardView.bRehearse.addMouseListener(new boardMouseListener());
         boardView.bMove.addMouseListener(new boardMouseListener());

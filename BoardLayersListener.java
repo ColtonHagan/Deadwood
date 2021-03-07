@@ -24,9 +24,12 @@ public class BoardLayersListener extends JFrame {
     // JLabels
     JLabel boardlabel;
     JLabel mLabel;
+    JLabel nameLabel;
+    JLabel creditLabel;
+    JLabel moneyLabel;
     JLabel[] cardlabel;
     JLabel[] playerlabel;
-
+    JLabel[][] shotlabel;
 
     //JButtons
     JButton bAct;
@@ -64,6 +67,7 @@ public class BoardLayersListener extends JFrame {
 
         // Create the deadwood board
         boardlabel = new JLabel();
+        shotlabel = new JLabel[10][];
         ImageIcon icon = new ImageIcon("board.jpg");
         boardlabel.setIcon(icon);
         boardlabel.setBounds(0, 0, icon.getIconWidth(), icon.getIconHeight());
@@ -83,14 +87,33 @@ public class BoardLayersListener extends JFrame {
         ImageIcon cIcon = new ImageIcon(image);
         cardlabel[roomNumber].setIcon(cIcon);
         cardlabel[roomNumber].setBounds(cords[0], cords[1], cIcon.getIconWidth(), cIcon.getIconHeight());
-        cardlabel[roomNumber].setOpaque(true);
 
         // Add the card to the lower layer
         bPane.add(cardlabel[roomNumber], new Integer(1));
     }
     
     public void removeScene(int roomNumber) {
-      //cardlabel[roomNumber].setIcon(null);
+      cardlabel[roomNumber].setIcon(null);
+    }
+    
+    public void removeShotCounter(int roomNumber) {
+      for(int i = shotlabel[roomNumber].length - 1; i >= 0; i--) {
+         if(shotlabel[roomNumber][i].getIcon() != null) {
+            shotlabel[roomNumber][i].setIcon(null);
+            break;
+         }
+      }
+    }
+    
+    public void displayShotCounters(int roomNumber, int[][] cords) {
+      shotlabel[roomNumber] = new JLabel[cords.length];
+      for(int i = 0; i < cords.length; i++) {
+         ImageIcon icon = new ImageIcon("dice/b1.png");
+         shotlabel[roomNumber][i] = new JLabel();
+         shotlabel[roomNumber][i].setIcon(icon);
+         shotlabel[roomNumber][i].setBounds(cords[i][0], cords[i][1], 60, 60);
+         bPane.add(shotlabel[roomNumber][i], new Integer(1));
+      }
     }
     
     public void flipScene(int roomNumber, String imageName) {
@@ -105,7 +128,7 @@ public class BoardLayersListener extends JFrame {
          } else {
             playerlabel[playerNumber].setBounds(roleCords[0] + roomCords[0],roleCords[1] + roomCords[1], playerlabel[playerNumber].getIcon().getIconWidth(), playerlabel[playerNumber].getIcon().getIconHeight());
          }
-         bPane.add(playerlabel[playerNumber], new Integer(2));
+         bPane.add(playerlabel[playerNumber], new Integer[2]);
     }
     
     public void displayMove(int playerNumber, int[] roomCords) {
@@ -128,22 +151,18 @@ public class BoardLayersListener extends JFrame {
       playerlabel[playerNumber].setVisible(true);
     }
     
-    public void playerDisplay(String name, int credits, int dollars, int rank) {
-        JLabel nameLabel = new JLabel("Name: " + name);
+    public void playerDisplay(String name, int money, int credits) {
+        nameLabel = new JLabel("Name: " + name);
         nameLabel.setBounds(boardlabel.getWidth() + 20, bMove.getBounds().y + 30, 100, 20); //location of this may change if move button is no longer smallest button
         bPane.add(nameLabel, new Integer[2]);
 
-        JLabel moneyLabel = new JLabel("Dollars: " + dollars);
+        moneyLabel = new JLabel("Dollars: " + money);
         moneyLabel.setBounds(boardlabel.getWidth() + 30, nameLabel.getBounds().y + 30, 100, 20);
         bPane.add(moneyLabel, new Integer[2]);
 
-        JLabel creditLabel = new JLabel("Credits: " + credits);
+        creditLabel = new JLabel("Credits: " + credits);
         creditLabel.setBounds(boardlabel.getWidth() + 30, moneyLabel.getBounds().y + 30, 100, 20);
         bPane.add(creditLabel, new Integer[2]);
-
-        JLabel rankLabel = new JLabel("Rank: " + rank);
-        rankLabel.setBounds(boardlabel.getWidth() + 30, creditLabel.getBounds().y + 30, 100, 20);
-        bPane.add(rankLabel, new Integer[2]);
     }
 
     public int setTotalPlayers(int n) {

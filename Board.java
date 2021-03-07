@@ -55,6 +55,7 @@ class Board {
             SceneCard randomCard = sceneLibray.getRandomCard();
             boardListener.createScenes(rooms[i].getCords(),"CardBack-small.jpg", i);
             rooms[i].setScene(randomCard);
+            boardListener.displayShotCounters(i, rooms[i].getShotCounterCords());
         }
     }
 
