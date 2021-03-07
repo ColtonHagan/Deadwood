@@ -111,10 +111,10 @@ public class BoardLayersListener extends JFrame {
     public void displayShotCounters(int roomNumber, int[][] cords) {
       shotlabel[roomNumber] = new JLabel[cords.length];
       for(int i = 0; i < cords.length; i++) {
-         ImageIcon icon = new ImageIcon("dice/b1.png");
+         ImageIcon icon = new ImageIcon("clapperboard.png");
          shotlabel[roomNumber][i] = new JLabel();
          shotlabel[roomNumber][i].setIcon(icon);
-         shotlabel[roomNumber][i].setBounds(cords[i][0], cords[i][1], 60, 60);
+         shotlabel[roomNumber][i].setBounds(cords[i][0], cords[i][1] - 15, 60, 60);
          bPane.add(shotlabel[roomNumber][i], new Integer(1));
       }
     }
