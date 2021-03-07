@@ -84,8 +84,6 @@ class GameStateController extends DeadwoodController {
         boardView.bUpgrade.addMouseListener(new boardMouseListener());
         boardView.bTakeRole[0].addMouseListener(new boardMouseListener());
         boardView.bTakeRole[1].addMouseListener(new boardMouseListener());
-        boardView.bPayment[0].addMouseListener(new boardMouseListener());
-        boardView.bPayment[1].addMouseListener(new boardMouseListener());
     }
 
     // Used when shot counter hits zero, for SceneCard ending
@@ -401,7 +399,7 @@ class GameStateController extends DeadwoodController {
 
     class boardMouseListener implements MouseListener {
         public void mouseClicked(MouseEvent e) {
-                // Button for acting
+            // Button for acting
             if (e.getSource() == boardView.bAct) {
                 System.out.println("Act is Selected\n");
                 if (getSystem().checkCanAct()) {
@@ -448,9 +446,30 @@ class GameStateController extends DeadwoodController {
 
                 // Button for Upgrading
             } else if (e.getSource() == boardView.bUpgrade) {
-                System.out.println("Upgrade is Selected\n");
+                if(getSystem().checkCanUpgrade()) {
+                    System.out.println("Upgrade is Selected\n");
                     boardView.hideAll();
+                    for (int i = 0; i < 10; i++) {
+                        if (i < 5) {
+                            boardView.setPayment(i, gameModel.getExactPlayer(0).getCastingOffice().costDollars(i + 2));
+                        } else {
+                            boardView.setPayment(i, gameModel.getExactPlayer(0).getCastingOffice().costCredits(i - 3));
+                        }
+
+                        if (i < 5 && gameModel.getCurrentPlayer().getMoney() >= gameModel.getExactPlayer(0).getCastingOffice().costDollars(i + 2)) {
+                            boardView.bPayment[i].addMouseListener(new boardMouseListener());
+                            boardView.bPayment[i].enable(true);
+                        } else if (i >= 5 && gameModel.getCurrentPlayer().getCredits() >= gameModel.getExactPlayer(0).getCastingOffice().costCredits(i - 3)) {
+                            boardView.bPayment[i].addMouseListener(new boardMouseListener());
+                            boardView.bPayment[i].enable(true);
+                        } else {
+                            boardView.bPayment[i].enable(false);
+                        }
+                    }
                     boardView.showPromptPayment();
+                } else {
+                    System.out.println("Error: Not in office!");
+                }
             }
 
 
@@ -466,19 +485,41 @@ class GameStateController extends DeadwoodController {
                 }
             }
 
+            // Choosing Upgrade Buttons
+            for (int i = 0; i < 10; i++) {
+                if (e.getSource() == boardView.bPayment[i]) {
+                    if (i < 5) {
+                        upgradeRankDollars(i + 2);
+                    } else {
+                        upgradeRankCredits(i - 4);
+                    }
+                    boardView.hidePayments();
+                    boardView.showButtonsDefault();
+                }
+            }
+
             // Choosing Room Buttons
             for (int i = 0; i < boardView.bRooms.length; i++) {
+                boolean workRoom = false;
                 if (e.getSource() == boardView.bRooms[i]) {
                     Room room = roomNameToRoom(boardView.bRooms[i].getText());
                     move(room);
-                    if (!gameModel.getCurrentPlayer().getCurrentRoom().getSceneCard().getFlip()) {
-                        gameModel.getCurrentPlayer().getCurrentRoom().getSceneCard().setFlip(true);
-                        boardView.flipScene(gameModel.getCurrentPlayer().getCurrentRoom().getRoomNumber(), "cards/" + gameModel.getCurrentPlayer().getCurrentRoom().getSceneCard().getImage());
+                    if (!(gameModel.getCurrentPlayer().getCurrentRoom().getSceneCard() == null)) {
+                        if (!gameModel.getCurrentPlayer().getCurrentRoom().getSceneCard().getFlip()) {
+                            gameModel.getCurrentPlayer().getCurrentRoom().getSceneCard().setFlip(true);
+                            boardView.flipScene(gameModel.getCurrentPlayer().getCurrentRoom().getRoomNumber(), "cards/" + gameModel.getCurrentPlayer().getCurrentRoom().getSceneCard().getImage());
+                            workRoom = true;
+                        }
                     }
+
                     //boardView.displayMove(gameModel.getCurrentPlayerInt(), room.getCords());
                     boardView.displayMove(gameModel.getCurrentPlayerInt(), gameModel.getCurrentPlayer().getCurrentRoom().getCords());
                     boardView.hideRooms();
-                    boardView.showPromptTakeRole();
+                    if (workRoom) {
+                        boardView.showPromptTakeRole();
+                    } else {
+                        boardView.showButtonsDefault();
+                    }
 
                     for (JButton b : boardView.bRooms) {
                         b.removeMouseListener(this);
@@ -555,11 +596,6 @@ class GameStateController extends DeadwoodController {
                 }
             }
 
-            if(e.getSource() == boardView.bPayment[0]) {
-
-            } else if(e.getSource() == boardView.bPayment[1]) {
-
-            }
         }
 
         public void mousePressed(MouseEvent e) {

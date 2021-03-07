@@ -79,6 +79,10 @@ class PlayerModel {
         return role.getRank();
     }
 
+    public CastingOffice getCastingOffice() {
+        return office;
+    }
+
     // Setters and Modifiers
     public void updateMoney(int money) {
         this.money = money;

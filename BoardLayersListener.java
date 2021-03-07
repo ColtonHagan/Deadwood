@@ -199,6 +199,16 @@ public class BoardLayersListener extends JFrame {
         return n;
     }
 
+    public void setPayment(int i, int payment) {
+        bPayment[i] = new JButton("" + payment);
+        bPayment[i].setBackground(Color.white);
+        if(i < 5) {
+            bPayment[i].setBounds(boardlabel.getWidth() + 10, 30 + (i * 20), 50, 20);
+        } else {
+            bPayment[i].setBounds(boardlabel.getWidth() + 60, 30 + ((i - 5) * 20), 50, 20);
+        }
+    }
+
     public void updatePlayerIcon(int playerNumber, int rank) {
         String[] diceChoices = {"b", "c", "g", "o", "p", "r", "v", "w", "y"};
         ImageIcon pIcon = new ImageIcon("dice/" + diceChoices[playerNumber] + rank + ".png");
@@ -283,6 +293,7 @@ public class BoardLayersListener extends JFrame {
         // Initialize for rooms and roles
         bRooms = new JButton[0];
         bRoles = new JButton[0];
+        bPayment = new JButton[10];
 
         // Prompt set
         bTakeRole = new JButton[2];
@@ -293,16 +304,6 @@ public class BoardLayersListener extends JFrame {
         bTakeRole[1] = new JButton("No");
         bTakeRole[1].setBackground(Color.white);
         bTakeRole[1].setBounds(boardlabel.getWidth() + 10, 50, 100, 20);
-
-        // Payment Type
-        bPayment = new JButton[2];
-        bPayment[0] = new JButton("Credits");
-        bPayment[0].setBackground(Color.white);
-        bPayment[0].setBounds(boardlabel.getWidth() + 10, 30, 100, 20);
-
-        bPayment[1] = new JButton("Dollars");
-        bPayment[1].setBackground(Color.white);
-        bPayment[1].setBounds(boardlabel.getWidth() + 10, 50, 100, 20);
 
         // Place the action buttons in the top layer
         bPane.add(bAct, new Integer[2]);
@@ -329,8 +330,6 @@ public class BoardLayersListener extends JFrame {
         mLabel.setVisible(false);
         bTakeRole[0].setVisible(false);
         bTakeRole[1].setVisible(false);
-        bPayment[0].setVisible(false);
-        bPayment[1].setVisible(false);
     }
 
     public void hideRoles() {
@@ -345,6 +344,12 @@ public class BoardLayersListener extends JFrame {
             b.setVisible(false);
         }
         mLabel.setVisible(false);
+    }
+
+    public void hidePayments() {
+        for (JButton b : bPayment) {
+            b.setVisible(false);
+        }
     }
     public void hideButtonsPlayerCount() {
         for (JButton b : bPlayerCount) {
@@ -383,11 +388,12 @@ public class BoardLayersListener extends JFrame {
     }
 
     public void showPromptPayment() {
-        mLabel = new JLabel("Payment Type?");
+        mLabel = new JLabel("Dollars | Credits");
         mLabel.setBounds(boardlabel.getWidth() + 40, 0, 100, 20);
         bPane.add(mLabel, new Integer[2]);
 
-        bPayment[0].setVisible(true);
-        bPayment[1].setVisible(true);
+        for(int i = 0; i < 10; i++) {
+            bPayment[i].setVisible(true);
+        }
     }
 }
