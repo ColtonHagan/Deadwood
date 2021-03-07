@@ -75,7 +75,8 @@ class GameStateController extends DeadwoodController {
 
         // Button Setup
         boardView.createButtons();
-        boardView.playerDisplay(gameModel.getCurrentPlayer().getName(), gameModel.getCurrentPlayer().getMoney(), gameModel.getCurrentPlayer().getCredits());
+        boardView.createPlayerDisplay();
+        boardView.updatePlayerDisplay(gameModel.getCurrentPlayer().getName(), gameModel.getCurrentPlayer().getMoney(), gameModel.getCurrentPlayer().getCredits());
         boardView.bAct.addMouseListener(new boardMouseListener());
         boardView.bRehearse.addMouseListener(new boardMouseListener());
         boardView.bMove.addMouseListener(new boardMouseListener());
@@ -317,13 +318,14 @@ class GameStateController extends DeadwoodController {
             gameModel.setCurrentPlayerInt(0);
             updateModel(gameModel.getCurrentPlayer());
         }
+        boardView.updatePlayerDisplay(gameModel.getCurrentPlayer().getName(), gameModel.getCurrentPlayer().getMoney(), gameModel.getCurrentPlayer().getCredits());
         getView().showEndTurn(gameModel.getCurrentPlayer().getName());
-
+   
         // Checks if this is the last Scenecard on board, ends day if true;
         if (gameModel.getBoard().getCurrentRooms() == 1) {
             endDay();
         }
-
+        
         // Resets buttons based on player status
         boardView.hideAll();
         if (gameModel.getCurrentPlayer().getHasRole()) {
@@ -482,7 +484,8 @@ class GameStateController extends DeadwoodController {
                 if (e.getSource() == boardView.bRoles[i]) {
                     Role role = roleNameToRole(boardView.bRoles[i].getText());
                     addRole(role);
-                    boardView.displayMove(gameModel.getCurrentPlayerInt(), gameModel.getCurrentPlayer().getCurrentRoom().getCords());
+                    //boardView.displayMove(gameModel.getCurrentPlayerInt(), gameModel.getCurrentPlayer().getCurrentRoom().getCords());
+                    boardView.displayRole(role, gameModel.getCurrentPlayerInt(), gameModel.getCurrentPlayer().getCurrentRoom().getCords());
                     boardView.hideRoles();
 
                     for (JButton b : boardView.bRoles) {
