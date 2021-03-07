@@ -63,7 +63,6 @@ class GameStateController extends DeadwoodController {
         PlayerModel[] players = new PlayerModel[gameModel.getTotalPlayers()];
         for (int i = 0; i < gameModel.getTotalPlayers(); i++) {
             String name = boardView.createPlayers(i);
-            rank = 6; //REMOVE
             players[i] = new PlayerModel(name, money, credits, rank, gameModel.getBoard().getTrailer());
             boardView.displayMove(i, gameModel.getBoard().getTrailer().getCords());
         }
