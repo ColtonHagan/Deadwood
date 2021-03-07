@@ -63,7 +63,6 @@ class GameStateController extends DeadwoodController {
         PlayerModel[] players = new PlayerModel[gameModel.getTotalPlayers()];
         for (int i = 0; i < gameModel.getTotalPlayers(); i++) {
             String name = boardView.createPlayers(i);
-            rank = 0;
             players[i] = new PlayerModel(name, money, credits, rank, gameModel.getBoard().getTrailer());
             boardView.displayMove(i, gameModel.getBoard().getTrailer().getCords());
         }
@@ -321,6 +320,13 @@ class GameStateController extends DeadwoodController {
         if (gameModel.getBoard().getCurrentRooms() == 1) {
             endDay();
         }
+
+        // Resets buttons based on player status
+        if (gameModel.getCurrentPlayer().getHasRole()) {
+            boardView.showButtonsHasRole();
+        } else {
+            boardView.showButtonsDefault();
+        }
     }
 
     public void endDay() throws Exception {
@@ -447,7 +453,7 @@ class GameStateController extends DeadwoodController {
                     boardView.hideAll();
                     boardView.createButtonsRoles(validNames);
 
-                    for (JButton b : boardView.bRooms) {
+                    for (JButton b : boardView.bRoles) {
                         b.addMouseListener(new boardMouseListener());
                     }
                 }
@@ -489,9 +495,13 @@ class GameStateController extends DeadwoodController {
                 if (e.getSource() == boardView.bRoles[i]) {
                     Role role = roleNameToRole(boardView.bRoles[i].getText());
                     addRole(role);
-                    System.out.println("Role taken: " + boardView.bRoles[i].getText());
                     boardView.displayMove(gameModel.getCurrentPlayerInt(), gameModel.getCurrentPlayer().getCurrentRoom().getCords());
                     boardView.hideRoles();
+                    try {
+                        endTurn();
+                    } catch (Exception exception) {
+                        exception.printStackTrace();
+                    }
                 }
             }
 
@@ -507,20 +517,28 @@ class GameStateController extends DeadwoodController {
                             i++;
                         }
                     }
+                    if(i > 0) {
+                        String[] validNames = new String[i];
+                        for (int j = 0; j < i; j++) {
+                            validNames[j] = valid[j].getName();
+                        }
+                        boardView.hideAll();
+                        boardView.createButtonsRoles(validNames);
 
-                    String[] validNames = new String[i];
-                    for(int j = 0; j <= i; j++) {
-                        validNames[j] = valid[j].getName();
+                        for (JButton b : boardView.bRoles) {
+                            b.addMouseListener(new boardMouseListener());
+                        }
+                    } else {
+                        System.out.println("Cannot take role, no available roles");
+                        boardView.hideRoles();
+                        boardView.showButtonsDefault();
                     }
-                    boardView.hideAll();
-                    boardView.createButtonsRoles(validNames);
-
-                    for (JButton b : boardView.bRooms) {
-                        b.addMouseListener(new boardMouseListener());
-                    }
+                } else {
+                    System.out.println("Cannot take role, already have role");
                 }
             } else if (e.getSource() == boardView.bTakeRole[1]) {
                 try {
+                    boardView.hideAll();
                     endTurn();
                 } catch (Exception exception) {
                     exception.printStackTrace();

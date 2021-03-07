@@ -45,11 +45,7 @@ class Systems {
     public boolean checkRoleValid(Role role) {
         // This makes sure there is a scene card. No scene card, no roles to take.
         if (!(model.getCurrentRoom().getSceneCard() == null)) {
-            boolean onCard = false;
-            if (model.getCurrentRoom().getSceneCard().hasRole(role)) {
-                onCard = true;
-            }
-            return (role.getUsedBy() == null && model.getRank() >= role.getRank() && (onCard || (model.getCurrentRoom().hasRole(role))));
+            return (role.getUsedBy() == null && model.getRank() >= role.getRank());
         } else {
             return false;
         }

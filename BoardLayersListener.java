@@ -72,7 +72,7 @@ public class BoardLayersListener extends JFrame {
         bPane.add(boardlabel, new Integer[0]);
 
         // Set the size of the GUI
-        setSize(icon.getIconWidth() + 200, icon.getIconHeight());
+        setSize(icon.getIconWidth() + 350, icon.getIconHeight());
         // setPreferredSize(new Dimension(icon.getIconWidth()+200,icon.getIconHeight()));
         // setPreferredSize(new Dimension(1280,720));
     }
@@ -199,7 +199,7 @@ public class BoardLayersListener extends JFrame {
         for (int i = 0; i < adjacentRooms.length; i++) {
             bRooms[i] = new JButton(adjacentRooms[i]);
             bRooms[i].setBackground(Color.white);
-            bRooms[i].setBounds(boardlabel.getWidth() + 10, 30 + (i * 20), 100, 20);
+            bRooms[i].setBounds(boardlabel.getWidth() + 10, 30 + (i * 20), 300, 20);
             bPane.add(bRooms[i], new Integer[2]);
         }
     }
@@ -213,7 +213,7 @@ public class BoardLayersListener extends JFrame {
         for (int i = 0; i < roles.length; i++) {
             bRoles[i] = new JButton(roles[i]);
             bRoles[i].setBackground(Color.white);
-            bRoles[i].setBounds(boardlabel.getWidth() + 10, 30 + (i * 20), 100, 20);
+            bRoles[i].setBounds(boardlabel.getWidth() + 10, 30 + (i * 20), 300, 20);
             bPane.add(bRoles[i], new Integer[2]);
         }
     }
@@ -283,6 +283,8 @@ public class BoardLayersListener extends JFrame {
         bWork.setVisible(false);
         bUpgrade.setVisible(false);
         mLabel.setVisible(false);
+        bTakeRole[0].setVisible(false);
+        bTakeRole[1].setVisible(false);
     }
 
     public void hideRoles() {
@@ -314,6 +316,16 @@ public class BoardLayersListener extends JFrame {
         mLabel.setBounds(boardlabel.getWidth() + 40, 0, 100, 20);
         bPane.add(mLabel, new Integer[2]);
     }
+
+    public void showButtonsHasRole() {
+        bAct.setVisible(true);
+        bRehearse.setVisible(true);
+
+        mLabel = new JLabel("Choose Action");
+        mLabel.setBounds(boardlabel.getWidth() + 40, 0, 100, 20);
+        bPane.add(mLabel, new Integer[2]);
+    }
+
 
     public void showPromptTakeRole() {
         // Create the Menu for action buttons
