@@ -111,6 +111,7 @@ class ParseData {
         ArrayList<String> neighbors = new ArrayList<String>();
         int[][] possibleUpgrades = new int[5][3];
         int shotCounters = 0;
+        int roomNumber = 0;
         String name = "";
         int[] cords = new int[2];
 
@@ -157,7 +158,7 @@ class ParseData {
             Role[] roleArray = Arrays.copyOf(roles.toArray(), roles.toArray().length, Role[].class);
             String[] neighborsArray = Arrays.copyOf(neighbors.toArray(), neighbors.toArray().length, String[].class);
             int[] cordsCopy = Arrays.copyOf(cords, cords.length);
-            rooms[i] = new Room(name, shotCounters, roleArray, neighborsArray, cordsCopy);
+            rooms[i] = new Room(name, shotCounters, roleArray, neighborsArray, cordsCopy, i);
             roles.clear();
             neighbors.clear();
         }

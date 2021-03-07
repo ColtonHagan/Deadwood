@@ -12,17 +12,22 @@ public class Room {
     private final String[] adjacentRooms;
     private final String name;
     private final int[] cords;
+    private final int roomNumber;
 
-    public Room(String name, int shotCounters, Role[] extraRoles, String[] adjacentRooms, int[] cords) { //add room number and shot chounter cords
+    public Room(String name, int shotCounters, Role[] extraRoles, String[] adjacentRooms, int[] cords, int roomNumber) { //add room number and shot chounter cords
         this.name = name;
         totalShotCounters = shotCounters;
         currentShotCounters = shotCounters;
         this.extraRoles = extraRoles;
         this.adjacentRooms = adjacentRooms;
         this.cords = cords;
+        this.roomNumber = roomNumber;
     }
 
     // Getters
+    public int getRoomNumber() {
+      return roomNumber;
+    }
     public String[] getAdjacentRooms() {
         return adjacentRooms;
     }

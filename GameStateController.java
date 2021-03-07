@@ -71,7 +71,7 @@ class GameStateController extends DeadwoodController {
         updateModel(gameModel.getCurrentPlayer());
         createOffice(dataParser);
 
-        // playGame();
+        //playGame();
 
         // Button Setup
         boardView.createButtons();
@@ -86,6 +86,7 @@ class GameStateController extends DeadwoodController {
     public void endRoom(Room currentRoom) {
         getView().printSceneEnd();
         bonusPayment(currentRoom);
+        boardView.removeScene(currentRoom.getRoomNumber());
         currentRoom.setScene(null);
         gameModel.getBoard().removeRoom();
         gameModel.getCurrentPlayer().getCurrentRoom().clearExtras();
@@ -142,11 +143,7 @@ class GameStateController extends DeadwoodController {
             getView().noBonusPayment();
         }
     }
-
-
-
-    /*
-    public void playGame() throws Exception {
+    /*public void playGame() throws Exception {
         getView().inputWelcome();
 
         // Plays the game until current day reaches totalDays
@@ -176,6 +173,7 @@ class GameStateController extends DeadwoodController {
                         if (room != null) {
                             move(room);
                             boardView.displayMove(gameModel.getCurrentPlayerInt(), gameModel.getCurrentPlayer().getCurrentRoom().getCords());
+                            boardView.flipScene(gameModel.getCurrentPlayer().getCurrentRoom().getRoomNumber(), "cards/" + gameModel.getCurrentPlayer().getCurrentRoom().getSceneCard().getImage());
                         } else {
                             getView().inputMoveInvalidRoom();
                         }
@@ -276,8 +274,7 @@ class GameStateController extends DeadwoodController {
             }
         }
         endGame();
-    }
-    */
+    }*/
 
     public String getInput() {
         Scanner in = new Scanner(System.in);
@@ -337,7 +334,7 @@ class GameStateController extends DeadwoodController {
     public void endDay() throws Exception {
         // Check if not last day
         if (gameModel.getCurrentDay() < gameModel.getTotalDays()) {
-            gameModel.getBoard().resetBoard(gameModel.getSceneLibrary());
+            gameModel.getBoard().resetBoard(gameModel.getSceneLibrary(), boardView);
         }
 
         // Resets all players for next day and moves them to trailers

@@ -35,11 +35,11 @@ class Board {
     }
 
     // Used on day end to refill shot counters
-    public void resetBoard(Scenes sceneLibray) {
+    public void resetBoard(Scenes sceneLibray, BoardLayersListener boardListener) {
         for (Room room : rooms) {
             room.resetShotCounters();
         }
-        //placeScenes(sceneLibray);
+        placeScenes(sceneLibray, boardListener);
         currentRooms = totalRooms;
     }
 
@@ -53,7 +53,7 @@ class Board {
     public void placeScenes(Scenes sceneLibray, BoardLayersListener boardListener) {
         for (int i = 0; i < rooms.length - 2; i++) {
             SceneCard randomCard = sceneLibray.getRandomCard();
-            boardListener.createScenes(rooms[i].getCords(),randomCard.getImage(), i);
+            boardListener.createScenes(rooms[i].getCords(),"CardBack-small.jpg", i);
             rooms[i].setScene(randomCard);
         }
     }

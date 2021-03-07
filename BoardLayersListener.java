@@ -79,7 +79,7 @@ public class BoardLayersListener extends JFrame {
     public void createScenes(int[] cords, String image, int roomNumber) {
         // Add a scene card to this room
         cardlabel[roomNumber] = new JLabel();
-        ImageIcon cIcon = new ImageIcon("cards/" + image);
+        ImageIcon cIcon = new ImageIcon(image);
         cardlabel[roomNumber].setIcon(cIcon);
         cardlabel[roomNumber].setBounds(cords[0], cords[1], cIcon.getIconWidth(), cIcon.getIconHeight());
         cardlabel[roomNumber].setOpaque(true);
@@ -88,6 +88,15 @@ public class BoardLayersListener extends JFrame {
         bPane.add(cardlabel[roomNumber], new Integer(1));
     }
     
+    public void removeScene(int roomNumber) {
+      cardlabel[roomNumber].setIcon(null);
+    }
+    
+    public void flipScene(int roomNumber, String imageName) {
+      ImageIcon cardIcon = new ImageIcon(imageName);
+      cardlabel[roomNumber].setIcon(cardIcon);
+      bPane.add(cardlabel[roomNumber], new Integer(1));
+    }
     public void displayRole(Role newRole, int playerNumber, int[] roomCords) {
          int[] roleCords = newRole.getCords();
          if(newRole.getExtra()) {
