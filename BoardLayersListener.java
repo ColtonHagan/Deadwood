@@ -38,12 +38,12 @@ public class BoardLayersListener extends JFrame {
     JButton bMove;
     JButton bWork;
     JButton bUpgrade;
+    JButton bCancel;
     JButton[] bRooms;
     JButton[] bRoles;
     JButton[] bPlayerCount;
     JButton[] bTakeRole;
     JButton[] bPayment;
-    JButton[] bRank;
 
     // JLayered Pane
     JLayeredPane bPane;
@@ -296,6 +296,10 @@ public class BoardLayersListener extends JFrame {
         bUpgrade.setBackground(Color.white);
         bUpgrade.setBounds(boardlabel.getWidth() + 10, 60, 100, 20);
 
+        bCancel = new JButton("Cancel");
+        bCancel.setBackground(Color.white);
+        bCancel.setBounds(boardlabel.getWidth() + 10, bMove.getBounds().y + 100, 150, 20);
+
         // Initialize for rooms and roles
         bRooms = new JButton[0];
         bRoles = new JButton[0];
@@ -317,6 +321,7 @@ public class BoardLayersListener extends JFrame {
         bPane.add(bMove, new Integer[2]);
         bPane.add(bWork, new Integer[2]);
         bPane.add(bUpgrade, new Integer[2]);
+        bPane.add(bCancel, new Integer[2]);
         bPane.add(bTakeRole[0], new Integer[2]);
         bPane.add(bTakeRole[1], new Integer[2]);
 
@@ -325,6 +330,7 @@ public class BoardLayersListener extends JFrame {
         bRehearse.setVisible(false);
         bTakeRole[0].setVisible(false);
         bTakeRole[1].setVisible(false);
+        bCancel.setVisible(false);
     }
 
     public void hideAll() {
@@ -340,23 +346,30 @@ public class BoardLayersListener extends JFrame {
 
     public void hideRoles() {
         for (JButton b : bRoles) {
-            b.setVisible(false);
+            if (!(b == null)) {
+                b.setVisible(false);
+            }
         }
         mLabel.setVisible(false);
     }
 
     public void hideRooms() {
         for (JButton b : bRooms) {
-            b.setVisible(false);
+            if (!(b == null)) {
+                b.setVisible(false);
+            }
         }
         mLabel.setVisible(false);
     }
 
     public void hidePayments() {
         for (JButton b : bPayment) {
-            b.setVisible(false);
+            if (!(b == null)) {
+                b.setVisible(false);
+            }
         }
         mLabel.setVisible(false);
+        bCancel.setVisible(false);
     }
     public void hideButtonsPlayerCount() {
         for (JButton b : bPlayerCount) {
@@ -402,5 +415,6 @@ public class BoardLayersListener extends JFrame {
         for(int i = 0; i < 10; i++) {
             bPayment[i].setVisible(true);
         }
+        bCancel.setVisible(true);
     }
 }
