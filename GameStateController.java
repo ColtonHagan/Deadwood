@@ -57,12 +57,12 @@ class GameStateController extends DeadwoodController {
             String name = boardView.createPlayers(i);
             rank = 6; //testing 
             players[i] = new PlayerModel(name, money, credits, rank, gameModel.getBoard().getTrailer());
+            boardView.displayMove(i, gameModel.getBoard().getTrailer().getCords());
         }
 
         gameModel.setAllPlayers(players);
         updateModel(gameModel.getCurrentPlayer());
         createOffice(dataParser);
-
         playGame();
     }
 
@@ -157,6 +157,7 @@ class GameStateController extends DeadwoodController {
                         Room room = roomNameToRoom(roomName);
                         if (room != null) {
                             move(room);
+                            boardView.displayMove(gameModel.getCurrentPlayerInt(), gameModel.getCurrentPlayer().getCurrentRoom().getCords());
                         } else {
                             getView().inputMoveInvalidRoom();
                         }

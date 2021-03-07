@@ -80,14 +80,34 @@ public class BoardLayersListener extends JFrame {
     
     public void displayRole(Role newRole, int playerNumber, int[] roomCords) {
          int[] roleCords = newRole.getCords();
-         System.out.println(Arrays.toString(roleCords));
          if(newRole.getExtra()) {
             playerlabel[playerNumber].setBounds(roleCords[0] + roomCords[0],roleCords[1] + roomCords[1], playerlabel[playerNumber].getIcon().getIconWidth(), playerlabel[playerNumber].getIcon().getIconHeight());
          } else {
             playerlabel[playerNumber].setBounds(roleCords[0] + roomCords[0],roleCords[1] + roomCords[1], playerlabel[playerNumber].getIcon().getIconWidth(), playerlabel[playerNumber].getIcon().getIconHeight());
          }
          bPane.add(playerlabel[playerNumber], new Integer(2));
-         
+    }
+    
+    public void displayMove(int playerNumber, int[] roomCords) {
+      int y = roomCords[1]+100;
+      int x = roomCords[0];
+      int slotsOver = 0;
+      boolean playerOnLocation = false;
+      //checks if current player is at locationg
+      for(int i = 0; i < playerlabel.length; i++) {
+         if(playerlabel[i].getLocation().x == x && playerlabel[i].getLocation().y == y) {
+            playerOnLocation = true;
+            slotsOver++;
+            x += playerlabel[playerNumber].getIcon().getIconHeight();
+            if(slotsOver == 4) {
+               y += playerlabel[playerNumber].getIcon().getIconHeight();
+               x = roomCords[0];
+            }
+         }
+      }
+      playerlabel[playerNumber].setBounds(x,y, playerlabel[playerNumber].getIcon().getIconWidth(), playerlabel[playerNumber].getIcon().getIconHeight());
+      bPane.add(playerlabel[playerNumber], new Integer(2));
+      playerlabel[playerNumber].setVisible(true);
     }
     
     public void playerDisplay(String name, int credits, int dollars, int rank) {
@@ -125,14 +145,14 @@ public class BoardLayersListener extends JFrame {
 
             //playerlabel.setBounds(114,227,pIcon.getIconWidth(),pIcon.getIconHeight());
             //playerlabel[playerNumber].setBounds(114, 227, 46, 46);
-            if(i < 4) {
+            /*if(i < 4) {
                 playerlabel[i].setBounds(991 + (46*i), 248, 46, 46);
             } else {
                 playerlabel[i].setBounds(991 + (46*(i - 4)), 294, 46, 46);
-            }
-
+            }*/
+            playerlabel[i].setBounds(0, 0, 46, 46);
             playerlabel[i].setOpaque(true);
-            playerlabel[i].setVisible(true);
+            playerlabel[i].setVisible(false);
             bPane.add(playerlabel[i], new Integer[3]);
         }
         return n;
