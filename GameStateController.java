@@ -63,6 +63,7 @@ class GameStateController extends DeadwoodController {
         PlayerModel[] players = new PlayerModel[gameModel.getTotalPlayers()];
         for (int i = 0; i < gameModel.getTotalPlayers(); i++) {
             String name = boardView.createPlayers(i);
+            rank = 6; //REMOVE
             players[i] = new PlayerModel(name, money, credits, rank, gameModel.getBoard().getTrailer());
             boardView.displayMove(i, gameModel.getBoard().getTrailer().getCords());
         }
@@ -76,7 +77,7 @@ class GameStateController extends DeadwoodController {
         // Button Setup
         boardView.createButtons();
         boardView.createPlayerDisplay();
-        boardView.updatePlayerDisplay(gameModel.getCurrentPlayer().getName(), gameModel.getCurrentPlayer().getMoney(), gameModel.getCurrentPlayer().getCredits());
+        boardView.updatePlayerDisplay(gameModel.getCurrentPlayer().getName(), gameModel.getCurrentPlayer().getMoney(), gameModel.getCurrentPlayer().getCredits(), 0);
         boardView.bAct.addMouseListener(new boardMouseListener());
         boardView.bRehearse.addMouseListener(new boardMouseListener());
         boardView.bMove.addMouseListener(new boardMouseListener());
@@ -316,7 +317,7 @@ class GameStateController extends DeadwoodController {
             gameModel.setCurrentPlayerInt(0);
             updateModel(gameModel.getCurrentPlayer());
         }
-        boardView.updatePlayerDisplay(gameModel.getCurrentPlayer().getName(), gameModel.getCurrentPlayer().getMoney(), gameModel.getCurrentPlayer().getCredits());
+        boardView.updatePlayerDisplay(gameModel.getCurrentPlayer().getName(), gameModel.getCurrentPlayer().getMoney(), gameModel.getCurrentPlayer().getCredits(), gameModel.getCurrentPlayerInt());
         getView().showEndTurn(gameModel.getCurrentPlayer().getName());
    
         // Checks if this is the last Scenecard on board, ends day if true;

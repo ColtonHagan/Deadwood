@@ -27,6 +27,7 @@ public class BoardLayersListener extends JFrame {
     JLabel nameLabel;
     JLabel creditLabel;
     JLabel moneyLabel;
+    JLabel diceLabel;
     JLabel[] cardlabel;
     JLabel[] playerlabel;
     JLabel[][] shotlabel;
@@ -153,7 +154,7 @@ public class BoardLayersListener extends JFrame {
     
     public void createPlayerDisplay() {
         nameLabel = new JLabel();
-        nameLabel.setBounds(boardlabel.getWidth() + 20, bMove.getBounds().y + 30, 100, 20); //location of this may change if move button is no longer smallest button
+        nameLabel.setBounds(boardlabel.getWidth() + 20, bMove.getBounds().y + 100, 100, 20); //location of this may change if move button is no longer lowest button
         bPane.add(nameLabel, new Integer[2]);
 
         moneyLabel = new JLabel();
@@ -163,12 +164,18 @@ public class BoardLayersListener extends JFrame {
         creditLabel = new JLabel();
         creditLabel.setBounds(boardlabel.getWidth() + 30, moneyLabel.getBounds().y + 30, 100, 20);
         bPane.add(creditLabel, new Integer[2]);
+        
+        diceLabel = new JLabel();
+        diceLabel.setBounds(moneyLabel.getLocation().x + 250, moneyLabel.getBounds().y, playerlabel[0].getIcon().getIconWidth(), playerlabel[0].getIcon().getIconHeight());
+        bPane.add(diceLabel, new Integer[2]);
     }
     
-    public void updatePlayerDisplay(String name, int money, int credits) {
+    public void updatePlayerDisplay(String name, int money, int credits, int activePlayer) {
       nameLabel.setText("Name: " + name);
       moneyLabel.setText("Dollars: " + money);
       creditLabel.setText("Credits: " + credits);
+      diceLabel.setIcon(null);
+      diceLabel.setIcon(playerlabel[activePlayer].getIcon());
     }
 
     public int setTotalPlayers(int n) {
