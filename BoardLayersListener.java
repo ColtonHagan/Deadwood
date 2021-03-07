@@ -185,11 +185,19 @@ public class BoardLayersListener extends JFrame {
         }
     }
 
-    public void removeButtonsPlayerCount() {
-        for (JButton b : bPlayerCount) {
-            b.setVisible(false);
+    public void createButtonsRooms(String[] adjacentRooms) {
+        mLabel = new JLabel("Choose Room");
+        mLabel.setBounds(boardlabel.getWidth() + 40, 0, 100, 20);
+        bPane.add(mLabel, new Integer[2]);
+
+        bRooms = new JButton[adjacentRooms.length];
+        for (int i = 0; i < adjacentRooms.length; i++) {
+            bRooms[i] = new JButton(adjacentRooms[i]);
+            bRooms[i].setBackground(Color.white);
+            bRooms[i].setBounds(boardlabel.getWidth() + 10, 30 + (i * 20), 100, 20);
+            bPane.add(bRooms[i], new Integer[2]);
         }
-        mLabel.setVisible(false);
+
     }
 
     public void createButtons() {
@@ -220,6 +228,8 @@ public class BoardLayersListener extends JFrame {
         bMove.setBackground(Color.white);
         bMove.setBounds(boardlabel.getWidth() + 10, 90, 100, 20);
 
+        bRooms = new JButton[4];
+
         // Place the action buttons in the top layer
         bPane.add(bAct, new Integer[2]);
         bPane.add(bRehearse, new Integer[2]);
@@ -238,6 +248,13 @@ public class BoardLayersListener extends JFrame {
         bMove.setVisible(false);
         bWork.setVisible(false);
         bUpgrade.setVisible(false);
+        mLabel.setVisible(false);
+    }
+
+    public void hideButtonsPlayerCount() {
+        for (JButton b : bPlayerCount) {
+            b.setVisible(false);
+        }
         mLabel.setVisible(false);
     }
 

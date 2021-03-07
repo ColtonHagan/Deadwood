@@ -4,6 +4,7 @@ Class : CS 345
 Date : 2/23/21
 Program Description : Controls how/when game progresses
 */
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseEvent;
@@ -22,14 +23,14 @@ class GameStateController extends DeadwoodController {
     }
 
     public void preSetUp() {
-        for (int i = 0; i < 7; i++){
+        for (int i = 0; i < 7; i++) {
             boardView.bPlayerCount[i].addMouseListener(new boardMouseListener());
         }
     }
 
     public void setUpGame() throws Exception {
         // Remove Buttons for choosing player count
-        boardView.removeButtonsPlayerCount();
+        boardView.hideButtonsPlayerCount();
 
         int rank = 1;
         int money = 0;
@@ -281,15 +282,6 @@ class GameStateController extends DeadwoodController {
         return in.nextLine();
     }
 
-
-    public String concatenateArray(String[] array, int startIndex, int endIndex) {
-        String combined = array[startIndex];
-        for (int i = startIndex + 1; i <= endIndex; i++) {
-            combined += " " + array[i];
-        }
-        return combined;
-    }
-
     // For finding the specific Room from its roomName (given from user input in console)
     public Room roomNameToRoom(String roomName) {
         for (Room room : gameModel.getBoard().allRooms()) {
@@ -348,7 +340,7 @@ class GameStateController extends DeadwoodController {
         getView().showEndDay();
         gameModel.setCurrentDay(gameModel.getCurrentDay() + 1);
 
-        if(gameModel.getCurrentDay() >= gameModel.getTotalDays()) {
+        if (gameModel.getCurrentDay() >= gameModel.getTotalDays()) {
             endGame();
         }
     }
@@ -428,59 +420,49 @@ class GameStateController extends DeadwoodController {
             } else if (e.getSource() == boardView.bMove) {
                 System.out.println("Move is Selected\n");
                 if (getSystem().checkCanMove()) {
+                    String[] adjacentRooms = gameModel.getCurrentPlayer().getCurrentRoom().getAdjacentRooms();
+                    boardView.hideAll();
+                    boardView.createButtonsRooms(adjacentRooms);
 
+                    for (JButton b : boardView.bRooms) {
+                        b.addMouseListener(new boardMouseListener());
+                    }
                 }
             }
 
+/*
+            if (e.getSource() == boardView.bRooms[0]) {
+                Room room = roomNameToRoom(boardView.bRooms[0].toString());
+                move(room);
+                boardView.displayMove(gameModel.getCurrentPlayerInt(), room.getCords());
+                boardView.displayMove(gameModel.getCurrentPlayerInt(), gameModel.getCurrentPlayer().getCurrentRoom().getCords());
+            } else if (e.getSource() == boardView.bRooms[0]) {
+                Room room = roomNameToRoom(boardView.bRooms.toString());
+                move(room);
+                boardView.displayMove(gameModel.getCurrentPlayerInt(), room.getCords());
+                boardView.displayMove(gameModel.getCurrentPlayerInt(), gameModel.getCurrentPlayer().getCurrentRoom().getCords());
+            }
+*/
+
             //Game Setup stuff
-            if (e.getSource() == boardView.bPlayerCount[0]) {
-                gameModel.setTotalPlayers(2);
-                try {
-                    setUpGame();
-                } catch (Exception exception) {
-                    exception.printStackTrace();
+            for(int i = 0; i < 7; i++) {
+                if (e.getSource() == boardView.bPlayerCount[i]) {
+                    gameModel.setTotalPlayers(i + 2);
+                    try {
+                        setUpGame();
+                    } catch (Exception exception) {
+                        exception.printStackTrace();
+                    }
                 }
-            } else if (e.getSource() == boardView.bPlayerCount[1]) {
-                gameModel.setTotalPlayers(3);
-                try {
-                    setUpGame();
-                } catch (Exception exception) {
-                    exception.printStackTrace();
-                }
-            } else if (e.getSource() == boardView.bPlayerCount[2]) {
-                gameModel.setTotalPlayers(4);
-                try {
-                    setUpGame();
-                } catch (Exception exception) {
-                    exception.printStackTrace();
-                }
-            } else if (e.getSource() == boardView.bPlayerCount[3]) {
-                gameModel.setTotalPlayers(5);
-                try {
-                    setUpGame();
-                } catch (Exception exception) {
-                    exception.printStackTrace();
-                }
-            } else if (e.getSource() == boardView.bPlayerCount[4]) {
-                gameModel.setTotalPlayers(6);
-                try {
-                    setUpGame();
-                } catch (Exception exception) {
-                    exception.printStackTrace();
-                }
-            } else if (e.getSource() == boardView.bPlayerCount[5]) {
-                gameModel.setTotalPlayers(7);
-                try {
-                    setUpGame();
-                } catch (Exception exception) {
-                    exception.printStackTrace();
-                }
-            } else if (e.getSource() == boardView.bPlayerCount[6]) {
-                gameModel.setTotalPlayers(8);
-                try {
-                    setUpGame();
-                } catch (Exception exception) {
-                    exception.printStackTrace();
+            }
+
+            //Room Buttons
+            for (int i = 0; i < boardView.bRooms.length; i++) {
+                if (e.getSource() == boardView.bRooms[i]) {
+                    Room room = roomNameToRoom(boardView.bRooms[i].getText());
+                    move(room);
+                    //boardView.displayMove(gameModel.getCurrentPlayerInt(), room.getCords());
+                    boardView.displayMove(gameModel.getCurrentPlayerInt(), gameModel.getCurrentPlayer().getCurrentRoom().getCords());
                 }
             }
         }
