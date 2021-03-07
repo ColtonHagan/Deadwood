@@ -13,7 +13,7 @@ public class Room {
     private final String name;
     private final int[] cords;
 
-    public Room(String name, int shotCounters, Role[] extraRoles, String[] adjacentRooms, int[] cords) {
+    public Room(String name, int shotCounters, Role[] extraRoles, String[] adjacentRooms, int[] cords) { //add room number and shot chounter cords
         this.name = name;
         totalShotCounters = shotCounters;
         currentShotCounters = shotCounters;
