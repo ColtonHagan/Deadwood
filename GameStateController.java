@@ -62,6 +62,7 @@ class GameStateController extends DeadwoodController {
         PlayerModel[] players = new PlayerModel[gameModel.getTotalPlayers()];
         for (int i = 0; i < gameModel.getTotalPlayers(); i++) {
             String name = boardView.createPlayers(i);
+            rank = 6; //testing 
             players[i] = new PlayerModel(name, money, credits, rank, gameModel.getBoard().getTrailer());
         }
 
@@ -189,6 +190,7 @@ class GameStateController extends DeadwoodController {
                         if (role != null) {
                             if (getSystem().checkCanAddRole(role)) {
                                 addRole(role);
+                                boardView.displayRole(role, gameModel.getCurrentPlayerInt(), gameModel.getCurrentPlayer().getCurrentRoom().getCords());
                                 role.setUsedBy(gameModel.getCurrentPlayer());
                             } else {
                                 getView().printAddRoleError();

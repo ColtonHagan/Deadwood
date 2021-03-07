@@ -7,6 +7,11 @@
 
 */
 
+//for testing
+import java.io.*; 
+import java.util.*; 
+
+
 import java.awt.*;
 import javax.swing.*;
 import javax.swing.ImageIcon;
@@ -76,13 +81,25 @@ public class BoardLayersListener extends JFrame {
         cardlabel[roomNumber] = new JLabel();
         ImageIcon cIcon = new ImageIcon("cards/" + image);
         cardlabel[roomNumber].setIcon(cIcon);
-        cardlabel[roomNumber].setBounds(cords[0], cords[1], cIcon.getIconWidth() + 2, cIcon.getIconHeight());
+        cardlabel[roomNumber].setBounds(cords[0], cords[1], cIcon.getIconWidth(), cIcon.getIconHeight());
         cardlabel[roomNumber].setOpaque(true);
 
         // Add the card to the lower layer
         bPane.add(cardlabel[roomNumber], new Integer(1));
     }
-
+    
+    public void displayRole(Role newRole, int playerNumber, int[] roomCords) {
+         int[] roleCords = newRole.getCords();
+         System.out.println(Arrays.toString(roleCords));
+         if(newRole.getExtra()) {
+            playerlabel[playerNumber].setBounds(roleCords[0] + roomCords[0],roleCords[1] + roomCords[1], playerlabel[playerNumber].getIcon().getIconWidth(), playerlabel[playerNumber].getIcon().getIconHeight());
+         } else {
+            playerlabel[playerNumber].setBounds(roleCords[0] + roomCords[0],roleCords[1] + roomCords[1], playerlabel[playerNumber].getIcon().getIconWidth(), playerlabel[playerNumber].getIcon().getIconHeight());
+         }
+         bPane.add(playerlabel[playerNumber], new Integer(2));
+         
+    }
+    
     public void playerDisplay(String name, int credits, int dollars, int rank) {
         JLabel nameLabel = new JLabel("Name: " + name);
         nameLabel.setBounds(boardlabel.getWidth() + 20, bMove.getBounds().y + 30, 100, 20); //location of this may change if move button is no longer smallest button
@@ -105,12 +122,11 @@ public class BoardLayersListener extends JFrame {
         // Add a dice to represent a player.
         // Role for Crusty the prospector. The x and y co-ordiantes are taken from Board.xml file
         playerlabel = new JLabel[n];
-
         ImageIcon[] pIcon = new ImageIcon[n];
         String[] diceChoices = {"b1.png", "c1.png", "g1.png", "o1.png", "p1.png", "r1.png", "v1.png", "w1.png", "y1.png"};
         for (int i = 0; i < n; i++) {
             playerlabel[i] = new JLabel();
-            pIcon[i] = new ImageIcon(diceChoices[i]);
+            pIcon[i] = new ImageIcon("dice/" + diceChoices[i]);
             playerlabel[i].setIcon(pIcon[i]);
 
             //playerlabel.setBounds(114,227,pIcon.getIconWidth(),pIcon.getIconHeight());

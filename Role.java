@@ -33,6 +33,10 @@ public class Role {
     public PlayerModel getUsedBy() {
         return usedBy;
     }
+    
+    public int[] getCords() {
+      return cords;
+    }
 
     public String getName() {
         return name;
