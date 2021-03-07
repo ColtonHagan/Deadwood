@@ -344,8 +344,10 @@ class GameStateController extends DeadwoodController {
         }
 
         // Resets all players for next day and moves them to trailers
-        for (PlayerModel player : gameModel.getPlayers()) {
+        for (int i = 0; i < gameModel.getPlayers().length; i++) {
+            PlayerModel player = gameModel.getPlayers()[i];
             player.updateCurrentRoom(gameModel.getBoard().getTrailer());
+            boardView.displayMove(i, gameModel.getBoard().getTrailer().getCords());
             player.removeRole();
             player.updatePracticeChips(0);
             clearWorked();
