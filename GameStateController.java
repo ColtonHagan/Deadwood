@@ -389,7 +389,7 @@ class GameStateController extends DeadwoodController {
     class boardMouseListener implements MouseListener {
         public void mouseClicked(MouseEvent e) {
             if (e.getSource() == boardView.bAct) {
-                System.out.println("Acting is Selected\n");
+                System.out.println("Act is Selected\n");
                 if (getSystem().checkCanAct()) {
                     act();
                     if (gameModel.getCurrentPlayer().getCurrentRoom().getShotCounters() == 0) {
@@ -428,23 +428,32 @@ class GameStateController extends DeadwoodController {
                         b.addMouseListener(new boardMouseListener());
                     }
                 }
+            } else if (e.getSource() == boardView.bWork) {
+                System.out.println("Work is Selected\n");
+                if (getSystem().checkCanAddRole()) {
+                    int i = 0;
+                    Role[] valid = new Role[gameModel.getCurrentPlayer().getCurrentRoom().availableRoles().length];
+                    for (Role r: gameModel.getCurrentPlayer().getCurrentRoom().availableRoles()) {
+                        if(getSystem().checkRoleValid(r)) {
+                            valid[i] = r;
+                            i++;
+                        }
+                    }
+
+                    String[] validNames = new String[i];
+                    for(int j = 0; j <= i; j++) {
+                        validNames[j] = valid[j].toString();
+                    }
+                    boardView.hideAll();
+                    boardView.createButtonsRoles(validNames);
+
+                    for (JButton b : boardView.bRooms) {
+                        b.addMouseListener(new boardMouseListener());
+                    }
+                }
             }
 
-/*
-            if (e.getSource() == boardView.bRooms[0]) {
-                Room room = roomNameToRoom(boardView.bRooms[0].toString());
-                move(room);
-                boardView.displayMove(gameModel.getCurrentPlayerInt(), room.getCords());
-                boardView.displayMove(gameModel.getCurrentPlayerInt(), gameModel.getCurrentPlayer().getCurrentRoom().getCords());
-            } else if (e.getSource() == boardView.bRooms[0]) {
-                Room room = roomNameToRoom(boardView.bRooms.toString());
-                move(room);
-                boardView.displayMove(gameModel.getCurrentPlayerInt(), room.getCords());
-                boardView.displayMove(gameModel.getCurrentPlayerInt(), gameModel.getCurrentPlayer().getCurrentRoom().getCords());
-            }
-*/
-
-            //Game Setup stuff
+            // Game Setup stuff
             for(int i = 0; i < 7; i++) {
                 if (e.getSource() == boardView.bPlayerCount[i]) {
                     gameModel.setTotalPlayers(i + 2);
@@ -456,7 +465,7 @@ class GameStateController extends DeadwoodController {
                 }
             }
 
-            //Room Buttons
+            // Room Buttons
             for (int i = 0; i < boardView.bRooms.length; i++) {
                 if (e.getSource() == boardView.bRooms[i]) {
                     Room room = roomNameToRoom(boardView.bRooms[i].getText());
@@ -467,6 +476,54 @@ class GameStateController extends DeadwoodController {
                     }
                     //boardView.displayMove(gameModel.getCurrentPlayerInt(), room.getCords());
                     boardView.displayMove(gameModel.getCurrentPlayerInt(), gameModel.getCurrentPlayer().getCurrentRoom().getCords());
+                    boardView.hideRooms();
+
+                    boardView.bTakeRole[0].addMouseListener(new boardMouseListener());
+                    boardView.bTakeRole[1].addMouseListener(new boardMouseListener());
+                    boardView.showPromptTakeRole();
+                }
+            }
+
+            // Role Buttons
+            for (int i = 0; i < boardView.bRoles.length; i++) {
+                if (e.getSource() == boardView.bRoles[i]) {
+                    Role role = roleNameToRole(boardView.bRoles[i].getText());
+                    addRole(role);
+                    System.out.println("Role taken: " + boardView.bRoles[i].getText());
+                    boardView.displayMove(gameModel.getCurrentPlayerInt(), gameModel.getCurrentPlayer().getCurrentRoom().getCords());
+                    boardView.hideRoles();
+                }
+            }
+
+            // After moving, prompt if user wants to take role
+            if(e.getSource() == boardView.bTakeRole[0]) {
+                System.out.println("Taking a Role Selected");
+                if (getSystem().checkCanAddRole()) {
+                    int i = 0;
+                    Role[] valid = new Role[gameModel.getCurrentPlayer().getCurrentRoom().availableRoles().length];
+                    for (Role r: gameModel.getCurrentPlayer().getCurrentRoom().availableRoles()) {
+                        if(getSystem().checkRoleValid(r)) {
+                            valid[i] = r;
+                            i++;
+                        }
+                    }
+
+                    String[] validNames = new String[i];
+                    for(int j = 0; j <= i; j++) {
+                        validNames[j] = valid[j].getName();
+                    }
+                    boardView.hideAll();
+                    boardView.createButtonsRoles(validNames);
+
+                    for (JButton b : boardView.bRooms) {
+                        b.addMouseListener(new boardMouseListener());
+                    }
+                }
+            } else if (e.getSource() == boardView.bTakeRole[1]) {
+                try {
+                    endTurn();
+                } catch (Exception exception) {
+                    exception.printStackTrace();
                 }
             }
         }
