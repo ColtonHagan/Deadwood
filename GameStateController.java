@@ -496,7 +496,8 @@ class GameStateController extends DeadwoodController {
                 if (e.getSource() == boardView.bRoles[i]) {
                     Role role = roleNameToRole(boardView.bRoles[i].getText());
                     addRole(role);
-                    boardView.displayMove(gameModel.getCurrentPlayerInt(), gameModel.getCurrentPlayer().getCurrentRoom().getCords());
+                    //boardView.displayMove(gameModel.getCurrentPlayerInt(), gameModel.getCurrentPlayer().getCurrentRoom().getCords());
+                    boardView.displayRole(role, gameModel.getCurrentPlayerInt(), gameModel.getCurrentPlayer().getCurrentRoom().getCords());
                     boardView.hideRoles();
                     try {
                         endTurn();

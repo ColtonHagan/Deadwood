@@ -124,7 +124,7 @@ public class BoardLayersListener extends JFrame {
     public void displayRole(Role newRole, int playerNumber, int[] roomCords) {
          int[] roleCords = newRole.getCords();
          if(newRole.getExtra()) {
-            playerlabel[playerNumber].setBounds(roleCords[0] + roomCords[0],roleCords[1] + roomCords[1], playerlabel[playerNumber].getIcon().getIconWidth(), playerlabel[playerNumber].getIcon().getIconHeight());
+            playerlabel[playerNumber].setBounds(roleCords[0],roleCords[1], playerlabel[playerNumber].getIcon().getIconWidth(), playerlabel[playerNumber].getIcon().getIconHeight());
          } else {
             playerlabel[playerNumber].setBounds(roleCords[0] + roomCords[0],roleCords[1] + roomCords[1], playerlabel[playerNumber].getIcon().getIconWidth(), playerlabel[playerNumber].getIcon().getIconHeight());
          }
