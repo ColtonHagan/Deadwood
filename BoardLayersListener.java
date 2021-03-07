@@ -151,18 +151,24 @@ public class BoardLayersListener extends JFrame {
       playerlabel[playerNumber].setVisible(true);
     }
     
-    public void playerDisplay(String name, int money, int credits) {
-        nameLabel = new JLabel("Name: " + name);
+    public void createPlayerDisplay() {
+        nameLabel = new JLabel();
         nameLabel.setBounds(boardlabel.getWidth() + 20, bMove.getBounds().y + 30, 100, 20); //location of this may change if move button is no longer smallest button
         bPane.add(nameLabel, new Integer[2]);
 
-        moneyLabel = new JLabel("Dollars: " + money);
+        moneyLabel = new JLabel();
         moneyLabel.setBounds(boardlabel.getWidth() + 30, nameLabel.getBounds().y + 30, 100, 20);
         bPane.add(moneyLabel, new Integer[2]);
 
-        creditLabel = new JLabel("Credits: " + credits);
+        creditLabel = new JLabel();
         creditLabel.setBounds(boardlabel.getWidth() + 30, moneyLabel.getBounds().y + 30, 100, 20);
         bPane.add(creditLabel, new Integer[2]);
+    }
+    
+    public void updatePlayerDisplay(String name, int money, int credits) {
+      nameLabel.setText("Name: " + name);
+      moneyLabel.setText("Dollars: " + money);
+      creditLabel.setText("Credits: " + credits);
     }
 
     public int setTotalPlayers(int n) {

@@ -75,7 +75,8 @@ class GameStateController extends DeadwoodController {
 
         // Button Setup
         boardView.createButtons();
-        boardView.playerDisplay(gameModel.getCurrentPlayer().getName(), gameModel.getCurrentPlayer().getMoney(), gameModel.getCurrentPlayer().getCredits());
+        boardView.createPlayerDisplay();
+        boardView.updatePlayerDisplay(gameModel.getCurrentPlayer().getName(), gameModel.getCurrentPlayer().getMoney(), gameModel.getCurrentPlayer().getCredits());
         boardView.bAct.addMouseListener(new boardMouseListener());
         boardView.bRehearse.addMouseListener(new boardMouseListener());
         boardView.bMove.addMouseListener(new boardMouseListener());
@@ -315,13 +316,14 @@ class GameStateController extends DeadwoodController {
             gameModel.setCurrentPlayerInt(0);
             updateModel(gameModel.getCurrentPlayer());
         }
+        boardView.updatePlayerDisplay(gameModel.getCurrentPlayer().getName(), gameModel.getCurrentPlayer().getMoney(), gameModel.getCurrentPlayer().getCredits());
         getView().showEndTurn(gameModel.getCurrentPlayer().getName());
-
+   
         // Checks if this is the last Scenecard on board, ends day if true;
         if (gameModel.getBoard().getCurrentRooms() == 1) {
             endDay();
         }
-
+        
         // Resets buttons based on player status
         if (gameModel.getCurrentPlayer().getHasRole()) {
             boardView.showButtonsHasRole();
