@@ -82,6 +82,7 @@ class GameStateController extends DeadwoodController {
         boardView.bMove.addMouseListener(new boardMouseListener());
         boardView.bWork.addMouseListener(new boardMouseListener());
         boardView.bUpgrade.addMouseListener(new boardMouseListener());
+        boardView.bCancel.addMouseListener(new boardMouseListener());
         boardView.bTakeRole[0].addMouseListener(new boardMouseListener());
         boardView.bTakeRole[1].addMouseListener(new boardMouseListener());
     }
@@ -99,10 +100,10 @@ class GameStateController extends DeadwoodController {
         for (int i = 0; i < gameModel.getPlayers().length; i++) {
             PlayerModel player = gameModel.getPlayers()[i];
             if (player.getCurrentRoom() == currentRoom) {
-               player.removeRole();
-               player.updateHasRole(false);
-               player.updatePracticeChips(0);
-               boardView.displayMove(i,gameModel.getCurrentPlayer().getCurrentRoom().getCords());
+                player.removeRole();
+                player.updateHasRole(false);
+                player.updatePracticeChips(0);
+                boardView.displayMove(i, gameModel.getCurrentPlayer().getCurrentRoom().getCords());
             }
         }
         gameModel.getCurrentPlayer().updateMoved(true);
@@ -149,138 +150,6 @@ class GameStateController extends DeadwoodController {
             getView().noBonusPayment();
         }
     }
-    /*public void playGame() throws Exception {
-        getView().inputWelcome();
-
-        // Plays the game until current day reaches totalDays
-        while (gameModel.getCurrentDay() <= gameModel.getTotalDays()) {
-            getView().inputChoose();
-            String[] userInputArray = getInput().split(" ");
-            switch (userInputArray[0]) {
-                case "Upgrade":
-                    if (userInputArray.length == 3) {
-                        int targetRank = Integer.parseInt(userInputArray[2]);
-                        if (userInputArray[1].equals("Credits")) {
-                            upgradeRankCredits(targetRank);
-                        } else if (userInputArray[1].equals("Dollars")) {
-                            upgradeRankDollars(targetRank);
-                        } else {
-                            getView().inputUpgradeMissingInfo();
-                        }
-                    } else {
-                        getView().inputUpgradeMissingInfo();
-                    }
-                    break;
-
-                case "Move":
-                    if (userInputArray.length > 1) {
-                        String roomName = concatenateArray(userInputArray, 1, userInputArray.length - 1);
-                        Room room = roomNameToRoom(roomName);
-                        if (room != null) {
-                            move(room);
-                            boardView.displayMove(gameModel.getCurrentPlayerInt(), gameModel.getCurrentPlayer().getCurrentRoom().getCords());
-                            boardView.flipScene(gameModel.getCurrentPlayer().getCurrentRoom().getRoomNumber(), "cards/" + gameModel.getCurrentPlayer().getCurrentRoom().getSceneCard().getImage());
-                        } else {
-                            getView().inputMoveInvalidRoom();
-                        }
-                    } else {
-                        getView().inputMoveMissingInfo();
-                    }
-                    break;
-
-                case "Work":  //take role
-                    if (userInputArray.length > 1) {
-                        String roleName = concatenateArray(userInputArray, 1, userInputArray.length - 1);
-                        Role role = roleNameToRole(roleName);
-
-                        if (role != null) {
-                            if (getSystem().checkCanAddRole(role)) {
-                                addRole(role);
-                                boardView.displayRole(role, gameModel.getCurrentPlayerInt(), gameModel.getCurrentPlayer().getCurrentRoom().getCords());
-                                role.setUsedBy(gameModel.getCurrentPlayer());
-                            } else {
-                                getView().printAddRoleError();
-                            }
-                        } else {
-                            getView().inputWorkInvalidRole();
-                        }
-                    } else {
-                        getView().inputWorkMissingInfo();
-                    }
-                    break;
-
-                case "Act":
-                    if (getSystem().checkCanAct()) {
-                        act();
-                        if (gameModel.getCurrentPlayer().getCurrentRoom().getShotCounters() == 0) {
-                            endRoom(gameModel.getCurrentPlayer().getCurrentRoom());
-                        }
-                    } else {
-                        getView().printActError();
-                    }
-                    break;
-
-                case "Rehearsing":
-                    rehearse();
-                    break;
-
-                case "Active":
-                    if (userInputArray[1].equals("Player?")) {
-                        if (gameModel.getCurrentPlayer().getHasRole()) {
-                            getView().printPlayerDetails(gameModel.getCurrentPlayer().getName(), gameModel.getCurrentPlayer().getMoney(), gameModel.getCurrentPlayer().getCredits(), gameModel.getCurrentPlayer().getRank(),
-                                    gameModel.getCurrentPlayer().getCurrentRole().getName(), gameModel.getCurrentPlayer().getCurrentRole().getTagLine());
-                        } else {
-                            getView().printPlayerDetailsNoRole(gameModel.getCurrentPlayer().getName(), gameModel.getCurrentPlayer().getMoney(), gameModel.getCurrentPlayer().getCredits(), gameModel.getCurrentPlayer().getRank());
-                        }
-                    } else {
-                        getView().inputError();
-                    }
-                    break;
-
-                case "Where":
-                    if (!gameModel.getCurrentPlayer().getHasRole()) {
-                        getView().playerLocation(gameModel.getCurrentPlayer().getCurrentRoom().getName());
-                    } else if (gameModel.getCurrentPlayer().getCurrentRole().getExtra()) {
-                        getView().playerLocationWithExtraRole(gameModel.getCurrentPlayer().getCurrentRoom().getName(), gameModel.getCurrentPlayer().getCurrentRole().getName());
-                    } else {
-                        getView().playerLocationWithOnCardRole(gameModel.getCurrentPlayer().getCurrentRoom().getName(), gameModel.getCurrentPlayer().getCurrentRole().getName(),
-                                gameModel.getCurrentPlayer().getCurrentRoom().getSceneCard().getName());
-                    }
-                    break;
-
-                case "Locations":
-                    for (PlayerModel currentPlayer : gameModel.getPlayers()) {
-                        if (currentPlayer == gameModel.getCurrentPlayer()) {
-                            if (gameModel.getCurrentPlayer().getHasRole()) {
-                                getView().activePlayerLocationWithRole(currentPlayer.getName(), currentPlayer.getCurrentRoom().getName(), currentPlayer.getCurrentRole().getName());
-                            } else {
-                                getView().activePlayerLocation(currentPlayer.getName(), currentPlayer.getCurrentRoom().getName());
-                            }
-                        } else {
-                            if (currentPlayer.getHasRole()) {
-                                getView().inactivePlayerLocationWithRole(currentPlayer.getName(), currentPlayer.getCurrentRoom().getName(), currentPlayer.getCurrentRole().getName());
-                            } else {
-                                getView().inactivePlayerLocation(currentPlayer.getName(),currentPlayer.getCurrentRoom().getName());
-                            }
-                        }
-                    }
-                    break;
-
-                case "Roles":
-                    getView().printRoles(gameModel.getCurrentPlayer().getCurrentRoom().availableRoles());
-                    break;
-
-                case "End":
-                    endTurn();
-                    break;
-
-                default:
-                    getView().inputError();
-                    break;
-            }
-        }
-        endGame();
-    }*/
 
     public String getInput() {
         Scanner in = new Scanner(System.in);
@@ -405,11 +274,19 @@ class GameStateController extends DeadwoodController {
 
     class boardMouseListener implements MouseListener {
         public void mouseClicked(MouseEvent e) {
-            // Button for acting
-            if (e.getSource() == boardView.bAct) {
+                // Button for Cancelling
+            if (e.getSource() == boardView.bCancel) {
+                boardView.hidePayments();
+                boardView.hideRoles();
+                boardView.hideRooms();
+                boardView.hideAll();
+                boardView.showButtonsDefault();
+
+                // Button for acting
+            } else if (e.getSource() == boardView.bAct) {
                 System.out.println("Act is Selected\n");
                 if (getSystem().checkCanAct()) {
-                    if(act()) {
+                    if (act()) {
                         boardView.removeShotCounter(gameModel.getCurrentPlayer().getCurrentRoom().getRoomNumber());
                     }
                     if (gameModel.getCurrentPlayer().getCurrentRoom().getShotCounters() == 0) {
@@ -454,7 +331,7 @@ class GameStateController extends DeadwoodController {
 
                 // Button for Upgrading
             } else if (e.getSource() == boardView.bUpgrade) {
-                if(getSystem().checkCanUpgrade()) {
+                if (getSystem().checkCanUpgrade()) {
                     System.out.println("Upgrade is Selected\n");
                     boardView.hideAll();
                     for (int i = 0; i < 10; i++) {
