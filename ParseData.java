@@ -110,6 +110,8 @@ class ParseData {
         ArrayList<Role> roles = new ArrayList<Role>();
         ArrayList<String> neighbors = new ArrayList<String>();
         int[][] possibleUpgrades = new int[5][3];
+        int[][] shotCounterCords = null;
+        int[][] shotCounterCopy = null;
         int shotCounters = 0;
         int roomNumber = 0;
         String name = "";
@@ -139,6 +141,12 @@ class ParseData {
                 } else if (nodeName.equals("takes")) {
                     Element roleElement = (Element) roleList.item(0);
                     shotCounters = Integer.parseInt(roleElement.getAttribute("number"));
+                    shotCounterCords = new int[roleList.getLength()][2];
+                    for (int k = 0; k < roleList.getLength(); k++) {
+                        Element shotCounterElement = (Element) getInnerNodes(roleList.item(k)).item(0);
+                        shotCounterCords[k][0] = Integer.parseInt(shotCounterElement.getAttribute("x"));
+                        shotCounterCords[k][1] = Integer.parseInt(shotCounterElement.getAttribute("y"));
+                    }
                 } else if (nodeName.equals("area")) {
                     cords[0] = Integer.parseInt(roomInfoElement.getAttribute("x"));
                     cords[1] = Integer.parseInt(roomInfoElement.getAttribute("y"));
@@ -158,7 +166,10 @@ class ParseData {
             Role[] roleArray = Arrays.copyOf(roles.toArray(), roles.toArray().length, Role[].class);
             String[] neighborsArray = Arrays.copyOf(neighbors.toArray(), neighbors.toArray().length, String[].class);
             int[] cordsCopy = Arrays.copyOf(cords, cords.length);
-            rooms[i] = new Room(name, shotCounters, roleArray, neighborsArray, cordsCopy, i);
+            if(shotCounterCords != null) { 
+               shotCounterCopy = Arrays.stream(shotCounterCords).map(int[]::clone).toArray(int[][]::new);
+            }
+            rooms[i] = new Room(name, shotCounters, roleArray, neighborsArray, cordsCopy, i, shotCounterCopy);
             roles.clear();
             neighbors.clear();
         }

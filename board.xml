@@ -8,9 +8,9 @@
     </neighbors>
     <area x="21" y="69" h="115" w="205" />
     <takes>
-      <take number="3"><area x="36" y="11" h="47" w="47" /></take>
-      <take number="2"><area x="89" y="11" h="47" w="47" /></take>
-      <take number="1"><area x="141" y="11" h="47" w="47" /></take>
+      <take number="3"> <area x="36" y="11" h="47" w="47" /> </take>
+      <take number="2"> <area x="89" y="11" h="47" w="47" /> </take>
+      <take number="1"> <area x="141" y="11" h="47" w="47" /> </take>
     </takes>
     <parts>
       <part name="Crusty Prospector" level="1">
@@ -39,9 +39,9 @@
     </neighbors>
     <area x="27" y="732" h="115" w="205" />
     <takes>
-      <take number="3"><area x="244" y="764" h="47" w="47" /></take>
-      <take number="2"><area x="299" y="764" h="47" w="47" /></take>
-      <take number="1"><area x="354" y="764" h="47" w="47" /></take>
+      <take number="3"> <area x="244" y="764" h="47" w="47" /> </take>
+      <take number="2"> <area x="299" y="764" h="47" w="47" /> </take>
+      <take number="1"> <area x="354" y="764" h="47" w="47" /> </take>
     </takes>
     <parts>
       <part name="Clumsy Pit Fighter" level="1">
@@ -70,8 +70,8 @@
     </neighbors>
     <area x="623" y="734" h="115" w="205" />
     <takes>
-      <take number="2"><area x="623" y="675" h="47" w="47" /></take>
-      <take number="1"><area x="682" y="675" h="47" w="47" /></take>
+      <take number="2"> <area x="623" y="675" h="47" w="47" /> </take>
+      <take number="1"> <area x="682" y="675" h="47" w="47" /> </take>
     </takes>
     <parts>
       <part name="Dead Man" level="1">
@@ -92,9 +92,9 @@
     </neighbors>
     <area x="969" y="740" h="115" w="205" />
     <takes>
-      <take number="3"><area x="1005" y="683" h="47" w="47" /></take>
-      <take number="2"><area x="1058" y="683" h="47" w="47" /></take>
-      <take number="1"><area x="1111" y="683" h="47" w="47" /></take>
+      <take number="3"> <area x="1005" y="683" h="47" w="47" /> </take>
+      <take number="2"> <area x="1058" y="683" h="47" w="47" /> </take>
+      <take number="1"> <area x="1111" y="683" h="47" w="47" /> </take>
     </takes>
     <parts>
       <part name="Sleeping Drunkard" level="1">
@@ -123,9 +123,9 @@
     </neighbors>
     <area x="969" y="28" h="115" w="205" />
     <takes>
-      <take number="3"><area x="912" y="23" h="47" w="47" /></take>
-      <take number="2"><area x="858" y="23" h="47" w="47" /></take>
-      <take number="1"><area x="804" y="23" h="47" w="47" /></take>
+      <take number="3"> <area x="912" y="23" h="47" w="47" /> </take>
+      <take number="2"> <area x="858" y="23" h="47" w="47" /> </take>
+      <take number="1"> <area x="804" y="23" h="47" w="47" /> </take>
     </takes>
     <parts>
       <part name="Railroad Worker" level="1">
@@ -154,7 +154,7 @@
     </neighbors>
     <area x="281" y="27" h="115" w="205" />
     <takes>
-      <take number="1"><area x="442" y="156" h="47" w="47" /></take>
+      <take number="1"> <area x="442" y="156" h="47" w="47" /> </take>
     </takes>
     <parts>
       <part name="Prisoner In Cell" level="2">
@@ -176,8 +176,8 @@
     </neighbors>
     <area x="370" y="282" h="115" w="205" />
     <takes>
-      <take number="2"><area x="313" y="277" h="47" w="47" /></take>
-      <take number="1"><area x="313" y="330" h="47" w="47" /></take>
+      <take number="2"> <area x="313" y="277" h="47" w="47" /> </take>
+      <take number="1"> <area x="313" y="330" h="47" w="47" /> </take>
     </takes>
     <parts>
       <part name="Man in Overalls" level="1">
@@ -199,8 +199,8 @@
     </neighbors>
     <area x="252" y="478" h="115" w="205" />
     <takes>
-      <take number="2"><area x="472" y="473" h="47" w="47" /></take>
-      <take number="1"><area x="525" y="473" h="47" w="47" /></take>
+      <take number="2"> <area x="472" y="473" h="47" w="47" /> </take>
+      <take number="1"> <area x="525" y="473" h="47" w="47" /> </take>
     </takes>
     <parts>
       <part name="Shot in Leg" level="1">
@@ -226,7 +226,7 @@
     </neighbors>
     <area x="623" y="475" h="115" w="205" />
     <takes>
-      <take number="1"><area x="840" y="549" h="47" w="47" /></take>
+      <take number="1"> <area x="840" y="549" h="47" w="47" /> </take>
     </takes>
     <parts>
       <part name="Suspicious Gentleman" level="2">
@@ -248,8 +248,8 @@
     </neighbors>
     <area x="632" y="280" h="115" w="205" />
     <takes>
-      <take number="2"><area x="626" y="216" h="47" w="47" /></take>
-      <take number="1"><area x="679" y="216" h="47" w="47" /></take>
+      <take number="2"> <area x="626" y="216" h="47" w="47" /> </take>
+      <take number="1"> <area x="679" y="216" h="47" w="47" /> </take>
     </takes>
     <parts>
       <part name="Reluctant Farmer" level="1">

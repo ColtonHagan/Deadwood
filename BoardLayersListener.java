@@ -26,7 +26,7 @@ public class BoardLayersListener extends JFrame {
     JLabel mLabel;
     JLabel[] cardlabel;
     JLabel[] playerlabel;
-
+    JLabel[][] shotlabel;
 
     //JButtons
     JButton bAct;
@@ -63,6 +63,7 @@ public class BoardLayersListener extends JFrame {
 
         // Create the deadwood board
         boardlabel = new JLabel();
+        shotlabel = new JLabel[10][];
         ImageIcon icon = new ImageIcon("board.jpg");
         boardlabel.setIcon(icon);
         boardlabel.setBounds(0, 0, icon.getIconWidth(), icon.getIconHeight());
@@ -89,7 +90,27 @@ public class BoardLayersListener extends JFrame {
     }
     
     public void removeScene(int roomNumber) {
-      //cardlabel[roomNumber].setIcon(null);
+      cardlabel[roomNumber].setIcon(null);
+    }
+    
+    public void removeShotCounter(int roomNumber) {
+      for(int i = shotlabel[roomNumber].length - 1; i >= 0; i--) {
+         if(shotlabel[roomNumber][i].getIcon() != null) {
+            shotlabel[roomNumber][i].setIcon(null);
+            break;
+         }
+      }
+    }
+    
+    public void displayShotCounters(int roomNumber, int[][] cords) {
+      shotlabel[roomNumber] = new JLabel[cords.length];
+      for(int i = 0; i < cords.length; i++) {
+         ImageIcon icon = new ImageIcon("dice/b1.png");
+         shotlabel[roomNumber][i] = new JLabel();
+         shotlabel[roomNumber][i].setIcon(icon);
+         shotlabel[roomNumber][i].setBounds(cords[i][0], cords[i][1], 60, 60);
+         bPane.add(shotlabel[roomNumber][i], new Integer(1));
+      }
     }
     
     public void flipScene(int roomNumber, String imageName) {

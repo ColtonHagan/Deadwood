@@ -13,8 +13,9 @@ public class Room {
     private final String name;
     private final int[] cords;
     private final int roomNumber;
+    private final int[][] shotCounterCords;
 
-    public Room(String name, int shotCounters, Role[] extraRoles, String[] adjacentRooms, int[] cords, int roomNumber) { //add room number and shot chounter cords
+    public Room(String name, int shotCounters, Role[] extraRoles, String[] adjacentRooms, int[] cords, int roomNumber, int[][] shotCounterCords) { //add room number and shot chounter cords
         this.name = name;
         totalShotCounters = shotCounters;
         currentShotCounters = shotCounters;
@@ -22,6 +23,7 @@ public class Room {
         this.adjacentRooms = adjacentRooms;
         this.cords = cords;
         this.roomNumber = roomNumber;
+        this.shotCounterCords = shotCounterCords;
     }
 
     // Getters
@@ -42,6 +44,10 @@ public class Room {
     
     public int[] getCords() {
       return cords;
+    }
+    
+    public int[][] getShotCounterCords() {
+      return shotCounterCords;
     }
 
     public int getShotCounters() {
