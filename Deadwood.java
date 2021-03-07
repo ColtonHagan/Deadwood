@@ -7,6 +7,6 @@ Program Description : Playable deadwood game with console interface
 public class Deadwood {
    public static void main(String[] args) throws Exception {
       GameStateController control = new GameStateController();
-      control.setUpGame();
+      control.preSetUp();
    }
 }

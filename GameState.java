@@ -8,13 +8,12 @@ class GameState {
     private int currentDay;
     private int totalDays;
     private int currentPlayer;
-    private final int totalPlayers;
+    private int totalPlayers;
     private PlayerModel[] players;
     private final Scenes sceneLibray = new Scenes();
     private Board board = new Board();
 
-    public GameState(int totalPlayers) {
-        this.totalPlayers = totalPlayers;
+    public GameState() {
         this.currentDay = 1;
         this.currentPlayer = 0;
     }
@@ -63,6 +62,10 @@ class GameState {
 
     public void setTotalDays(int totalDays) {
         this.totalDays = totalDays;
+    }
+
+    public void setTotalPlayers(int totalPlayers) {
+        this.totalPlayers = totalPlayers;
     }
 
     public void setCurrentPlayerInt(int currentPlayer) {

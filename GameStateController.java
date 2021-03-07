@@ -4,6 +4,10 @@ Class : CS 345
 Date : 2/23/21
 Program Description : Controls how/when game progresses
 */
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.util.*;
 
 class GameStateController extends DeadwoodController {
@@ -12,17 +16,27 @@ class GameStateController extends DeadwoodController {
 
     public GameStateController() {
         this.boardView = new BoardLayersListener();
+        boardView.addListener(this);
         boardView.setVisible(true);
-        int totalPlayers = boardView.getTotalPlayers();
-        this.gameModel = new GameState(totalPlayers);
+        this.gameModel = new GameState();
+    }
+
+    public void preSetUp() {
+        for (int i = 0; i < 7; i++){
+            boardView.bPlayerCount[i].addMouseListener(new boardMouseListener());
+        }
     }
 
     public void setUpGame() throws Exception {
+        // Remove Buttons for choosing player count
+        boardView.removeButtonsPlayerCount();
+
         int rank = 1;
         int money = 0;
         int credits = 0;
         int days = 4;
-        // Picking totalPlayers to set up game for from args.
+        // Picking totalPlayers
+        boardView.setTotalPlayers(gameModel.getTotalPlayers());
         if (gameModel.getTotalPlayers() == 2 || gameModel.getTotalPlayers() == 3) {
             days = 3;
         } else if (gameModel.getTotalPlayers() == 5) {
@@ -44,14 +58,7 @@ class GameStateController extends DeadwoodController {
         gameModel.getSceneLibrary().createScenes(dataParser);
         gameModel.getBoard().createBoard(dataParser, gameModel.getSceneLibrary(), boardView);
 
-        // Creating players with preset names, variable stats based on above totalPlayers
-        // String[] namesList = {"Blue", "Cyan", "Green", "Orange", "Pink", "Red", "Violet", "Yellow"};
-        //for (int i = 0; i < gameModel.getTotalPlayers(); i++) {
-        //    String name = namesList[i];
-        //    players[i] = new PlayerModel(name, money, credits, rank, gameModel.getBoard().getTrailer());
-        //}
-
-        // With inputted names
+        // Creating players with inputted names, variable stats based on above totalPlayers
         PlayerModel[] players = new PlayerModel[gameModel.getTotalPlayers()];
         for (int i = 0; i < gameModel.getTotalPlayers(); i++) {
             String name = boardView.createPlayers(i);
@@ -62,7 +69,15 @@ class GameStateController extends DeadwoodController {
         updateModel(gameModel.getCurrentPlayer());
         createOffice(dataParser);
 
-        playGame();
+        // playGame();
+
+        // Button Setup
+        boardView.createButtons();
+        boardView.bAct.addMouseListener(new boardMouseListener());
+        boardView.bRehearse.addMouseListener(new boardMouseListener());
+        boardView.bMove.addMouseListener(new boardMouseListener());
+        boardView.bWork.addMouseListener(new boardMouseListener());
+        boardView.bUpgrade.addMouseListener(new boardMouseListener());
     }
 
     // Used when shot counter hits zero, for SceneCard ending
@@ -127,6 +142,8 @@ class GameStateController extends DeadwoodController {
     }
 
 
+
+    /*
     public void playGame() throws Exception {
         getView().inputWelcome();
 
@@ -256,6 +273,7 @@ class GameStateController extends DeadwoodController {
         }
         endGame();
     }
+    */
 
     public String getInput() {
         Scanner in = new Scanner(System.in);
@@ -293,28 +311,28 @@ class GameStateController extends DeadwoodController {
         return null;
     }
 
-    public void endTurn() {
-      clearMoved();
-      clearWorked();
-      // Sets the player of the next turn to the next player
-      if (gameModel.getCurrentPlayerInt() + 1 < gameModel.getTotalPlayers()) {
-         gameModel.setCurrentPlayerInt(gameModel.getCurrentPlayerInt() + 1);
-         updateModel(gameModel.getCurrentPlayer());
-      } else {
-         gameModel.setCurrentPlayerInt(0);
-         updateModel(gameModel.getCurrentPlayer());
-      }
-      getView().showEndTurn(gameModel.getCurrentPlayer().getName());
+    public void endTurn() throws Exception {
+        clearMoved();
+        clearWorked();
+        // Sets the player of the next turn to the next player
+        if (gameModel.getCurrentPlayerInt() + 1 < gameModel.getTotalPlayers()) {
+            gameModel.setCurrentPlayerInt(gameModel.getCurrentPlayerInt() + 1);
+            updateModel(gameModel.getCurrentPlayer());
+        } else {
+            gameModel.setCurrentPlayerInt(0);
+            updateModel(gameModel.getCurrentPlayer());
+        }
+        getView().showEndTurn(gameModel.getCurrentPlayer().getName());
 
-      // Checks if this is the last Scenecard on board, ends day if true;
-      if (gameModel.getBoard().getCurrentRooms() == 1) {
+        // Checks if this is the last Scenecard on board, ends day if true;
+        if (gameModel.getBoard().getCurrentRooms() == 1) {
             endDay();
-      }
+        }
     }
 
-    public void endDay() {
+    public void endDay() throws Exception {
         // Check if not last day
-        if(gameModel.getCurrentDay() < gameModel.getTotalDays()) {
+        if (gameModel.getCurrentDay() < gameModel.getTotalDays()) {
             gameModel.getBoard().resetBoard(gameModel.getSceneLibrary());
         }
 
@@ -328,6 +346,10 @@ class GameStateController extends DeadwoodController {
         }
         getView().showEndDay();
         gameModel.setCurrentDay(gameModel.getCurrentDay() + 1);
+
+        if(gameModel.getCurrentDay() >= gameModel.getTotalDays()) {
+            endGame();
+        }
     }
 
     public void endGame() throws Exception {
@@ -355,7 +377,7 @@ class GameStateController extends DeadwoodController {
         }
 
         // Checks if there was a tie, print multiple winners for tie and single for no tie
-        if(tieAmount > 1) {
+        if (tieAmount > 1) {
             getView().printTie();
             for (String s : winningPlayers) {
                 getView().showWinnerTie(s, highestScore);
@@ -363,10 +385,115 @@ class GameStateController extends DeadwoodController {
         } else {
             getView().showWinner(winningPlayers[0], highestScore);
         }
-        
+
         // Asks to restart the game
         getView().promptRestart();
         String userInput = getInput();
-        if(userInput.equals("Yes")) setUpGame();
+        if (userInput.equals("Yes")) setUpGame();
+    }
+
+
+    class boardMouseListener implements MouseListener {
+        public void mouseClicked(MouseEvent e) {
+            if (e.getSource() == boardView.bAct) {
+                System.out.println("Acting is Selected\n");
+                if (getSystem().checkCanAct()) {
+                    act();
+                    if (gameModel.getCurrentPlayer().getCurrentRoom().getShotCounters() == 0) {
+                        endRoom(gameModel.getCurrentPlayer().getCurrentRoom());
+                    }
+                    try {
+                        endTurn();
+                    } catch (Exception exception) {
+                        exception.printStackTrace();
+                    }
+                } else {
+                    getView().printActError();
+                }
+
+            } else if (e.getSource() == boardView.bRehearse) {
+                System.out.println("Rehearse is Selected\n");
+                if (getSystem().checkCanRehearse()) {
+                    rehearse();
+                    try {
+                        endTurn();
+                    } catch (Exception exception) {
+                        exception.printStackTrace();
+                    }
+                } else {
+                    getView().printRehearseError();
+                }
+
+            } else if (e.getSource() == boardView.bMove) {
+                System.out.println("Move is Selected\n");
+                if (getSystem().checkCanMove()) {
+
+                }
+            }
+
+            //Game Setup stuff
+            if (e.getSource() == boardView.bPlayerCount[0]) {
+                gameModel.setTotalPlayers(2);
+                try {
+                    setUpGame();
+                } catch (Exception exception) {
+                    exception.printStackTrace();
+                }
+            } else if (e.getSource() == boardView.bPlayerCount[1]) {
+                gameModel.setTotalPlayers(3);
+                try {
+                    setUpGame();
+                } catch (Exception exception) {
+                    exception.printStackTrace();
+                }
+            } else if (e.getSource() == boardView.bPlayerCount[2]) {
+                gameModel.setTotalPlayers(4);
+                try {
+                    setUpGame();
+                } catch (Exception exception) {
+                    exception.printStackTrace();
+                }
+            } else if (e.getSource() == boardView.bPlayerCount[3]) {
+                gameModel.setTotalPlayers(5);
+                try {
+                    setUpGame();
+                } catch (Exception exception) {
+                    exception.printStackTrace();
+                }
+            } else if (e.getSource() == boardView.bPlayerCount[4]) {
+                gameModel.setTotalPlayers(6);
+                try {
+                    setUpGame();
+                } catch (Exception exception) {
+                    exception.printStackTrace();
+                }
+            } else if (e.getSource() == boardView.bPlayerCount[5]) {
+                gameModel.setTotalPlayers(7);
+                try {
+                    setUpGame();
+                } catch (Exception exception) {
+                    exception.printStackTrace();
+                }
+            } else if (e.getSource() == boardView.bPlayerCount[6]) {
+                gameModel.setTotalPlayers(8);
+                try {
+                    setUpGame();
+                } catch (Exception exception) {
+                    exception.printStackTrace();
+                }
+            }
+        }
+
+        public void mousePressed(MouseEvent e) {
+        }
+
+        public void mouseReleased(MouseEvent e) {
+        }
+
+        public void mouseEntered(MouseEvent e) {
+        }
+
+        public void mouseExited(MouseEvent e) {
+        }
     }
 }

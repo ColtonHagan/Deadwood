@@ -4,6 +4,7 @@ Class : CS 345
 Date : 2/23/21
 Program Description : Controls player actions and updates view appropriately
 */
+
 import java.util.Random;
 
 class DeadwoodController {
@@ -144,21 +145,9 @@ class DeadwoodController {
     }
 
     public void rehearse() {
-        // Ensuring rehearsal is legal (Must have role... etc)
-        if (system.checkCanRehearse()) {
-            int budget = model.getCurrentRoom().getSceneCard().getBudget();
-
-            // Check if guaranteed to succeed next act
-            if (model.getPracticeChips() + 1 >= budget) {
-                view.showRehearsalFail(model.getPracticeChips());
-            } else {
-                model.updatePracticeChips(model.getPracticeChips() + 1);
-                view.showRehearsalSuccess(model.getPracticeChips());
-                model.updateWorked(true);
-            }
-        } else {
-            view.printRehearseError();
-        }
+        model.updatePracticeChips(model.getPracticeChips() + 1);
+        view.showRehearsalSuccess(model.getPracticeChips());
+        model.updateWorked(true);
     }
 
     private int rollDice() {

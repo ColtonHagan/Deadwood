@@ -22,7 +22,8 @@ class Systems {
 
     // Checking if player has a role
     public boolean checkCanRehearse() {
-        return (model.getHasRole() && model.getWorked());
+        int budget = model.getCurrentRoom().getSceneCard().getBudget();
+        return (model.getHasRole() && model.getWorked() && !(model.getPracticeChips() + 1 >= budget));
     }
 
     // Checking if player has a role
