@@ -212,6 +212,7 @@ public class BoardLayersListener extends JFrame {
         } else {
             bPayment[i].setBounds(boardlabel.getWidth() + 60, 30 + ((i - 5) * 20), 50, 20);
         }
+        bPane.add(bPayment[i], new Integer[2]);
     }
 
     public void updatePlayerIcon(int playerNumber, int rank) {

@@ -462,12 +462,12 @@ class GameStateController extends DeadwoodController {
 
                         if (i < 5 && gameModel.getCurrentPlayer().getMoney() >= gameModel.getExactPlayer(0).getCastingOffice().costDollars(i + 2)) {
                             boardView.bPayment[i].addMouseListener(new boardMouseListener());
-                            boardView.bPayment[i].enable(true);
+                            boardView.bPayment[i].setEnabled(true);
                         } else if (i >= 5 && gameModel.getCurrentPlayer().getCredits() >= gameModel.getExactPlayer(0).getCastingOffice().costCredits(i - 3)) {
                             boardView.bPayment[i].addMouseListener(new boardMouseListener());
-                            boardView.bPayment[i].enable(true);
+                            boardView.bPayment[i].setEnabled(true);
                         } else {
-                            boardView.bPayment[i].enable(false);
+                            boardView.bPayment[i].setEnabled(false);
                         }
                     }
                     boardView.showPromptPayment();
