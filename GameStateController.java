@@ -499,6 +499,9 @@ class GameStateController extends DeadwoodController {
                     }
                     boardView.hidePayments();
                     boardView.showButtonsDefault();
+                    for (JButton b : boardView.bPayment) {
+                        b.removeMouseListener(this);
+                    }
                 }
             }
 
@@ -512,8 +515,8 @@ class GameStateController extends DeadwoodController {
                         if (!gameModel.getCurrentPlayer().getCurrentRoom().getSceneCard().getFlip()) {
                             gameModel.getCurrentPlayer().getCurrentRoom().getSceneCard().setFlip(true);
                             boardView.flipScene(gameModel.getCurrentPlayer().getCurrentRoom().getRoomNumber(), "cards/" + gameModel.getCurrentPlayer().getCurrentRoom().getSceneCard().getImage());
-                            workRoom = true;
                         }
+                        workRoom = true;
                     }
 
                     //boardView.displayMove(gameModel.getCurrentPlayerInt(), room.getCords());
