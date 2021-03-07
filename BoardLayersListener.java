@@ -42,6 +42,8 @@ public class BoardLayersListener extends JFrame {
     JButton[] bRoles;
     JButton[] bPlayerCount;
     JButton[] bTakeRole;
+    JButton[] bPayment;
+    JButton[] bRank;
 
     // JLayered Pane
     JLayeredPane bPane;
@@ -297,6 +299,16 @@ public class BoardLayersListener extends JFrame {
         bTakeRole[1].setBackground(Color.white);
         bTakeRole[1].setBounds(boardlabel.getWidth() + 10, 50, 100, 20);
 
+        // Payment Type
+        bPayment = new JButton[2];
+        bPayment[0] = new JButton("Credits");
+        bPayment[0].setBackground(Color.white);
+        bPayment[0].setBounds(boardlabel.getWidth() + 10, 30, 100, 20);
+
+        bPayment[1] = new JButton("Dollars");
+        bPayment[1].setBackground(Color.white);
+        bPayment[1].setBounds(boardlabel.getWidth() + 10, 50, 100, 20);
+
         // Place the action buttons in the top layer
         bPane.add(bAct, new Integer[2]);
         bPane.add(bRehearse, new Integer[2]);
@@ -322,6 +334,8 @@ public class BoardLayersListener extends JFrame {
         mLabel.setVisible(false);
         bTakeRole[0].setVisible(false);
         bTakeRole[1].setVisible(false);
+        bPayment[0].setVisible(false);
+        bPayment[1].setVisible(false);
     }
 
     public void hideRoles() {
@@ -363,7 +377,6 @@ public class BoardLayersListener extends JFrame {
         bPane.add(mLabel, new Integer[2]);
     }
 
-
     public void showPromptTakeRole() {
         // Create the Menu for action buttons
         mLabel = new JLabel("Take a Role?");
@@ -372,5 +385,14 @@ public class BoardLayersListener extends JFrame {
 
         bTakeRole[0].setVisible(true);
         bTakeRole[1].setVisible(true);
+    }
+
+    public void showPromptPayment() {
+        mLabel = new JLabel("Payment Type?");
+        mLabel.setBounds(boardlabel.getWidth() + 40, 0, 100, 20);
+        bPane.add(mLabel, new Integer[2]);
+
+        bPayment[0].setVisible(true);
+        bPayment[1].setVisible(true);
     }
 }
