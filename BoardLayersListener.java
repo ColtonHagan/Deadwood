@@ -79,7 +79,7 @@ public class BoardLayersListener extends JFrame {
         bPane.add(boardlabel, new Integer[0]);
 
         // Set the size of the GUI
-        setSize(icon.getIconWidth() + 350, icon.getIconHeight());
+        setSize(icon.getIconWidth() + 350, icon.getIconHeight() + 50);
         // setPreferredSize(new Dimension(icon.getIconWidth()+200,icon.getIconHeight()));
         // setPreferredSize(new Dimension(1280,720));
     }
@@ -100,7 +100,7 @@ public class BoardLayersListener extends JFrame {
     }
     
     public void removeShotCounter(int roomNumber) {
-      for(int i = shotlabel[roomNumber].length - 1; i >= 0; i--) {
+      for(int i = 0; i < shotlabel[roomNumber].length; i++) {
          if(shotlabel[roomNumber][i].getIcon() != null) {
             shotlabel[roomNumber][i].setIcon(null);
             break;
@@ -120,10 +120,12 @@ public class BoardLayersListener extends JFrame {
     }
     
     public void flipScene(int roomNumber, String imageName) {
+      cardlabel[roomNumber].setIcon(null);
       ImageIcon cardIcon = new ImageIcon(imageName);
       cardlabel[roomNumber].setIcon(cardIcon);
       bPane.add(cardlabel[roomNumber], new Integer(2));
     }
+    
     public void displayRole(Role newRole, int playerNumber, int[] roomCords) {
          int[] roleCords = newRole.getCords();
          if(newRole.getExtra()) {
@@ -185,15 +187,18 @@ public class BoardLayersListener extends JFrame {
         // Role for Crusty the prospector. The x and y co-ordiantes are taken from Board.xml file
         playerlabel = new JLabel[n];
         ImageIcon[] pIcon = new ImageIcon[n];
-        String[] diceChoices = {"b1.png", "c1.png", "g1.png", "o1.png", "p1.png", "r1.png", "v1.png", "w1.png", "y1.png"};
         for (int i = 0; i < n; i++) {
             playerlabel[i] = new JLabel();
-            pIcon[i] = new ImageIcon("dice/" + diceChoices[i]);
-            playerlabel[i].setIcon(pIcon[i]);
 
             playerlabel[i].setBounds(0, 0, 46, 46);
             playerlabel[i].setOpaque(false);
             playerlabel[i].setVisible(false);
+            pIcon[i] = new ImageIcon();
+            if(n < 7) {
+               updatePlayerIcon(i, 1);
+            } else {
+               updatePlayerIcon(i, 2);
+            }
             bPane.add(playerlabel[i], new Integer[3]);
         }
         return n;

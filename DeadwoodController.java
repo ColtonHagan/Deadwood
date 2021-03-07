@@ -155,12 +155,13 @@ class DeadwoodController {
         return rand.nextInt(6) + 1;
     }
 
-    public void act() {
+    public boolean act() {
         int budget = model.getCurrentRoom().getSceneCard().getBudget();
+        boolean success = false;
         if ((rollDice() + model.getPracticeChips()) >= budget) {
             //If Actor succeeds in acting:
+            success = true;
             model.getCurrentRoom().removeShotCounter();
-
             if (model.getCurrentRole().getExtra()) {
                 //Off card:
                 model.updateMoney(model.getMoney() + 1);
@@ -183,5 +184,6 @@ class DeadwoodController {
             }
         }
         model.updateWorked(true);
+        return success;
     }
 }
