@@ -158,7 +158,7 @@ public class BoardLayersListener extends JFrame {
     
     public void createPlayerDisplay() {
         nameLabel = new JLabel();
-        nameLabel.setBounds(boardlabel.getWidth() + 20, bMove.getBounds().y + 100, 100, 20); //location of this may change if move button is no longer lowest button
+        nameLabel.setBounds(boardlabel.getWidth() + 20, bMove.getBounds().y + 120, 100, 20); //location of this may change if move button is no longer lowest button
         bPane.add(nameLabel, new Integer[2]);
 
         moneyLabel = new JLabel();
