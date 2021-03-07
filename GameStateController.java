@@ -84,6 +84,8 @@ class GameStateController extends DeadwoodController {
         boardView.bUpgrade.addMouseListener(new boardMouseListener());
         boardView.bTakeRole[0].addMouseListener(new boardMouseListener());
         boardView.bTakeRole[1].addMouseListener(new boardMouseListener());
+        boardView.bPayment[0].addMouseListener(new boardMouseListener());
+        boardView.bPayment[1].addMouseListener(new boardMouseListener());
     }
 
     // Used when shot counter hits zero, for SceneCard ending
@@ -320,12 +322,12 @@ class GameStateController extends DeadwoodController {
         }
         boardView.updatePlayerDisplay(gameModel.getCurrentPlayer().getName(), gameModel.getCurrentPlayer().getMoney(), gameModel.getCurrentPlayer().getCredits(), gameModel.getCurrentPlayerInt());
         getView().showEndTurn(gameModel.getCurrentPlayer().getName());
-   
+
         // Checks if this is the last Scenecard on board, ends day if true;
         if (gameModel.getBoard().getCurrentRooms() == 1) {
             endDay();
         }
-        
+
         // Resets buttons based on player status
         boardView.hideAll();
         if (gameModel.getCurrentPlayer().getHasRole()) {
@@ -399,7 +401,7 @@ class GameStateController extends DeadwoodController {
 
     class boardMouseListener implements MouseListener {
         public void mouseClicked(MouseEvent e) {
-            // Button for acting
+                // Button for acting
             if (e.getSource() == boardView.bAct) {
                 System.out.println("Act is Selected\n");
                 if (getSystem().checkCanAct()) {
@@ -443,11 +445,16 @@ class GameStateController extends DeadwoodController {
                     }
                 }
 
-                // Button for taking a role
+
+                // Button for Upgrading
+            } else if (e.getSource() == boardView.bUpgrade) {
+                System.out.println("Upgrade is Selected\n");
+                    boardView.hideAll();
+                    boardView.showPromptPayment();
             }
 
 
-            // Choosing total players Buttons
+            // Choosing total players Buttons (for start of game)
             for (int i = 0; i < 7; i++) {
                 if (e.getSource() == boardView.bPlayerCount[i]) {
                     gameModel.setTotalPlayers(i + 2);
@@ -525,7 +532,7 @@ class GameStateController extends DeadwoodController {
                         }
                     } else {
                         System.out.println("Cannot take role, no available roles");
-                        if(gameModel.getCurrentPlayer().getMoved()) {
+                        if (gameModel.getCurrentPlayer().getMoved()) {
                             try {
                                 endTurn();
                             } catch (Exception exception) {
@@ -539,13 +546,19 @@ class GameStateController extends DeadwoodController {
                 } else {
                     System.out.println("Cannot take role, already have role");
                 }
-            // After moving, refuse to take a role
+                // After moving, refuse to take a role
             } else if (e.getSource() == boardView.bTakeRole[1]) {
                 try {
                     endTurn();
                 } catch (Exception exception) {
                     exception.printStackTrace();
                 }
+            }
+
+            if(e.getSource() == boardView.bPayment[0]) {
+
+            } else if(e.getSource() == boardView.bPayment[1]) {
+
             }
         }
 
