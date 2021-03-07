@@ -15,22 +15,28 @@ import java.util.*;
 import java.awt.*;
 import javax.swing.*;
 import javax.swing.ImageIcon;
-import javax.imageio.ImageIO;
-import java.awt.event.*;
 import javax.swing.JOptionPane;
 
 public class BoardLayersListener extends JFrame {
+    // GameStateController, Acting as a listener
+    GameStateController controller;
 
     // JLabels
     JLabel boardlabel;
+    JLabel mLabel;
     JLabel[] cardlabel;
     JLabel[] playerlabel;
-    JLabel mLabel;
+
 
     //JButtons
     JButton bAct;
     JButton bRehearse;
+    JButton bUpgrade;
+    JButton bWork;
     JButton bMove;
+    JButton[] bRooms;
+    JButton[] bRoles;
+    JButton[] bPlayerCount;
 
     // JLayered Pane
     JLayeredPane bPane;
@@ -40,7 +46,11 @@ public class BoardLayersListener extends JFrame {
         super("Deadwood");
         cardlabel = new JLabel[10];
         createBoard();
-        createButtons();
+        createButtonsPlayerCount();
+    }
+
+    public void addListener(GameStateController controller) {
+        this.controller = controller;
     }
 
     public void createBoard() {
@@ -65,15 +75,15 @@ public class BoardLayersListener extends JFrame {
         // setPreferredSize(new Dimension(icon.getIconWidth()+200,icon.getIconHeight()));
         // setPreferredSize(new Dimension(1280,720));
     }
-    
-   public void createScenes(int[] cords, String image, int roomNumber) {
+
+    public void createScenes(int[] cords, String image, int roomNumber) {
         // Add a scene card to this room
         cardlabel[roomNumber] = new JLabel();
         ImageIcon cIcon = new ImageIcon("cards/" + image);
         cardlabel[roomNumber].setIcon(cIcon);
         cardlabel[roomNumber].setBounds(cords[0], cords[1], cIcon.getIconWidth(), cIcon.getIconHeight());
         cardlabel[roomNumber].setOpaque(true);
-                
+
         // Add the card to the lower layer
         bPane.add(cardlabel[roomNumber], new Integer(1));
     }
@@ -114,42 +124,31 @@ public class BoardLayersListener extends JFrame {
         JLabel nameLabel = new JLabel("Name: " + name);
         nameLabel.setBounds(boardlabel.getWidth() + 20, bMove.getBounds().y + 30, 100, 20); //location of this may change if move button is no longer smallest button
         bPane.add(nameLabel, new Integer[2]);
-        
+
         JLabel moneyLabel = new JLabel("Dollars: " + dollars);
         moneyLabel.setBounds(boardlabel.getWidth() + 30, nameLabel.getBounds().y + 30, 100, 20);
         bPane.add(moneyLabel, new Integer[2]);
-        
+
         JLabel creditLabel = new JLabel("Credits: " + credits);
         creditLabel.setBounds(boardlabel.getWidth() + 30, moneyLabel.getBounds().y + 30, 100, 20);
         bPane.add(creditLabel, new Integer[2]);
-        
+
         JLabel rankLabel = new JLabel("Rank: " + rank);
         rankLabel.setBounds(boardlabel.getWidth() + 30, creditLabel.getBounds().y + 30, 100, 20);
         bPane.add(rankLabel, new Integer[2]);
     }
 
-    public int getTotalPlayers() {
+    public int setTotalPlayers(int n) {
         // Add a dice to represent a player.
         // Role for Crusty the prospector. The x and y co-ordiantes are taken from Board.xml file
-
-        Integer[] options = {2, 3, 4, 5, 6, 7, 8};
-        int n = (Integer)JOptionPane.showInputDialog(boardlabel, "How many players? (2-8)",
-                "Total Players", JOptionPane.QUESTION_MESSAGE, null, options, options[2]);
         playerlabel = new JLabel[n];
         ImageIcon[] pIcon = new ImageIcon[n];
         String[] diceChoices = {"b1.png", "c1.png", "g1.png", "o1.png", "p1.png", "r1.png", "v1.png", "w1.png", "y1.png"};
-        for(int i = 0; i < n; i++) {
+        for (int i = 0; i < n; i++) {
             playerlabel[i] = new JLabel();
             pIcon[i] = new ImageIcon("dice/" + diceChoices[i]);
             playerlabel[i].setIcon(pIcon[i]);
 
-            //playerlabel.setBounds(114,227,pIcon.getIconWidth(),pIcon.getIconHeight());
-            //playerlabel[playerNumber].setBounds(114, 227, 46, 46);
-            /*if(i < 4) {
-                playerlabel[i].setBounds(991 + (46*i), 248, 46, 46);
-            } else {
-                playerlabel[i].setBounds(991 + (46*(i - 4)), 294, 46, 46);
-            }*/
             playerlabel[i].setBounds(0, 0, 46, 46);
             playerlabel[i].setOpaque(true);
             playerlabel[i].setVisible(false);
@@ -163,68 +162,80 @@ public class BoardLayersListener extends JFrame {
         return s;
     }
 
+    public void createButtonsPlayerCount() {
+        mLabel = new JLabel("How Many Players?");
+        mLabel.setBounds(boardlabel.getWidth() + 10, 0, 150, 20);
+        bPane.add(mLabel, new Integer[2]);
+
+        bPlayerCount = new JButton[7];
+        for (int i = 0; i < 7; i++){
+            bPlayerCount[i] = new JButton("" + (i + 2));
+            bPlayerCount[i].setBackground(Color.white);
+            bPlayerCount[i].setBounds(boardlabel.getWidth() + 10, (30 + (i * 30)), 100, 20);
+            bPane.add(bPlayerCount[i], new Integer[2]);
+        }
+    }
+
+    public void removeButtonsPlayerCount() {
+        for (JButton b : bPlayerCount) {
+            b.setVisible(false);
+        }
+        mLabel.setVisible(false);
+    }
+
     public void createButtons() {
         // Create the Menu for action buttons
-        mLabel = new JLabel("MENU");
+        mLabel = new JLabel("Choose Action");
         mLabel.setBounds(boardlabel.getWidth() + 40, 0, 100, 20);
         bPane.add(mLabel, new Integer[2]);
 
-        // Create Action buttons
-        bAct = new JButton("ACT");
+        // Acting set
+        bAct = new JButton("Act");
         bAct.setBackground(Color.white);
         bAct.setBounds(boardlabel.getWidth() + 10, 30, 100, 20);
-        bAct.addMouseListener(new boardMouseListener());
 
-        bRehearse = new JButton("REHEARSE");
+        bRehearse = new JButton("Rehearse");
         bRehearse.setBackground(Color.white);
-        bRehearse.setBounds(boardlabel.getWidth() + 10, 60, 100, 20);
-        bRehearse.addMouseListener(new boardMouseListener());
+        bRehearse.setBounds(boardlabel.getWidth() + 10, 50, 100, 20);
 
-        bMove = new JButton("MOVE");
+        // Default set
+        bWork = new JButton("Work");
+        bWork.setBackground(Color.white);
+        bWork.setBounds(boardlabel.getWidth() + 10, 30, 100, 20);
+
+        bUpgrade = new JButton("Upgrade");
+        bUpgrade.setBackground(Color.white);
+        bUpgrade.setBounds(boardlabel.getWidth() + 10, 60, 100, 20);
+
+        bMove = new JButton("Move");
         bMove.setBackground(Color.white);
         bMove.setBounds(boardlabel.getWidth() + 10, 90, 100, 20);
-        bMove.addMouseListener(new boardMouseListener());
 
         // Place the action buttons in the top layer
         bPane.add(bAct, new Integer[2]);
         bPane.add(bRehearse, new Integer[2]);
         bPane.add(bMove, new Integer[2]);
+        bPane.add(bWork, new Integer[2]);
+        bPane.add(bUpgrade, new Integer[2]);
+
+        // Hide a few buttons
+        bAct.setVisible(false);
+        bRehearse.setVisible(false);
     }
 
-    // This class implements Mouse Events
-    class boardMouseListener implements MouseListener {
-        public void mouseClicked(MouseEvent e) {
-            if (e.getSource() == bAct) {
-                playerlabel[0].setVisible(true);
-                System.out.println("Acting is Selected\n");
-            } else if (e.getSource() == bRehearse) {
-                System.out.println("Rehearse is Selected\n");
-            } else if (e.getSource() == bMove) {
-                System.out.println("Move is Selected\n");
-            }
-        }
-
-        public void mousePressed(MouseEvent e) {
-        }
-
-        public void mouseReleased(MouseEvent e) {
-        }
-
-        public void mouseEntered(MouseEvent e) {
-        }
-
-        public void mouseExited(MouseEvent e) {
-        }
-    }
-/*
-    public static void main(String[] args) {
-
-        BoardLayersListener board = new BoardLayersListener();
-        board.setVisible(true);
-
-        // Take input from the user about number of players
-        JOptionPane.showInputDialog(board, "How many players?");
+    public void hideAll() {
+        bAct.setVisible(false);
+        bRehearse.setVisible(false);
+        bMove.setVisible(false);
+        bWork.setVisible(false);
+        bUpgrade.setVisible(false);
+        mLabel.setVisible(false);
     }
 
- */
+    public void setButtonsDefault() {
+        bMove.setVisible(true);
+        bWork.setVisible(true);
+        bUpgrade.setVisible(true);
+        mLabel.setVisible(true);
+    }
 }
