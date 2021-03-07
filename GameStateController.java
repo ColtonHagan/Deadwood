@@ -460,6 +460,10 @@ class GameStateController extends DeadwoodController {
             for (int i = 0; i < boardView.bRooms.length; i++) {
                 if (e.getSource() == boardView.bRooms[i]) {
                     Room room = roomNameToRoom(boardView.bRooms[i].getText());
+                    if(room.getSceneCard().getFlip()) {
+                        room.getSceneCard().setFlip(true);
+                        boardView.flipScene(room.getRoomNumber(), room.getSceneCard().getImage());
+                    }
                     move(room);
                     //boardView.displayMove(gameModel.getCurrentPlayerInt(), room.getCords());
                     boardView.displayMove(gameModel.getCurrentPlayerInt(), gameModel.getCurrentPlayer().getCurrentRoom().getCords());
