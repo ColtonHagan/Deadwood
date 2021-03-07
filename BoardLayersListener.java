@@ -212,6 +212,7 @@ public class BoardLayersListener extends JFrame {
         } else {
             bPayment[i].setBounds(boardlabel.getWidth() + 60, 30 + ((i - 5) * 20), 50, 20);
         }
+        bPane.add(bPayment[i], new Integer[2]);
     }
 
     public void updatePlayerIcon(int playerNumber, int rank) {
@@ -355,6 +356,7 @@ public class BoardLayersListener extends JFrame {
         for (JButton b : bPayment) {
             b.setVisible(false);
         }
+        mLabel.setVisible(false);
     }
     public void hideButtonsPlayerCount() {
         for (JButton b : bPlayerCount) {
@@ -394,7 +396,7 @@ public class BoardLayersListener extends JFrame {
 
     public void showPromptPayment() {
         mLabel = new JLabel("Dollars | Credits");
-        mLabel.setBounds(boardlabel.getWidth() + 40, 0, 100, 20);
+        mLabel.setBounds(boardlabel.getWidth() + 16, 0, 100, 20);
         bPane.add(mLabel, new Integer[2]);
 
         for(int i = 0; i < 10; i++) {
