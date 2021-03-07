@@ -24,6 +24,9 @@ public class BoardLayersListener extends JFrame {
     // JLabels
     JLabel boardlabel;
     JLabel mLabel;
+    JLabel nameLabel;
+    JLabel creditLabel;
+    JLabel moneyLabel;
     JLabel[] cardlabel;
     JLabel[] playerlabel;
     JLabel[][] shotlabel;
@@ -84,7 +87,6 @@ public class BoardLayersListener extends JFrame {
         ImageIcon cIcon = new ImageIcon(image);
         cardlabel[roomNumber].setIcon(cIcon);
         cardlabel[roomNumber].setBounds(cords[0], cords[1], cIcon.getIconWidth(), cIcon.getIconHeight());
-        cardlabel[roomNumber].setOpaque(true);
 
         // Add the card to the lower layer
         bPane.add(cardlabel[roomNumber], new Integer(1));
@@ -126,7 +128,7 @@ public class BoardLayersListener extends JFrame {
          } else {
             playerlabel[playerNumber].setBounds(roleCords[0] + roomCords[0],roleCords[1] + roomCords[1], playerlabel[playerNumber].getIcon().getIconWidth(), playerlabel[playerNumber].getIcon().getIconHeight());
          }
-         bPane.add(playerlabel[playerNumber], new Integer(2));
+         bPane.add(playerlabel[playerNumber], new Integer[2]);
     }
     
     public void displayMove(int playerNumber, int[] roomCords) {
@@ -149,22 +151,18 @@ public class BoardLayersListener extends JFrame {
       playerlabel[playerNumber].setVisible(true);
     }
     
-    public void playerDisplay(String name, int credits, int dollars, int rank) {
-        JLabel nameLabel = new JLabel("Name: " + name);
+    public void playerDisplay(String name, int money, int credits) {
+        nameLabel = new JLabel("Name: " + name);
         nameLabel.setBounds(boardlabel.getWidth() + 20, bMove.getBounds().y + 30, 100, 20); //location of this may change if move button is no longer smallest button
         bPane.add(nameLabel, new Integer[2]);
 
-        JLabel moneyLabel = new JLabel("Dollars: " + dollars);
+        moneyLabel = new JLabel("Dollars: " + money);
         moneyLabel.setBounds(boardlabel.getWidth() + 30, nameLabel.getBounds().y + 30, 100, 20);
         bPane.add(moneyLabel, new Integer[2]);
 
-        JLabel creditLabel = new JLabel("Credits: " + credits);
+        creditLabel = new JLabel("Credits: " + credits);
         creditLabel.setBounds(boardlabel.getWidth() + 30, moneyLabel.getBounds().y + 30, 100, 20);
         bPane.add(creditLabel, new Integer[2]);
-
-        JLabel rankLabel = new JLabel("Rank: " + rank);
-        rankLabel.setBounds(boardlabel.getWidth() + 30, creditLabel.getBounds().y + 30, 100, 20);
-        bPane.add(rankLabel, new Integer[2]);
     }
 
     public int setTotalPlayers(int n) {
