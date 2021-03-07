@@ -89,13 +89,15 @@ public class BoardLayersListener extends JFrame {
     }
     
     public void removeScene(int roomNumber) {
-      cardlabel[roomNumber].setIcon(null);
+      System.out.println("testing code scene removed");
+      //cardlabel[roomNumber].setIcon(null);
     }
     
     public void flipScene(int roomNumber, String imageName) {
+      System.out.println(imageName);
       ImageIcon cardIcon = new ImageIcon(imageName);
       cardlabel[roomNumber].setIcon(cardIcon);
-      bPane.add(cardlabel[roomNumber], new Integer(1));
+      bPane.add(cardlabel[roomNumber], new Integer(2));
     }
     public void displayRole(Role newRole, int playerNumber, int[] roomCords) {
          int[] roleCords = newRole.getCords();
@@ -111,11 +113,9 @@ public class BoardLayersListener extends JFrame {
       int y = roomCords[1]+100;
       int x = roomCords[0];
       int slotsOver = 0;
-      boolean playerOnLocation = false;
       //checks if current player is at locationg
       for(int i = 0; i < playerlabel.length; i++) {
          if(playerlabel[i].getLocation().x == x && playerlabel[i].getLocation().y == y) {
-            playerOnLocation = true;
             slotsOver++;
             x += playerlabel[playerNumber].getIcon().getIconHeight();
             if(slotsOver == 4) {

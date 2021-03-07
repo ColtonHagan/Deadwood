@@ -121,7 +121,7 @@ class DeadwoodController {
             if (checkMoved) {
                 model.updateMoved(true);
                 if (!(model.getCurrentRoom().getSceneCard() == null))
-                    model.getCurrentRoom().getSceneCard().setFlip(true);
+                    //model.getCurrentRoom().getSceneCard().setFlip(true);
                 view.showMoveSuccess(model.getCurrentRoom().getName());
             } else {
                 view.showMoveFail(model.getCurrentRoom().getName());
