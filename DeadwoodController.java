@@ -89,9 +89,9 @@ class DeadwoodController {
 
                 // Checking that there is enough cash to rank up
                 if (model.getMoney() >= cost) {
+                    view.showUpgradeSuccess(targetUpgrade, model.getRank());
                     model.updateRank(targetUpgrade);
                     updateMoney(model.getMoney() - cost);
-                    view.showUpgradeSuccess(targetUpgrade, model.getRank());
                 } else {
                     view.showUpgradeFail(targetUpgrade);
                 }
@@ -119,8 +119,6 @@ class DeadwoodController {
             // Flipping scene card if the player moved and it was unflipped, printing results via view
             if (checkMoved) {
                 model.updateMoved(true);
-                if (!(model.getCurrentRoom().getSceneCard() == null))
-                    //model.getCurrentRoom().getSceneCard().setFlip(true);
                 view.showMoveSuccess(model.getCurrentRoom().getName());
             } else {
                 view.showMoveFail(model.getCurrentRoom().getName());

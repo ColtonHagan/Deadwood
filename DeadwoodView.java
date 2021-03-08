@@ -39,7 +39,7 @@ class DeadwoodView {
 
     public void showRehearsalFail(int practiceChips) {
         consoleListener.printToLog("Rehearsal fail!");
-        consoleListener.printToLog("Player is guaranteed to succeed in the next act action");
+        consoleListener.printToLog("Guaranteed to succeed in the next act action");
         consoleListener.printToLog("You currently have " + practiceChips + " Practice chips. \n");
     }
 
@@ -61,15 +61,11 @@ class DeadwoodView {
 
     // Errors for when player does something illegal that System catches
     public void printUpgradeError() {
-        consoleListener.printToLog("Error: Cannot upgrade! You are not at the casting office! \n");
+        consoleListener.printToLog("Error: Cannot upgrade! \nYou are not at the casting office! \n");
     }
 
     public void printMoveError() {
-        consoleListener.printToLog("Error: Cannot move! Either you currently have a role or you have already moved! \n");
-    }
-
-    public void printRehearseError() {
-        consoleListener.printToLog("Error: Cannot rehearse! Either you have already worked (Act, Rehearse, or just took role) or you do not currently have a role! \n");
+        consoleListener.printToLog("Error: Cannot move! \nYou have already moved! \n");
     }
 
     public void printActError() {
@@ -77,7 +73,7 @@ class DeadwoodView {
     }
 
     public void printAddRoleError() {
-        consoleListener.printToLog("Error: Cannot take role, there are no available roles \n");
+        consoleListener.printToLog("Error: Cannot take role, there are no available roles \nOr rank is too low \n");
     }
 
     public void printAlreadyHaveRole() {
@@ -121,7 +117,7 @@ class DeadwoodView {
     }
 
     public void showEndTurn(String name) {
-        consoleListener.printToLog("Turn Ended, it is now " + name + "'s turn");
+        consoleListener.printToLog("\nTurn Ended, it is now " + name + "'s turn");
     }
 
     public void showEndDay() {

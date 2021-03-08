@@ -4,6 +4,7 @@ import javax.swing.*;
 public class ConsoleListener extends JPanel {
     private JTextArea textArea;
 
+    // Sets up the ConsoleListener which will print text in a JTextArea at the bottom right
     public ConsoleListener() {
         super(new GridBagLayout());
 
@@ -23,6 +24,7 @@ public class ConsoleListener extends JPanel {
         add(scrollPane, c);
     }
 
+    // Prints given string to the JTextArea
     public void printToLog(String s) {
         textArea.append(s + "\n");
 

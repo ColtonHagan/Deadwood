@@ -59,10 +59,12 @@ public class BoardLayersListener extends JFrame {
         createConsoleListener();
     }
 
+    // Adds controller as a listener
     public void addListener(GameStateController controller) {
         this.controller = controller;
     }
 
+    //Sets up the board picture
     public void createBoard() {
         // Set the title of the JFrame
         // Set the exit option for the JFrame
@@ -83,10 +85,9 @@ public class BoardLayersListener extends JFrame {
 
         // Set the size of the GUI
         setSize(icon.getIconWidth() + 350, icon.getIconHeight() + 50);
-        // setPreferredSize(new Dimension(icon.getIconWidth()+200,icon.getIconHeight()));
-        // setPreferredSize(new Dimension(1280,720));
     }
-    
+
+    // Hides all button elements and shows end game message
     public void endGame() {
          hideAll();
          JLabel endGame = new JLabel("Game Over");
@@ -94,6 +95,8 @@ public class BoardLayersListener extends JFrame {
          endGame.setFont(new Font("Serif", Font.BOLD, 40));
          bPane.add(endGame, new Integer(4));
     }
+
+    // Creates text box and bottom right that listens to DeadwoodView for strings
     private void createConsoleListener() {
         // Add a listener for console
         consoleListener = new ConsoleListener();
@@ -102,6 +105,7 @@ public class BoardLayersListener extends JFrame {
         bPane.add(consoleListener);
     }
 
+    // Sets scene cards onto rooms and flips
     public void createScenes(int[] cords, String image, int roomNumber) {
         // Add a scene card to this room
         cardlabel[roomNumber] = new JLabel();
@@ -112,13 +116,15 @@ public class BoardLayersListener extends JFrame {
         // Add the card to the lower layer
         bPane.add(cardlabel[roomNumber], new Integer(1));
     }
-    
+
+    // Removes scene card picture on scene end
     public void removeScene(int roomNumber) {
       if(cardlabel[roomNumber] != null) {
          cardlabel[roomNumber].setIcon(null);
       }
     }
-    
+
+    // Remove shot counter picture on act success
     public void removeShotCounter(int roomNumber) {
       for(int i = 0; i < shotlabel[roomNumber].length; i++) {
          if(shotlabel[roomNumber][i].getIcon() != null) {
@@ -127,7 +133,8 @@ public class BoardLayersListener extends JFrame {
          }
       }
     }
-    
+
+    // Fills out all shot counters on board
     public void displayShotCounters(int roomNumber, int[][] cords) {
       shotlabel[roomNumber] = new JLabel[cords.length];
       for(int i = 0; i < cords.length; i++) {
@@ -138,14 +145,16 @@ public class BoardLayersListener extends JFrame {
          bPane.add(shotlabel[roomNumber][i], new Integer(1));
       }
     }
-    
+
+    // Flips the sceneCard face up
     public void flipScene(int roomNumber, String imageName) {
       cardlabel[roomNumber].setIcon(null);
       ImageIcon cardIcon = new ImageIcon(imageName);
       cardlabel[roomNumber].setIcon(cardIcon);
       bPane.add(cardlabel[roomNumber], new Integer(2));
     }
-    
+
+    // Places the player's dice onto the role location on board
     public void displayRole(Role newRole, int playerNumber, int[] roomCords) {
          int[] roleCords = newRole.getCords();
          if(newRole.getExtra()) {
@@ -155,7 +164,8 @@ public class BoardLayersListener extends JFrame {
          }
          bPane.add(playerlabel[playerNumber], new Integer[4]);
     }
-    
+
+    // Moves the player to a new room
     public void displayMove(int playerNumber, int[] roomCords) {
       int y = roomCords[1]+100;
       int x = roomCords[0];
@@ -179,7 +189,8 @@ public class BoardLayersListener extends JFrame {
       bPane.add(playerlabel[playerNumber], new Integer(4));
       playerlabel[playerNumber].setVisible(true);
     }
-    
+
+    // Displays player's name, credits, money, practicechips, and day count on right side
     public void createPlayerDisplay() {
         nameLabel = new JLabel();
         nameLabel.setBounds(boardlabel.getWidth() + 20, bMove.getBounds().y + 140, 100, 20); //location of this may change if move button is no longer lowest button
@@ -205,7 +216,8 @@ public class BoardLayersListener extends JFrame {
         diceLabel.setBounds(moneyLabel.getLocation().x + 250, moneyLabel.getBounds().y, playerlabel[0].getIcon().getIconWidth(), playerlabel[0].getIcon().getIconHeight());
         bPane.add(diceLabel, new Integer[2]);
     }
-    
+
+    // Updates the player display information with correct info
     public void updatePlayerDisplay(String name, int money, int credits, int practice, int activePlayer, int day, int totalDays) {
       nameLabel.setText("Name: " + name);
       moneyLabel.setText("Dollars: " + money);
@@ -216,9 +228,8 @@ public class BoardLayersListener extends JFrame {
       diceLabel.setIcon(playerlabel[activePlayer].getIcon());
     }
 
+    // Creates the playerlabel for all the players
     public int setTotalPlayers(int n) {
-        // Add a dice to represent a player.
-        // Role for Crusty the prospector. The x and y co-ordiantes are taken from Board.xml file
         playerlabel = new JLabel[n];
         ImageIcon[] pIcon = new ImageIcon[n];
         for (int i = 0; i < n; i++) {
@@ -238,6 +249,7 @@ public class BoardLayersListener extends JFrame {
         return n;
     }
 
+    // Sets up the payment buttons with correct costs from the xml
     public void setPayment(int i, int payment) {
         bPayment[i] = new JButton("" + payment);
         bPayment[i].setBackground(Color.white);
@@ -249,17 +261,20 @@ public class BoardLayersListener extends JFrame {
         bPane.add(bPayment[i], new Integer[2]);
     }
 
+    // Sets player's dice to the given rank's dice
     public void updatePlayerIcon(int playerNumber, int rank) {
         String[] diceChoices = {"b", "c", "g", "o", "p", "r", "v", "w", "y"};
         ImageIcon pIcon = new ImageIcon("dice/" + diceChoices[playerNumber] + rank + ".png");
         playerlabel[playerNumber].setIcon(pIcon);
     }
 
+    // Prompts at start for player names
     public String createPlayers(int playerNumber) {
         String s = JOptionPane.showInputDialog(boardlabel, "Player number " + (playerNumber + 1) + ", Enter your name");
         return s;
     }
 
+    // Creates buttons at very start to choose total players
     public void createButtonsPlayerCount() {
         mLabel = new JLabel("How Many Players?");
         mLabel.setBounds(boardlabel.getWidth() + 10, 0, 150, 20);
@@ -274,6 +289,7 @@ public class BoardLayersListener extends JFrame {
         }
     }
 
+    // Creates room buttons from the given String array
     public void createButtonsRooms(String[] adjacentRooms) {
         mLabel = new JLabel("Choose Room");
         mLabel.setBounds(boardlabel.getWidth() + 40, 0, 100, 20);
@@ -289,6 +305,7 @@ public class BoardLayersListener extends JFrame {
         bCancel.setVisible(true);
     }
 
+    // Creates role buttons from the given String array
     public void createButtonsRoles(String[] roles) {
         mLabel = new JLabel("Choose Role");
         mLabel.setBounds(boardlabel.getWidth() + 40, 0, 100, 20);
@@ -304,6 +321,7 @@ public class BoardLayersListener extends JFrame {
         bCancel.setVisible(true);
     }
 
+    // Creates all default buttons
     public void createButtons() {
         // Create the Menu for action buttons
         mLabel = new JLabel("Choose Action");
@@ -319,7 +337,7 @@ public class BoardLayersListener extends JFrame {
         bRehearse.setBackground(Color.white);
         bRehearse.setBounds(boardlabel.getWidth() + 10, 50, 100, 20);
 
-        // Default set
+        // Default buttons like moving, work, etc
         bMove = new JButton("Move");
         bMove.setBackground(Color.white);
         bMove.setBounds(boardlabel.getWidth() + 10, 90, 100, 20);
@@ -345,7 +363,7 @@ public class BoardLayersListener extends JFrame {
         bRoles = new JButton[0];
         bPayment = new JButton[10];
 
-        // Prompt set
+        // Prompt set for yes no buttons
         bTakeRole = new JButton[2];
         bTakeRole[0] = new JButton("Yes");
         bTakeRole[0].setBackground(Color.white);
@@ -374,6 +392,7 @@ public class BoardLayersListener extends JFrame {
         bCancel.setVisible(false);
     }
 
+    // Hides all the buttons that will not change, most of the non - array buttons
     public void hideAll() {
         bAct.setVisible(false);
         bRehearse.setVisible(false);
@@ -386,6 +405,7 @@ public class BoardLayersListener extends JFrame {
         bTakeRole[1].setVisible(false);
     }
 
+    // Hides roles buttons which will change as game progresses
     public void hideRoles() {
         for (JButton b : bRoles) {
             if (!(b == null)) {
@@ -396,6 +416,7 @@ public class BoardLayersListener extends JFrame {
         bCancel.setVisible(false);
     }
 
+    // Hides rooms buttons which will change as game progresses
     public void hideRooms() {
         for (JButton b : bRooms) {
             if (!(b == null)) {
@@ -406,6 +427,7 @@ public class BoardLayersListener extends JFrame {
         bCancel.setVisible(false);
     }
 
+    // Hides paymentButtons as this can change depending on xml settings
     public void hidePayments() {
         for (JButton b : bPayment) {
             if (!(b == null)) {
@@ -415,6 +437,8 @@ public class BoardLayersListener extends JFrame {
         mLabel.setVisible(false);
         bCancel.setVisible(false);
     }
+
+    // Hides playercount
     public void hideButtonsPlayerCount() {
         for (JButton b : bPlayerCount) {
             b.setVisible(false);
@@ -422,6 +446,7 @@ public class BoardLayersListener extends JFrame {
         mLabel.setVisible(false);
     }
 
+    // Shows the default button setup on turn start
     public void showButtonsDefault() {
         bMove.setVisible(true);
         bWork.setVisible(true);
@@ -433,6 +458,7 @@ public class BoardLayersListener extends JFrame {
         bPane.add(mLabel, new Integer[2]);
     }
 
+    // Shows the button setup for when a player has a role
     public void showButtonsHasRole() {
         bAct.setVisible(true);
         bRehearse.setVisible(true);
@@ -442,6 +468,7 @@ public class BoardLayersListener extends JFrame {
         bPane.add(mLabel, new Integer[2]);
     }
 
+    // Shows the button setup after a player moves, which gives them choice to take role
     public void showPromptTakeRole() {
         // Create the Menu for action buttons
         mLabel = new JLabel("Take a Role?");
@@ -452,6 +479,7 @@ public class BoardLayersListener extends JFrame {
         bTakeRole[1].setVisible(true);
     }
 
+    // Shows button setup for when player chooses upgrade button, allows player to upgrade rank
     public void showPromptPayment() {
         mLabel = new JLabel("Dollars | Credits");
         mLabel.setBounds(boardlabel.getWidth() + 16, 0, 100, 20);

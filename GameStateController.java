@@ -327,7 +327,7 @@ class GameStateController extends DeadwoodController {
                         exception.printStackTrace();
                     }
                 } else {
-                    getView().printRehearseError();
+                    getView().showRehearsalFail(gameModel.getCurrentPlayer().getPracticeChips());
                 }
 
                 // Button for Moving
@@ -340,6 +340,8 @@ class GameStateController extends DeadwoodController {
                     for (JButton b : boardView.bRooms) {
                         b.addMouseListener(new boardMouseListener());
                     }
+                } else {
+                    getView().printMoveError();
                 }
 
 
