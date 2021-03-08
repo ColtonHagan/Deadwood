@@ -2,7 +2,7 @@
 Name : Colton Hagan and Steven Le
 Class : CS 345
 Date : 2/23/21
-Program Description : Prints statements about the game to consoleListener
+Program Description : Stores strings for button presses, passes these strings to consoleListener
 */
 class DeadwoodView {
     ConsoleListener consoleListener;

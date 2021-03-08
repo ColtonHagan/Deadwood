@@ -12,7 +12,7 @@ import javax.swing.*;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
-public class BoardLayersListener extends JFrame {
+public class BoardView extends JFrame {
     // GameStateController, Acting as a listener
     GameStateController controller;
 
@@ -49,7 +49,7 @@ public class BoardLayersListener extends JFrame {
     JLayeredPane bPane;
 
     // Constructor
-    public BoardLayersListener() {
+    public BoardView() {
         super("Deadwood");
         cardlabel = new JLabel[10];
         createBoard();

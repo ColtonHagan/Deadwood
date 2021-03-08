@@ -6,17 +6,16 @@ Program Description : Controls how/when game progresses
 */
 
 import javax.swing.*;
-import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.*;
 
 class GameStateController extends DeadwoodController {
     private final GameState gameModel;
-    private final BoardLayersListener boardView;
+    private final BoardView boardView;
 
     public GameStateController() {
-        this.boardView = new BoardLayersListener();
+        this.boardView = new BoardView();
         getView().addListener(boardView.consoleListener);
         boardView.addListener(this);
         boardView.setVisible(true);
