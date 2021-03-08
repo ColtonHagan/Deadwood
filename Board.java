@@ -53,6 +53,7 @@ class Board {
     public void placeScenes(Scenes sceneLibray, BoardLayersListener boardListener) {
         for (int i = 0; i < rooms.length - 2; i++) {
             SceneCard randomCard = sceneLibray.getRandomCard();
+            boardListener.removeScene(i);
             boardListener.createScenes(rooms[i].getCords(),"CardBack-small.jpg", i);
             rooms[i].setScene(randomCard);
             boardListener.displayShotCounters(i, rooms[i].getShotCounterCords());
