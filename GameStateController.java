@@ -76,7 +76,7 @@ class GameStateController extends DeadwoodController {
         // Button Setup
         boardView.createButtons();
         boardView.createPlayerDisplay();
-        boardView.updatePlayerDisplay(gameModel.getCurrentPlayer().getName(), gameModel.getCurrentPlayer().getMoney(), gameModel.getCurrentPlayer().getCredits(), 0, gameModel.getCurrentDay(), gameModel.getTotalDays());
+        boardView.updatePlayerDisplay(gameModel.getCurrentPlayer().getName(), gameModel.getCurrentPlayer().getMoney(), gameModel.getCurrentPlayer().getCredits(), 0, 0, 1, gameModel.getTotalDays());
         boardView.bAct.addMouseListener(new boardMouseListener());
         boardView.bRehearse.addMouseListener(new boardMouseListener());
         boardView.bMove.addMouseListener(new boardMouseListener());
@@ -192,7 +192,7 @@ class GameStateController extends DeadwoodController {
             gameModel.setCurrentPlayerInt(0);
             updateModel(gameModel.getCurrentPlayer());
         }
-        boardView.updatePlayerDisplay(gameModel.getCurrentPlayer().getName(), gameModel.getCurrentPlayer().getMoney(), gameModel.getCurrentPlayer().getCredits(), gameModel.getCurrentPlayerInt(), gameModel.getCurrentDay(), gameModel.getTotalDays());
+        boardView.updatePlayerDisplay(gameModel.getCurrentPlayer().getName(), gameModel.getCurrentPlayer().getMoney(), gameModel.getCurrentPlayer().getCredits(), gameModel.getCurrentPlayer().getPracticeChips(), gameModel.getCurrentPlayerInt(), gameModel.getCurrentDay(), gameModel.getTotalDays());
         getView().showEndTurn(gameModel.getCurrentPlayer().getName());
 
         // Checks if this is the last Scenecard on board, ends day if true;
@@ -395,7 +395,7 @@ class GameStateController extends DeadwoodController {
                     for (JButton b : boardView.bPayment) {
                         b.removeMouseListener(this);
                     }
-                    boardView.updatePlayerDisplay(gameModel.getCurrentPlayer().getName(), gameModel.getCurrentPlayer().getMoney(), gameModel.getCurrentPlayer().getCredits(), gameModel.getCurrentPlayerInt(), gameModel.getCurrentDay(), gameModel.getTotalDays());
+                    boardView.updatePlayerDisplay(gameModel.getCurrentPlayer().getName(), gameModel.getCurrentPlayer().getMoney(), gameModel.getCurrentPlayer().getCredits(), gameModel.getCurrentPlayer().getPracticeChips(), gameModel.getCurrentPlayerInt(), gameModel.getCurrentDay(), gameModel.getTotalDays());
                 }
             }
 
