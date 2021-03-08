@@ -5,7 +5,7 @@ Date : 2/23/21
 Program Description : Stores strings for button presses, passes these strings to consoleListener
 */
 class DeadwoodView {
-    ConsoleListener consoleListener;
+    private ConsoleListener consoleListener;
 
     public void addListener(ConsoleListener consoleListener) {
         this.consoleListener = consoleListener;

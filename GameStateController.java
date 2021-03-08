@@ -494,7 +494,7 @@ class GameStateController extends DeadwoodController {
             }
 
         }
-        
+
         // Required MouseEvent Stuff, unused
         public void mousePressed(MouseEvent e) {
         }

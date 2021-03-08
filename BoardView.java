@@ -11,37 +11,37 @@ import java.awt.*;
 import javax.swing.*;
 
 public class BoardView extends JFrame {
-    ConsoleListener consoleListener;
+    protected ConsoleListener consoleListener;
 
     // JLabels
-    JLabel boardlabel;
-    JLabel mLabel;
-    JLabel nameLabel;
-    JLabel creditLabel;
-    JLabel moneyLabel;
-    JLabel diceLabel;
-    JLabel dayLabel;
-    JLabel practiceLabel;
-    final JLabel[] cardlabel;
-    JLabel[] playerlabel;
-    JLabel[][] shotlabel;
+    private JLabel boardlabel;
+    private JLabel mLabel;
+    private JLabel nameLabel;
+    private JLabel creditLabel;
+    private JLabel moneyLabel;
+    private JLabel diceLabel;
+    private JLabel dayLabel;
+    private JLabel practiceLabel;
+    private final JLabel[] cardlabel;
+    private JLabel[] playerlabel;
+    private JLabel[][] shotlabel;
 
     //JButtons
-    JButton bAct;
-    JButton bRehearse;
-    JButton bMove;
-    JButton bWork;
-    JButton bUpgrade;
-    JButton bCancel;
-    JButton bEndTurn;
-    JButton[] bRooms;
-    JButton[] bRoles;
-    JButton[] bPlayerCount;
-    JButton[] bTakeRole;
-    JButton[] bPayment;
+    protected JButton bAct;
+    protected JButton bRehearse;
+    protected JButton bMove;
+    protected JButton bWork;
+    protected JButton bUpgrade;
+    protected JButton bCancel;
+    protected JButton bEndTurn;
+    protected JButton[] bRooms;
+    protected JButton[] bRoles;
+    protected JButton[] bPlayerCount;
+    protected JButton[] bTakeRole;
+    protected JButton[] bPayment;
 
     // JLayered Pane
-    JLayeredPane bPane;
+    private JLayeredPane bPane;
 
     // Constructor
     public BoardView() {

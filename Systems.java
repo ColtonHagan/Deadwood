@@ -56,7 +56,7 @@ class Systems {
         return (model.getCurrentRoom().getName().equals("office"));
     }
 
-    // Checks if rank upgrade is legal - cannot upgrade to ranks above 6 and
+    // Checks if rank upgrade is legal - cannot upgrade to ranks above 6 and cannot rank down
     public boolean rankPossible(int rank, int targetRank) {
         return (rank < targetRank && targetRank <= 6);
     }
