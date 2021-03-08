@@ -209,7 +209,6 @@ class GameStateController extends DeadwoodController {
     }
 
     public void endDay() throws Exception {
-
         // Resets all players for next day and moves them to trailers
         for (int i = 0; i < gameModel.getPlayers().length; i++) {
             PlayerModel player = gameModel.getPlayers()[i];
@@ -236,6 +235,7 @@ class GameStateController extends DeadwoodController {
 
     public void endGame() throws Exception {
         getView().showEndGame();
+        boardView.endGame();
         int tieAmount = 1;
         int score;
         int highestScore = 0;

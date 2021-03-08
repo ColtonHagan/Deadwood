@@ -86,7 +86,14 @@ public class BoardLayersListener extends JFrame {
         // setPreferredSize(new Dimension(icon.getIconWidth()+200,icon.getIconHeight()));
         // setPreferredSize(new Dimension(1280,720));
     }
-
+    
+    public void endGame() {
+         hideAll();
+         JLabel endGame = new JLabel("Game Over");
+         endGame.setBounds(boardlabel.getWidth() + 60, 20, 200, 100);
+         endGame.setFont(new Font("Serif", Font.BOLD, 40));
+         bPane.add(endGame, new Integer(4));
+    }
     private void createConsoleListener() {
         // Add a listener for console
         consoleListener = new ConsoleListener();
@@ -150,21 +157,22 @@ public class BoardLayersListener extends JFrame {
     public void displayMove(int playerNumber, int[] roomCords) {
       int y = roomCords[1]+100;
       int x = roomCords[0];
-      int slotsOver = 0;
+      int slotsOver = -1;
       //checks if current player is at location
-      for(int i = 0; i < playerlabel.length; i++) {
-         System.out.println(i + " " + playerlabel[i].getLocation().x + " " + playerlabel[i].getLocation().y);
-         if(playerlabel[i].getLocation().x == x && playerlabel[i].getLocation().y == y && playerNumber != i) {
-            slotsOver++;
-            if(slotsOver == 4) {
-               y += playerlabel[playerNumber].getIcon().getIconHeight();
-               x = roomCords[0];
-            } else {
-               x += playerlabel[playerNumber].getIcon().getIconHeight();
+      while(slotsOver != 0) {
+         slotsOver = 0;
+         for(int i = 0; i < playerlabel.length; i++) {
+            if(playerlabel[i].getLocation().x == x && playerlabel[i].getLocation().y == y && playerNumber != i) {
+               slotsOver++;
+               if(x > (2*playerlabel[playerNumber].getIcon().getIconWidth() + roomCords[0])) {
+                  y += playerlabel[playerNumber].getIcon().getIconHeight();
+                  x = roomCords[0];
+               } else {
+                  x += playerlabel[playerNumber].getIcon().getIconWidth();
+               }
             }
          }
       }
-      System.out.println(slotsOver);
       playerlabel[playerNumber].setBounds(x,y, playerlabel[playerNumber].getIcon().getIconWidth(), playerlabel[playerNumber].getIcon().getIconHeight());
       bPane.add(playerlabel[playerNumber], new Integer(3));
       playerlabel[playerNumber].setVisible(true);
