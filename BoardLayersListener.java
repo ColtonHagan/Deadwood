@@ -135,26 +135,29 @@ public class BoardLayersListener extends JFrame {
          } else {
             playerlabel[playerNumber].setBounds(roleCords[0] + roomCords[0],roleCords[1] + roomCords[1], playerlabel[playerNumber].getIcon().getIconWidth(), playerlabel[playerNumber].getIcon().getIconHeight());
          }
-         bPane.add(playerlabel[playerNumber], new Integer[2]);
+         bPane.add(playerlabel[playerNumber], new Integer[3]);
     }
     
     public void displayMove(int playerNumber, int[] roomCords) {
       int y = roomCords[1]+100;
       int x = roomCords[0];
       int slotsOver = 0;
-      //checks if current player is at locationg
+      //checks if current player is at location
       for(int i = 0; i < playerlabel.length; i++) {
+         System.out.println(i + " " + playerlabel[i].getLocation().x + " " + playerlabel[i].getLocation().y);
          if(playerlabel[i].getLocation().x == x && playerlabel[i].getLocation().y == y && playerNumber != i) {
             slotsOver++;
-            x += playerlabel[playerNumber].getIcon().getIconHeight();
             if(slotsOver == 4) {
                y += playerlabel[playerNumber].getIcon().getIconHeight();
                x = roomCords[0];
+            } else {
+               x += playerlabel[playerNumber].getIcon().getIconHeight();
             }
          }
       }
+      System.out.println(slotsOver);
       playerlabel[playerNumber].setBounds(x,y, playerlabel[playerNumber].getIcon().getIconWidth(), playerlabel[playerNumber].getIcon().getIconHeight());
-      bPane.add(playerlabel[playerNumber], new Integer(2));
+      bPane.add(playerlabel[playerNumber], new Integer(3));
       playerlabel[playerNumber].setVisible(true);
     }
     
@@ -180,11 +183,11 @@ public class BoardLayersListener extends JFrame {
         bPane.add(diceLabel, new Integer[2]);
     }
     
-    public void updatePlayerDisplay(String name, int money, int credits, int activePlayer, int day) {
+    public void updatePlayerDisplay(String name, int money, int credits, int activePlayer, int day, int totalDays) {
       nameLabel.setText("Name: " + name);
       moneyLabel.setText("Dollars: " + money);
       creditLabel.setText("Credits: " + credits);
-      dayLabel.setText("Day: " + day);
+      dayLabel.setText("Day: " + day + " of " + totalDays);
       diceLabel.setIcon(null);
       diceLabel.setIcon(playerlabel[activePlayer].getIcon());
     }
@@ -206,7 +209,7 @@ public class BoardLayersListener extends JFrame {
             } else {
                updatePlayerIcon(i, 2);
             }
-            bPane.add(playerlabel[i], new Integer[4]);
+            bPane.add(playerlabel[i], new Integer[3]);
         }
         return n;
     }
