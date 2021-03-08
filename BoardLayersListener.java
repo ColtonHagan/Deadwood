@@ -28,6 +28,7 @@ public class BoardLayersListener extends JFrame {
     JLabel moneyLabel;
     JLabel diceLabel;
     JLabel dayLabel;
+    JLabel practiceLabel;
     JLabel[] cardlabel;
     JLabel[] playerlabel;
     JLabel[][] shotlabel;
@@ -182,8 +183,12 @@ public class BoardLayersListener extends JFrame {
         creditLabel.setBounds(boardlabel.getWidth() + 30, moneyLabel.getBounds().y + 30, 100, 20);
         bPane.add(creditLabel, new Integer[2]);
         
+        practiceLabel = new JLabel();
+        practiceLabel.setBounds(boardlabel.getWidth() + 30, creditLabel.getBounds().y + 30, 100, 20);
+        bPane.add(practiceLabel, new Integer[2]);
+        
         dayLabel = new JLabel();
-        dayLabel.setBounds(boardlabel.getWidth() + 30, creditLabel.getBounds().y + 30, 100, 20);
+        dayLabel.setBounds(boardlabel.getWidth() + 30, practiceLabel.getBounds().y + 30, 100, 20);
         bPane.add(dayLabel, new Integer[2]);
         
         diceLabel = new JLabel();
@@ -191,10 +196,11 @@ public class BoardLayersListener extends JFrame {
         bPane.add(diceLabel, new Integer[2]);
     }
     
-    public void updatePlayerDisplay(String name, int money, int credits, int activePlayer, int day, int totalDays) {
+    public void updatePlayerDisplay(String name, int money, int credits, int practice, int activePlayer, int day, int totalDays) {
       nameLabel.setText("Name: " + name);
       moneyLabel.setText("Dollars: " + money);
       creditLabel.setText("Credits: " + credits);
+      practiceLabel.setText("Practice Chips: " + practice);
       dayLabel.setText("Day: " + day + " of " + totalDays);
       diceLabel.setIcon(null);
       diceLabel.setIcon(playerlabel[activePlayer].getIcon());
