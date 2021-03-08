@@ -101,7 +101,9 @@ class GameStateController extends DeadwoodController {
         for (int i = 0; i < gameModel.getPlayers().length; i++) {
             PlayerModel player = gameModel.getPlayers()[i];
             if (player.getCurrentRoom() == currentRoom) {
-                boardView.displayMove(i, gameModel.getCurrentPlayer().getCurrentRoom().getCords());
+                if(player.getCurrentRole() != null) {
+                  boardView.displayMove(i, gameModel.getCurrentPlayer().getCurrentRoom().getCords());
+                }
                 player.removeRole();
                 player.updateHasRole(false);
                 player.updatePracticeChips(0);
