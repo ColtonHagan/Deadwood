@@ -33,7 +33,7 @@ class GameStateController extends DeadwoodController {
         boardView.hideButtonsPlayerCount();
 
         int rank = 1;
-        int money = 0;
+        int money = 0; // Testing, both should be 0 here
         int credits = 0;
         int days = 4;
         // Picking totalPlayers
@@ -483,11 +483,8 @@ class GameStateController extends DeadwoodController {
                 }
                 // After moving, refuse to take a role
             } else if (e.getSource() == boardView.bTakeRole[1]) {
-                try {
-                    endTurn();
-                } catch (Exception exception) {
-                    exception.printStackTrace();
-                }
+                boardView.hideAll();
+                boardView.showButtonsDefault();
             }
 
         }
