@@ -151,7 +151,7 @@ public class BoardLayersListener extends JFrame {
          } else {
             playerlabel[playerNumber].setBounds(roleCords[0] + roomCords[0],roleCords[1] + roomCords[1], playerlabel[playerNumber].getIcon().getIconWidth(), playerlabel[playerNumber].getIcon().getIconHeight());
          }
-         bPane.add(playerlabel[playerNumber], new Integer[3]);
+         bPane.add(playerlabel[playerNumber], new Integer[4]);
     }
     
     public void displayMove(int playerNumber, int[] roomCords) {
@@ -174,7 +174,7 @@ public class BoardLayersListener extends JFrame {
          }
       }
       playerlabel[playerNumber].setBounds(x,y, playerlabel[playerNumber].getIcon().getIconWidth(), playerlabel[playerNumber].getIcon().getIconHeight());
-      bPane.add(playerlabel[playerNumber], new Integer(3));
+      bPane.add(playerlabel[playerNumber], new Integer(4));
       playerlabel[playerNumber].setVisible(true);
     }
     
@@ -231,7 +231,7 @@ public class BoardLayersListener extends JFrame {
             } else {
                updatePlayerIcon(i, 2);
             }
-            bPane.add(playerlabel[i], new Integer[3]);
+            bPane.add(playerlabel[i], new Integer[2]);
         }
         return n;
     }

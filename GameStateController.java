@@ -193,18 +193,18 @@ class GameStateController extends DeadwoodController {
         }
         boardView.updatePlayerDisplay(gameModel.getCurrentPlayer().getName(), gameModel.getCurrentPlayer().getMoney(), gameModel.getCurrentPlayer().getCredits(), gameModel.getCurrentPlayer().getPracticeChips(), gameModel.getCurrentPlayerInt(), gameModel.getCurrentDay(), gameModel.getTotalDays());
         getView().showEndTurn(gameModel.getCurrentPlayer().getName());
-
-        // Checks if this is the last Scenecard on board, ends day if true;
-        if (gameModel.getBoard().getCurrentRooms() == 1) {
-            endDay();
-        }
-
+        
         // Resets buttons based on player status
         boardView.hideAll();
         if (gameModel.getCurrentPlayer().getHasRole()) {
             boardView.showButtonsHasRole();
         } else {
             boardView.showButtonsDefault();
+        }
+        
+        // Checks if this is the last Scenecard on board, ends day if true;
+        if (gameModel.getBoard().getCurrentRooms() == 1) {
+            endDay();
         }
     }
 
@@ -269,9 +269,9 @@ class GameStateController extends DeadwoodController {
         }
 
         // Asks to restart the game
-        getView().promptRestart();
+        /*getView().promptRestart();
         String userInput = getInput();
-        if (userInput.equals("Yes")) setUpGame();
+        if (userInput.equals("Yes")) setUpGame();*/
     }
 
     class boardMouseListener implements MouseListener {
