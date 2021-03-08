@@ -54,10 +54,10 @@ class DeadwoodController {
     }
 
     // Important player action classes: Covers upgrading rank, moving, roles, acting, and rehearsing
-    public void upgradeRankCredits(int targetUpgrade) {
+    public void upgradeRankCredits(int targetUpgrade, CastingOffice castingOffice) {
         // System check to ensure upgrade is legal (Must be in office)
         if (system.checkCanUpgrade()) {
-            CastingOffice office = model.getOffice();
+            CastingOffice office = castingOffice;
 
             // Ensuring the rank up logic is legal (Can't upgrade to rank 7 or rank down)
             if (system.rankPossible(model.getRank(), targetUpgrade)) {
@@ -79,10 +79,10 @@ class DeadwoodController {
         }
     }
 
-    public void upgradeRankDollars(int targetUpgrade) {
+    public void upgradeRankDollars(int targetUpgrade, CastingOffice castingOffice) {
         // System check to ensure upgrade is legal (Must be in office)
         if (system.checkCanUpgrade()) {
-            CastingOffice office = model.getOffice();
+            CastingOffice office = castingOffice;
 
             // Ensuring the rank up logic is legal (Can't upgrade to rank 7 or rank down)
             if (system.rankPossible(model.getRank(), targetUpgrade)) {

@@ -39,6 +39,7 @@ public class BoardLayersListener extends JFrame {
     JButton bWork;
     JButton bUpgrade;
     JButton bCancel;
+    JButton bEndTurn;
     JButton[] bRooms;
     JButton[] bRoles;
     JButton[] bPlayerCount;
@@ -158,7 +159,7 @@ public class BoardLayersListener extends JFrame {
     
     public void createPlayerDisplay() {
         nameLabel = new JLabel();
-        nameLabel.setBounds(boardlabel.getWidth() + 20, bMove.getBounds().y + 120, 100, 20); //location of this may change if move button is no longer lowest button
+        nameLabel.setBounds(boardlabel.getWidth() + 20, bMove.getBounds().y + 140, 100, 20); //location of this may change if move button is no longer lowest button
         bPane.add(nameLabel, new Integer[2]);
 
         moneyLabel = new JLabel();
@@ -252,6 +253,7 @@ public class BoardLayersListener extends JFrame {
             bRooms[i].setBounds(boardlabel.getWidth() + 10, 30 + (i * 20), 300, 20);
             bPane.add(bRooms[i], new Integer[2]);
         }
+        bCancel.setVisible(true);
     }
 
     public void createButtonsRoles(String[] roles) {
@@ -266,6 +268,7 @@ public class BoardLayersListener extends JFrame {
             bRoles[i].setBounds(boardlabel.getWidth() + 10, 30 + (i * 20), 300, 20);
             bPane.add(bRoles[i], new Integer[2]);
         }
+        bCancel.setVisible(true);
     }
 
     public void createButtons() {
@@ -298,7 +301,11 @@ public class BoardLayersListener extends JFrame {
 
         bCancel = new JButton("Cancel");
         bCancel.setBackground(Color.white);
-        bCancel.setBounds(boardlabel.getWidth() + 10, bMove.getBounds().y + 100, 150, 20);
+        bCancel.setBounds(boardlabel.getWidth() + 10, bMove.getBounds().y + 100, 200, 20);
+
+        bEndTurn = new JButton("End Turn");
+        bEndTurn.setBackground(Color.white);
+        bEndTurn.setBounds(boardlabel.getWidth() + 10, bMove.getBounds().y + 120, 200, 20);
 
         // Initialize for rooms and roles
         bRooms = new JButton[0];
@@ -322,6 +329,7 @@ public class BoardLayersListener extends JFrame {
         bPane.add(bWork, new Integer[2]);
         bPane.add(bUpgrade, new Integer[2]);
         bPane.add(bCancel, new Integer[2]);
+        bPane.add(bEndTurn, new Integer[2]);
         bPane.add(bTakeRole[0], new Integer[2]);
         bPane.add(bTakeRole[1], new Integer[2]);
 
@@ -339,6 +347,7 @@ public class BoardLayersListener extends JFrame {
         bMove.setVisible(false);
         bWork.setVisible(false);
         bUpgrade.setVisible(false);
+        bEndTurn.setVisible(false);
         mLabel.setVisible(false);
         bTakeRole[0].setVisible(false);
         bTakeRole[1].setVisible(false);
@@ -351,6 +360,7 @@ public class BoardLayersListener extends JFrame {
             }
         }
         mLabel.setVisible(false);
+        bCancel.setVisible(false);
     }
 
     public void hideRooms() {
@@ -360,6 +370,7 @@ public class BoardLayersListener extends JFrame {
             }
         }
         mLabel.setVisible(false);
+        bCancel.setVisible(false);
     }
 
     public void hidePayments() {
@@ -382,6 +393,7 @@ public class BoardLayersListener extends JFrame {
         bMove.setVisible(true);
         bWork.setVisible(true);
         bUpgrade.setVisible(true);
+        bEndTurn.setVisible(true);
 
         mLabel = new JLabel("Choose Action");
         mLabel.setBounds(boardlabel.getWidth() + 40, 0, 100, 20);

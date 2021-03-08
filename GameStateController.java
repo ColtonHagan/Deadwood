@@ -83,6 +83,7 @@ class GameStateController extends DeadwoodController {
         boardView.bWork.addMouseListener(new boardMouseListener());
         boardView.bUpgrade.addMouseListener(new boardMouseListener());
         boardView.bCancel.addMouseListener(new boardMouseListener());
+        boardView.bEndTurn.addMouseListener(new boardMouseListener());
         boardView.bTakeRole[0].addMouseListener(new boardMouseListener());
         boardView.bTakeRole[1].addMouseListener(new boardMouseListener());
     }
@@ -218,12 +219,12 @@ class GameStateController extends DeadwoodController {
             clearWorked();
             clearMoved();
         }
-        
+
         // Check if not last day
         if (gameModel.getCurrentDay() < gameModel.getTotalDays()) {
             gameModel.getBoard().resetBoard(gameModel.getSceneLibrary(), boardView);
         }
-        
+
         getView().showEndDay();
         gameModel.setCurrentDay(gameModel.getCurrentDay() + 1);
 
@@ -274,13 +275,21 @@ class GameStateController extends DeadwoodController {
 
     class boardMouseListener implements MouseListener {
         public void mouseClicked(MouseEvent e) {
-                // Button for Cancelling
+            // Button for Cancelling
             if (e.getSource() == boardView.bCancel) {
                 boardView.hidePayments();
                 boardView.hideRoles();
                 boardView.hideRooms();
                 boardView.hideAll();
                 boardView.showButtonsDefault();
+
+                //Button for Ending turn
+            } else if (e.getSource() == boardView.bEndTurn) {
+                try {
+                    endTurn();
+                } catch (Exception exception) {
+                    exception.printStackTrace();
+                }
 
                 // Button for acting
             } else if (e.getSource() == boardView.bAct) {
@@ -341,10 +350,10 @@ class GameStateController extends DeadwoodController {
                             boardView.setPayment(i, gameModel.getExactPlayer(0).getCastingOffice().costCredits(i - 3));
                         }
 
-                        if (i < 5 && gameModel.getCurrentPlayer().getMoney() >= gameModel.getExactPlayer(0).getCastingOffice().costDollars(i + 2)) {
+                        if (i < 5 && gameModel.getCurrentPlayer().getRank() < (i + 2) && gameModel.getCurrentPlayer().getMoney() >= gameModel.getExactPlayer(0).getCastingOffice().costDollars(i + 2)) {
                             boardView.bPayment[i].addMouseListener(new boardMouseListener());
                             boardView.bPayment[i].setEnabled(true);
-                        } else if (i >= 5 && gameModel.getCurrentPlayer().getCredits() >= gameModel.getExactPlayer(0).getCastingOffice().costCredits(i - 3)) {
+                        } else if (i >= 5 && gameModel.getCurrentPlayer().getRank() < (i - 3) && gameModel.getCurrentPlayer().getCredits() >= gameModel.getExactPlayer(0).getCastingOffice().costCredits(i - 3)) {
                             boardView.bPayment[i].addMouseListener(new boardMouseListener());
                             boardView.bPayment[i].setEnabled(true);
                         } else {
@@ -374,10 +383,11 @@ class GameStateController extends DeadwoodController {
             for (int i = 0; i < 10; i++) {
                 if (e.getSource() == boardView.bPayment[i]) {
                     if (i < 5) {
-                        upgradeRankDollars(i + 2);
+                        upgradeRankDollars((i + 2), gameModel.getExactPlayer(0).getCastingOffice());
                     } else {
-                        upgradeRankCredits(i - 4);
+                        upgradeRankCredits((i - 3), gameModel.getExactPlayer(0).getCastingOffice());
                     }
+                    boardView.updatePlayerIcon(gameModel.getCurrentPlayerInt(), gameModel.getCurrentPlayer().getRank());
                     boardView.hidePayments();
                     boardView.showButtonsDefault();
                     for (JButton b : boardView.bPayment) {
@@ -461,16 +471,10 @@ class GameStateController extends DeadwoodController {
                         }
                     } else {
                         System.out.println("Cannot take role, no available roles");
-                        if (gameModel.getCurrentPlayer().getMoved()) {
-                            try {
-                                endTurn();
-                            } catch (Exception exception) {
-                                exception.printStackTrace();
-                            }
-                        } else {
-                            boardView.hideRoles();
-                            boardView.showButtonsDefault();
-                        }
+                        boardView.hideRoles();
+                        boardView.hideAll();
+                        boardView.showButtonsDefault();
+
                     }
                 } else {
                     System.out.println("Cannot take role, already have role");
