@@ -76,7 +76,7 @@ class GameStateController extends DeadwoodController {
         // Button Setup
         boardView.createButtons();
         boardView.createPlayerDisplay();
-        boardView.updatePlayerDisplay(gameModel.getCurrentPlayer().getName(), gameModel.getCurrentPlayer().getMoney(), gameModel.getCurrentPlayer().getCredits(), 0);
+        boardView.updatePlayerDisplay(gameModel.getCurrentPlayer().getName(), gameModel.getCurrentPlayer().getMoney(), gameModel.getCurrentPlayer().getCredits(), 0, gameModel.getCurrentDay());
         boardView.bAct.addMouseListener(new boardMouseListener());
         boardView.bRehearse.addMouseListener(new boardMouseListener());
         boardView.bMove.addMouseListener(new boardMouseListener());
@@ -190,7 +190,7 @@ class GameStateController extends DeadwoodController {
             gameModel.setCurrentPlayerInt(0);
             updateModel(gameModel.getCurrentPlayer());
         }
-        boardView.updatePlayerDisplay(gameModel.getCurrentPlayer().getName(), gameModel.getCurrentPlayer().getMoney(), gameModel.getCurrentPlayer().getCredits(), gameModel.getCurrentPlayerInt());
+        boardView.updatePlayerDisplay(gameModel.getCurrentPlayer().getName(), gameModel.getCurrentPlayer().getMoney(), gameModel.getCurrentPlayer().getCredits(), gameModel.getCurrentPlayerInt(), gameModel.getCurrentDay());
         getView().showEndTurn(gameModel.getCurrentPlayer().getName());
 
         // Checks if this is the last Scenecard on board, ends day if true;
@@ -228,7 +228,7 @@ class GameStateController extends DeadwoodController {
         getView().showEndDay();
         gameModel.setCurrentDay(gameModel.getCurrentDay() + 1);
 
-        if (gameModel.getCurrentDay() >= gameModel.getTotalDays()) {
+        if (gameModel.getCurrentDay() > gameModel.getTotalDays()) {
             endGame();
         }
     }
@@ -309,6 +309,7 @@ class GameStateController extends DeadwoodController {
                 } else {
                     getView().printActError();
                 }
+                boardView.updatePlayerDisplay(gameModel.getCurrentPlayer().getName(), gameModel.getCurrentPlayer().getMoney(), gameModel.getCurrentPlayer().getCredits(), gameModel.getCurrentPlayerInt(), gameModel.getCurrentDay());
 
                 // Button for Rehearsing
             } else if (e.getSource() == boardView.bRehearse) {
@@ -393,6 +394,7 @@ class GameStateController extends DeadwoodController {
                     for (JButton b : boardView.bPayment) {
                         b.removeMouseListener(this);
                     }
+                    boardView.updatePlayerDisplay(gameModel.getCurrentPlayer().getName(), gameModel.getCurrentPlayer().getMoney(), gameModel.getCurrentPlayer().getCredits(), gameModel.getCurrentPlayerInt(), gameModel.getCurrentDay());
                 }
             }
 
