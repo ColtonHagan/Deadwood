@@ -1,13 +1,11 @@
 /*
+Name : Colton Hagan and Steven Le
+Class : CS 345
+Date : 3/7/21
+Program Description : Displays gui elements about current gamestate
 
-   Deadwood GUI helper file
-   Author: Moushumi Sharmin
-   This file shows how to create a simple GUI using Java Swing and Awt Library
-   Classes Used: JFrame, JLabel, JButton, JLayeredPane
-
+Refrenced Deadwood GUI helper file by Moushumi Sharmin
 */
-
-//for testing
 
 import java.awt.*;
 import javax.swing.*;

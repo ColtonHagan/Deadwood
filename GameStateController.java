@@ -190,7 +190,6 @@ class GameStateController extends DeadwoodController {
             gameModel.setCurrentPlayerInt(0);
             updateModel(gameModel.getCurrentPlayer());
         }
-        boardView.updatePlayerDisplay(gameModel.getCurrentPlayer().getName(), gameModel.getCurrentPlayer().getMoney(), gameModel.getCurrentPlayer().getCredits(), gameModel.getCurrentPlayer().getPracticeChips(), gameModel.getCurrentPlayerInt(), gameModel.getCurrentDay(), gameModel.getTotalDays());
         getView().showEndTurn(gameModel.getCurrentPlayer().getName());
 
         // Resets buttons based on player status
@@ -200,7 +199,7 @@ class GameStateController extends DeadwoodController {
         } else {
             boardView.showButtonsDefault();
         }
-
+        boardView.updatePlayerDisplay(gameModel.getCurrentPlayer().getName(), gameModel.getCurrentPlayer().getMoney(), gameModel.getCurrentPlayer().getCredits(), gameModel.getCurrentPlayer().getPracticeChips(), gameModel.getCurrentPlayerInt(), gameModel.getCurrentDay(), gameModel.getTotalDays());
         // Checks if this is the last Scenecard on board, ends day if true;
         if (gameModel.getBoard().getCurrentRooms() == 1) {
             endDay();
@@ -227,13 +226,15 @@ class GameStateController extends DeadwoodController {
         getView().showEndDay();
         gameModel.setCurrentDay(gameModel.getCurrentDay() + 1);
 
-        if (gameModel.getCurrentDay() > gameModel.getTotalDays()) {
-            endGame();
-        }
-
         // Bring buttons back to default
         boardView.hideAll();
         boardView.showButtonsDefault();
+        
+        if (gameModel.getCurrentDay() > gameModel.getTotalDays()) {
+            endGame();
+        } else {
+            boardView.updatePlayerDisplay(gameModel.getCurrentPlayer().getName(), gameModel.getCurrentPlayer().getMoney(), gameModel.getCurrentPlayer().getCredits(), gameModel.getCurrentPlayer().getPracticeChips(), gameModel.getCurrentPlayerInt(), gameModel.getCurrentDay(), gameModel.getTotalDays());
+        }
     }
 
     public void endGame() throws Exception {

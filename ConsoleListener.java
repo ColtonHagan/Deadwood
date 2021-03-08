@@ -1,3 +1,9 @@
+/*
+Name : Colton Hagan and Steven Le
+Class : CS 345
+Date : 3/7/21
+Program Description : Shows text printouts of error messages and actions
+*/
 import java.awt.*;
 import javax.swing.*;
 
