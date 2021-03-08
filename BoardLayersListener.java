@@ -28,6 +28,7 @@ public class BoardLayersListener extends JFrame {
     JLabel creditLabel;
     JLabel moneyLabel;
     JLabel diceLabel;
+    JLabel dayLabel;
     JLabel[] cardlabel;
     JLabel[] playerlabel;
     JLabel[][] shotlabel;
@@ -169,15 +170,20 @@ public class BoardLayersListener extends JFrame {
         creditLabel.setBounds(boardlabel.getWidth() + 30, moneyLabel.getBounds().y + 30, 100, 20);
         bPane.add(creditLabel, new Integer[2]);
         
+        dayLabel = new JLabel();
+        dayLabel.setBounds(boardlabel.getWidth() + 30, creditLabel.getBounds().y + 30, 100, 20);
+        bPane.add(dayLabel, new Integer[2]);
+        
         diceLabel = new JLabel();
         diceLabel.setBounds(moneyLabel.getLocation().x + 250, moneyLabel.getBounds().y, playerlabel[0].getIcon().getIconWidth(), playerlabel[0].getIcon().getIconHeight());
         bPane.add(diceLabel, new Integer[2]);
     }
     
-    public void updatePlayerDisplay(String name, int money, int credits, int activePlayer) {
+    public void updatePlayerDisplay(String name, int money, int credits, int activePlayer, int day) {
       nameLabel.setText("Name: " + name);
       moneyLabel.setText("Dollars: " + money);
       creditLabel.setText("Credits: " + credits);
+      dayLabel.setText("Day: " + day);
       diceLabel.setIcon(null);
       diceLabel.setIcon(playerlabel[activePlayer].getIcon());
     }
