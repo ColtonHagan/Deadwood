@@ -42,10 +42,6 @@ public class Role {
         return name;
     }
 
-    public String getTagLine() {
-        return tagLine;
-    }
-
     // Setter
     public void setUsedBy(PlayerModel player) {
         usedBy = player;

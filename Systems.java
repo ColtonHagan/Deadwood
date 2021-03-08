@@ -2,7 +2,7 @@
 Name : Colton Hagan and Steven Le
 Class : CS 345
 Date : 2/23/21
-Program Description : Verifies certian actions are valid
+Program Description : Verifies certain actions are valid
 */
 class Systems {
     private PlayerModel model;
@@ -58,7 +58,7 @@ class Systems {
 
     // Checks if rank upgrade is legal - cannot upgrade to ranks above 6 and
     public boolean rankPossible(int rank, int targetRank) {
-        return (rank < 6 && rank < targetRank && targetRank <= 6);
+        return (rank < targetRank && targetRank <= 6);
     }
 
 }

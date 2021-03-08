@@ -5,7 +5,7 @@ Date : 3/7/21
 Program Description : Playable deadwood game with gui interface
 */
 public class Deadwood {
-   public static void main(String[] args) throws Exception {
+   public static void main(String[] args) {
       GameStateController control = new GameStateController();
       control.preSetUp();
    }

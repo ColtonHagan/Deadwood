@@ -35,24 +35,24 @@ class Board {
     }
 
     // Used on day end to refill shot counters
-    public void resetBoard(Scenes sceneLibray, BoardView boardListener) {
+    public void resetBoard(Scenes sceneLibrary, BoardView boardListener) {
         for (Room room : rooms) {
             room.resetShotCounters();
         }
-        placeScenes(sceneLibray, boardListener);
+        placeScenes(sceneLibrary, boardListener);
         currentRooms = totalRooms;
     }
 
-    // Creates the baord from parsed data
-    public void createBoard(ParseData dataParser, Scenes sceneLibray, BoardView boardListener) throws Exception {
+    // Creates the board from parsed data
+    public void createBoard(ParseData dataParser, Scenes sceneLibrary, BoardView boardListener) throws Exception {
         dataParser.parseBoard(rooms);
-        placeScenes(sceneLibray, boardListener);
+        placeScenes(sceneLibrary, boardListener);
     }
 
     // Sets the new scenes on day end
-    public void placeScenes(Scenes sceneLibray, BoardView boardListener) {
+    public void placeScenes(Scenes sceneLibrary, BoardView boardListener) {
         for (int i = 0; i < rooms.length - 2; i++) {
-            SceneCard randomCard = sceneLibray.getRandomCard();
+            SceneCard randomCard = sceneLibrary.getRandomCard();
             boardListener.removeScene(i);
             boardListener.createScenes(rooms[i].getCords(),"CardBack-small.jpg", i);
             rooms[i].setScene(randomCard);

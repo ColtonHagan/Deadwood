@@ -4,18 +4,13 @@ Class : CS 345
 Date : 3/7/21
 Program Description : Displays gui elements about current gamestate
 
-Refrenced Deadwood GUI helper file by Moushumi Sharmin
+Referenced Deadwood GUI helper file by Moushumi Sharmin
 */
 
 import java.awt.*;
 import javax.swing.*;
-import javax.swing.ImageIcon;
-import javax.swing.JOptionPane;
 
 public class BoardView extends JFrame {
-    // GameStateController, Acting as a listener
-    GameStateController controller;
-
     ConsoleListener consoleListener;
 
     // JLabels
@@ -27,7 +22,7 @@ public class BoardView extends JFrame {
     JLabel diceLabel;
     JLabel dayLabel;
     JLabel practiceLabel;
-    JLabel[] cardlabel;
+    final JLabel[] cardlabel;
     JLabel[] playerlabel;
     JLabel[][] shotlabel;
 
@@ -59,7 +54,6 @@ public class BoardView extends JFrame {
 
     // Adds controller as a listener
     public void addListener(GameStateController controller) {
-        this.controller = controller;
     }
 
     //Sets up the board picture
@@ -87,11 +81,11 @@ public class BoardView extends JFrame {
 
     // Hides all button elements and shows end game message
     public void endGame() {
-         hideAll();
-         JLabel endGame = new JLabel("Game Over");
-         endGame.setBounds(boardlabel.getWidth() + 60, 20, 200, 100);
-         endGame.setFont(new Font("Serif", Font.BOLD, 40));
-         bPane.add(endGame, new Integer(4));
+        hideAll();
+        JLabel endGame = new JLabel("Game Over");
+        endGame.setBounds(boardlabel.getWidth() + 60, 20, 200, 100);
+        endGame.setFont(new Font("Serif", Font.BOLD, 40));
+        bPane.add(endGame, Integer.valueOf(4));
     }
 
     // Creates text box and bottom right that listens to DeadwoodView for strings
@@ -112,80 +106,80 @@ public class BoardView extends JFrame {
         cardlabel[roomNumber].setBounds(cords[0], cords[1], cIcon.getIconWidth(), cIcon.getIconHeight());
 
         // Add the card to the lower layer
-        bPane.add(cardlabel[roomNumber], new Integer(1));
+        bPane.add(cardlabel[roomNumber], Integer.valueOf(1));
     }
 
     // Removes scene card picture on scene end
     public void removeScene(int roomNumber) {
-      if(cardlabel[roomNumber] != null) {
-         cardlabel[roomNumber].setIcon(null);
-      }
+        if (cardlabel[roomNumber] != null) {
+            cardlabel[roomNumber].setIcon(null);
+        }
     }
 
     // Remove shot counter picture on act success
     public void removeShotCounter(int roomNumber) {
-      for(int i = 0; i < shotlabel[roomNumber].length; i++) {
-         if(shotlabel[roomNumber][i].getIcon() != null) {
-            shotlabel[roomNumber][i].setIcon(null);
-            break;
-         }
-      }
+        for (int i = 0; i < shotlabel[roomNumber].length; i++) {
+            if (shotlabel[roomNumber][i].getIcon() != null) {
+                shotlabel[roomNumber][i].setIcon(null);
+                break;
+            }
+        }
     }
 
     // Fills out all shot counters on board
     public void displayShotCounters(int roomNumber, int[][] cords) {
-      shotlabel[roomNumber] = new JLabel[cords.length];
-      for(int i = 0; i < cords.length; i++) {
-         ImageIcon icon = new ImageIcon("clapperboard.png");
-         shotlabel[roomNumber][i] = new JLabel();
-         shotlabel[roomNumber][i].setIcon(icon);
-         shotlabel[roomNumber][i].setBounds(cords[i][0], cords[i][1] - 15, 60, 60);
-         bPane.add(shotlabel[roomNumber][i], new Integer(1));
-      }
+        shotlabel[roomNumber] = new JLabel[cords.length];
+        for (int i = 0; i < cords.length; i++) {
+            ImageIcon icon = new ImageIcon("clapperboard.png");
+            shotlabel[roomNumber][i] = new JLabel();
+            shotlabel[roomNumber][i].setIcon(icon);
+            shotlabel[roomNumber][i].setBounds(cords[i][0], cords[i][1] - 15, 60, 60);
+            bPane.add(shotlabel[roomNumber][i], Integer.valueOf(1));
+        }
     }
 
     // Flips the sceneCard face up
     public void flipScene(int roomNumber, String imageName) {
-      cardlabel[roomNumber].setIcon(null);
-      ImageIcon cardIcon = new ImageIcon(imageName);
-      cardlabel[roomNumber].setIcon(cardIcon);
-      bPane.add(cardlabel[roomNumber], new Integer(2));
+        cardlabel[roomNumber].setIcon(null);
+        ImageIcon cardIcon = new ImageIcon(imageName);
+        cardlabel[roomNumber].setIcon(cardIcon);
+        bPane.add(cardlabel[roomNumber], Integer.valueOf(2));
     }
 
     // Places the player's dice onto the role location on board
     public void displayRole(Role newRole, int playerNumber, int[] roomCords) {
-         int[] roleCords = newRole.getCords();
-         if(newRole.getExtra()) {
-            playerlabel[playerNumber].setBounds(roleCords[0],roleCords[1], playerlabel[playerNumber].getIcon().getIconWidth(), playerlabel[playerNumber].getIcon().getIconHeight());
-         } else {
-            playerlabel[playerNumber].setBounds(roleCords[0] + roomCords[0],roleCords[1] + roomCords[1], playerlabel[playerNumber].getIcon().getIconWidth(), playerlabel[playerNumber].getIcon().getIconHeight());
-         }
-         bPane.add(playerlabel[playerNumber], new Integer[4]);
+        int[] roleCords = newRole.getCords();
+        if (newRole.getExtra()) {
+            playerlabel[playerNumber].setBounds(roleCords[0], roleCords[1], playerlabel[playerNumber].getIcon().getIconWidth(), playerlabel[playerNumber].getIcon().getIconHeight());
+        } else {
+            playerlabel[playerNumber].setBounds(roleCords[0] + roomCords[0], roleCords[1] + roomCords[1], playerlabel[playerNumber].getIcon().getIconWidth(), playerlabel[playerNumber].getIcon().getIconHeight());
+        }
+        bPane.add(playerlabel[playerNumber], new Integer[4]);
     }
 
     // Moves the player to a new room
     public void displayMove(int playerNumber, int[] roomCords) {
-      int y = roomCords[1]+100;
-      int x = roomCords[0];
-      int slotsOver = -1;
-      //checks if current player is at location
-      while(slotsOver != 0) {
-         slotsOver = 0;
-         for(int i = 0; i < playerlabel.length; i++) {
-            if(playerlabel[i].getLocation().x == x && playerlabel[i].getLocation().y == y && playerNumber != i) {
-               slotsOver++;
-               if(x > (2*playerlabel[playerNumber].getIcon().getIconWidth() + roomCords[0])) {
-                  y += playerlabel[playerNumber].getIcon().getIconHeight();
-                  x = roomCords[0];
-               } else {
-                  x += playerlabel[playerNumber].getIcon().getIconWidth();
-               }
+        int y = roomCords[1] + 100;
+        int x = roomCords[0];
+        int slotsOver = -1;
+        //checks if current player is at location
+        while (slotsOver != 0) {
+            slotsOver = 0;
+            for (int i = 0; i < playerlabel.length; i++) {
+                if (playerlabel[i].getLocation().x == x && playerlabel[i].getLocation().y == y && playerNumber != i) {
+                    slotsOver++;
+                    if (x > (2 * playerlabel[playerNumber].getIcon().getIconWidth() + roomCords[0])) {
+                        y += playerlabel[playerNumber].getIcon().getIconHeight();
+                        x = roomCords[0];
+                    } else {
+                        x += playerlabel[playerNumber].getIcon().getIconWidth();
+                    }
+                }
             }
-         }
-      }
-      playerlabel[playerNumber].setBounds(x,y, playerlabel[playerNumber].getIcon().getIconWidth(), playerlabel[playerNumber].getIcon().getIconHeight());
-      bPane.add(playerlabel[playerNumber], new Integer(4));
-      playerlabel[playerNumber].setVisible(true);
+        }
+        playerlabel[playerNumber].setBounds(x, y, playerlabel[playerNumber].getIcon().getIconWidth(), playerlabel[playerNumber].getIcon().getIconHeight());
+        bPane.add(playerlabel[playerNumber], Integer.valueOf(4));
+        playerlabel[playerNumber].setVisible(true);
     }
 
     // Displays player's name, credits, money, practicechips, and day count on right side
@@ -201,15 +195,15 @@ public class BoardView extends JFrame {
         creditLabel = new JLabel();
         creditLabel.setBounds(boardlabel.getWidth() + 30, moneyLabel.getBounds().y + 30, 100, 20);
         bPane.add(creditLabel, new Integer[2]);
-        
+
         practiceLabel = new JLabel();
         practiceLabel.setBounds(boardlabel.getWidth() + 30, creditLabel.getBounds().y + 30, 100, 20);
         bPane.add(practiceLabel, new Integer[2]);
-        
+
         dayLabel = new JLabel();
         dayLabel.setBounds(boardlabel.getWidth() + 30, practiceLabel.getBounds().y + 30, 100, 20);
         bPane.add(dayLabel, new Integer[2]);
-        
+
         diceLabel = new JLabel();
         diceLabel.setBounds(moneyLabel.getLocation().x + 250, moneyLabel.getBounds().y, playerlabel[0].getIcon().getIconWidth(), playerlabel[0].getIcon().getIconHeight());
         bPane.add(diceLabel, new Integer[2]);
@@ -217,41 +211,37 @@ public class BoardView extends JFrame {
 
     // Updates the player display information with correct info
     public void updatePlayerDisplay(String name, int money, int credits, int practice, int activePlayer, int day, int totalDays) {
-      nameLabel.setText("Name: " + name);
-      moneyLabel.setText("Dollars: " + money);
-      creditLabel.setText("Credits: " + credits);
-      practiceLabel.setText("Practice Chips: " + practice);
-      dayLabel.setText("Day: " + day + " of " + totalDays);
-      diceLabel.setIcon(null);
-      diceLabel.setIcon(playerlabel[activePlayer].getIcon());
+        nameLabel.setText("Name: " + name);
+        moneyLabel.setText("Dollars: " + money);
+        creditLabel.setText("Credits: " + credits);
+        practiceLabel.setText("Practice Chips: " + practice);
+        dayLabel.setText("Day: " + day + " of " + totalDays);
+        diceLabel.setIcon(null);
+        diceLabel.setIcon(playerlabel[activePlayer].getIcon());
     }
 
     // Creates the playerlabel for all the players
-    public int setTotalPlayers(int n) {
+    public void setTotalPlayers(int n) {
         playerlabel = new JLabel[n];
-        ImageIcon[] pIcon = new ImageIcon[n];
         for (int i = 0; i < n; i++) {
             playerlabel[i] = new JLabel();
-
             playerlabel[i].setBounds(0, 0, 46, 46);
             playerlabel[i].setOpaque(false);
             playerlabel[i].setVisible(false);
-            pIcon[i] = new ImageIcon();
-            if(n < 7) {
-               updatePlayerIcon(i, 1);
+            if (n < 7) {
+                updatePlayerIcon(i, 1);
             } else {
-               updatePlayerIcon(i, 2);
+                updatePlayerIcon(i, 2);
             }
             bPane.add(playerlabel[i], new Integer[2]);
         }
-        return n;
     }
 
     // Sets up the payment buttons with correct costs from the xml
     public void setPayment(int i, int payment) {
         bPayment[i] = new JButton("" + payment);
         bPayment[i].setBackground(Color.white);
-        if(i < 5) {
+        if (i < 5) {
             bPayment[i].setBounds(boardlabel.getWidth() + 10, 30 + (i * 20), 50, 20);
         } else {
             bPayment[i].setBounds(boardlabel.getWidth() + 60, 30 + ((i - 5) * 20), 50, 20);
@@ -268,8 +258,7 @@ public class BoardView extends JFrame {
 
     // Prompts at start for player names
     public String createPlayers(int playerNumber) {
-        String s = JOptionPane.showInputDialog(boardlabel, "Player number " + (playerNumber + 1) + ", Enter your name");
-        return s;
+        return JOptionPane.showInputDialog(boardlabel, "Player number " + (playerNumber + 1) + ", Enter your name");
     }
 
     // Creates buttons at very start to choose total players
@@ -279,7 +268,7 @@ public class BoardView extends JFrame {
         bPane.add(mLabel, new Integer[2]);
 
         bPlayerCount = new JButton[7];
-        for (int i = 0; i < 7; i++){
+        for (int i = 0; i < 7; i++) {
             bPlayerCount[i] = new JButton("" + (i + 2));
             bPlayerCount[i].setBackground(Color.white);
             bPlayerCount[i].setBounds(boardlabel.getWidth() + 10, (30 + (i * 30)), 100, 20);
@@ -483,7 +472,7 @@ public class BoardView extends JFrame {
         mLabel.setBounds(boardlabel.getWidth() + 16, 0, 100, 20);
         bPane.add(mLabel, new Integer[2]);
 
-        for(int i = 0; i < 10; i++) {
+        for (int i = 0; i < 10; i++) {
             bPayment[i].setVisible(true);
         }
         bCancel.setVisible(true);

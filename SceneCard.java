@@ -10,13 +10,11 @@ public class SceneCard {
     private boolean inUse = false; //if the card has been played on the board or not
     private boolean flipped = false;
     private final String name;
-    private final String description; // To be used in gui
     private final Role[] roles;
     private final String image;
 
-    public SceneCard(String name, String description, int budget, int sceneNumber, Role[] roles, String image) {
+    public SceneCard(String name, int budget, int sceneNumber, Role[] roles, String image) {
         this.name = name;
-        this.description = description;
         this.budget = budget;
         this.roles = roles;
         this.sceneNumber = sceneNumber;
@@ -32,16 +30,8 @@ public class SceneCard {
         return roles;
     }
 
-    public String getName() {
-        return name;
-    }
-    
     public String getImage() {
        return image;
-    }
-
-    public int getSceneNumber() {
-        return sceneNumber;
     }
 
     public boolean getUse() {
@@ -61,17 +51,4 @@ public class SceneCard {
         flipped = flip;
     }
 
-    public boolean playerOn() {
-        return true;
-    }
-
-    // Checks if the role exists on this scenecard
-    public boolean hasRole(Role role) {
-        for (Role r : roles) {
-            if (r.equals(role)) {
-                return true;
-            }
-        }
-        return false;
-    }
 }

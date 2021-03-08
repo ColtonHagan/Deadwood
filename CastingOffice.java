@@ -5,7 +5,7 @@ Date : 2/23/21
 Program Description : Contains and manages upgrade possibilities
 */
 public class CastingOffice {
-    private int[][] possibleUpgrades;
+    private final int[][] possibleUpgrades;
 
     public CastingOffice(int[][] possibleUpgrades) {
         this.possibleUpgrades = possibleUpgrades;

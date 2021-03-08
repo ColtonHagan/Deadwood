@@ -4,6 +4,7 @@ Class : CS 345
 Date : 2/23/21
 Program Description : Parses data from xml file into a workable form
 */
+
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -17,24 +18,22 @@ import java.util.Arrays;
 
 class ParseData {
 
-    //Creates given array of all Scenes with SceneCards from xml files
+    // Creates given array of all Scenes with SceneCards from xml files
     public void parseScenes(SceneCard[] possibleScenes) throws Exception {
         NodeList cardList = getOuterNodes("cards.xml", "card");
         for (int i = 0; i < cardList.getLength(); i++) {
-            String cardDescription = "";
             int sceneNumber = 0;
-            ArrayList<Role> roles = new ArrayList<Role>();
+            ArrayList<Role> roles = new ArrayList<>();
             Node cardNode = cardList.item(i);
             NodeList roleList = getInnerNodes(cardNode);
             Element cardElement = (Element) cardNode;
             
-            //Finds roles and description/sceneNumbers on a SceneCard
+            // Finds roles and description/sceneNumbers on a SceneCard
             for (int j = 0; j < roleList.getLength(); j++) {
                 Node roleNode = roleList.item(j);
                 String nodeName = roleNode.getNodeName();
                 Element roleElement = (Element) roleNode;
                 if (nodeName.equals("scene")) {
-                    cardDescription = roleNode.getTextContent().trim();
                     sceneNumber = Integer.parseInt(roleElement.getAttribute("number"));
                 } else {
                     parseRole(roles, roleNode, roleElement, false);
@@ -44,12 +43,12 @@ class ParseData {
             String name = cardElement.getAttribute("name");
             String image = cardElement.getAttribute("img");
             Role[] roleArray = Arrays.copyOf(roles.toArray(), roles.toArray().length, Role[].class);
-            possibleScenes[i] = new SceneCard(name, cardDescription, budget, sceneNumber, roleArray, image);
+            possibleScenes[i] = new SceneCard(name, budget, sceneNumber, roleArray, image);
             roles.clear();
         }
     }
 
-    //Creates role from given node information
+    // Creates role from given node information
     private void parseRole(ArrayList<Role> roles, Node cardNode, Element roleElement, boolean extra) {
         int[] cords = new int[2];
         String name = roleElement.getAttribute("name");
@@ -64,7 +63,7 @@ class ParseData {
         roles.add(newRole);
     }
     
-    //Removes empty children of given node
+    // Removes empty children of given node
     private void removeEmptyNodes(Node node) {
         NodeList list = node.getChildNodes();
         for (int i = 0; i < list.getLength(); i++) {
@@ -74,7 +73,7 @@ class ParseData {
         }
     }
    
-    //Parses initial nodes/tags of a Document 
+    // Parses initial nodes/tags of a Document
     private NodeList getOuterNodes(String fileName, String tagName) throws Exception {
         DocumentBuilderFactory myDomFactory = DocumentBuilderFactory.newInstance();
         DocumentBuilder myBuilder = myDomFactory.newDocumentBuilder();
@@ -82,13 +81,13 @@ class ParseData {
         return myDoc.getElementsByTagName(tagName);
     }
 
-    //Removes empty nodes and returns children of a node
+    // Removes empty nodes and returns children of a node
     private NodeList getInnerNodes(Node baseNode) {
         removeEmptyNodes(baseNode);
         return baseNode.getChildNodes();
     }
 
-    //Parses possible upgrade from xml file
+    // Parses possible upgrade from xml file
     public int[][] parseOffice() throws Exception {
         NodeList upgradeList = getOuterNodes("board.xml", "upgrade");
         int[][] possibleUpgrades = new int[5][3];
@@ -105,16 +104,14 @@ class ParseData {
         return possibleUpgrades;
     }
     
-    //Creates array of rooms from XML files
+    // Creates array of rooms from XML files
     private void parseRooms(NodeList itemList, Room[] rooms) {
-        ArrayList<Role> roles = new ArrayList<Role>();
-        ArrayList<String> neighbors = new ArrayList<String>();
-        int[][] possibleUpgrades = new int[5][3];
+        ArrayList<Role> roles = new ArrayList<>();
+        ArrayList<String> neighbors = new ArrayList<>();
         int[][] shotCounterCords = null;
         int[][] shotCounterCopy = null;
         int shotCounters = 0;
-        int roomNumber = 0;
-        String name = "";
+        String name;
         int[] cords = new int[2];
 
         for (int i = 0; i < itemList.getLength(); i++) {
@@ -127,33 +124,38 @@ class ParseData {
                 String nodeName = roomInfoNode.getNodeName();
                 Element roomInfoElement = (Element) roomInfoNode;
                 
-                //Finds adjecent room, roles, shot countesr
-                if (nodeName.equals("neighbors")) {
-                    for (int k = 0; k < roleList.getLength(); k++) {
-                        Element roleElement = (Element) roleList.item(k);
-                        neighbors.add(roleElement.getAttribute("name"));
-                    }
-                } else if (nodeName.equals("parts")) {
-                    for (int k = 0; k < roleList.getLength(); k++) {
-                        Element roleElement = (Element) roleList.item(k);
-                        parseRole(roles, roleList.item(k), roleElement, true);
-                    }
-                } else if (nodeName.equals("takes")) {
-                    Element roleElement = (Element) roleList.item(0);
-                    shotCounters = Integer.parseInt(roleElement.getAttribute("number"));
-                    shotCounterCords = new int[roleList.getLength()][2];
-                    for (int k = 0; k < roleList.getLength(); k++) {
-                        Element shotCounterElement = (Element) getInnerNodes(roleList.item(k)).item(0);
-                        shotCounterCords[k][0] = Integer.parseInt(shotCounterElement.getAttribute("x"));
-                        shotCounterCords[k][1] = Integer.parseInt(shotCounterElement.getAttribute("y"));
-                    }
-                } else if (nodeName.equals("area")) {
-                    cords[0] = Integer.parseInt(roomInfoElement.getAttribute("x"));
-                    cords[1] = Integer.parseInt(roomInfoElement.getAttribute("y"));
+                // Finds adjacent room, roles, shot counters
+                switch (nodeName) {
+                    case "neighbors":
+                        for (int k = 0; k < roleList.getLength(); k++) {
+                            Element roleElement = (Element) roleList.item(k);
+                            neighbors.add(roleElement.getAttribute("name"));
+                        }
+                        break;
+                    case "parts":
+                        for (int k = 0; k < roleList.getLength(); k++) {
+                            Element roleElement = (Element) roleList.item(k);
+                            parseRole(roles, roleList.item(k), roleElement, true);
+                        }
+                        break;
+                    case "takes":
+                        Element roleElement = (Element) roleList.item(0);
+                        shotCounters = Integer.parseInt(roleElement.getAttribute("number"));
+                        shotCounterCords = new int[roleList.getLength()][2];
+                        for (int k = 0; k < roleList.getLength(); k++) {
+                            Element shotCounterElement = (Element) getInnerNodes(roleList.item(k)).item(0);
+                            shotCounterCords[k][0] = Integer.parseInt(shotCounterElement.getAttribute("x"));
+                            shotCounterCords[k][1] = Integer.parseInt(shotCounterElement.getAttribute("y"));
+                        }
+                        break;
+                    case "area":
+                        cords[0] = Integer.parseInt(roomInfoElement.getAttribute("x"));
+                        cords[1] = Integer.parseInt(roomInfoElement.getAttribute("y"));
+                        break;
                 }
             }
             
-            //Creates a blank trailer/office room with no shotcounters/sceneCard from xml
+            // Creates a blank trailer/office room with no shotcounters/sceneCard from xml
             if (roomNode.getNodeName().equals("trailer")) {
                 name = "trailer";
                 i = rooms.length - 2;
@@ -175,7 +177,7 @@ class ParseData {
         }
     }
     
-    //Creates "regular" set roomes along with office annd trailer
+    // Creates "regular" set rooms along with office and trailer
     public void parseBoard(Room[] rooms) throws Exception {
         parseRooms(getOuterNodes("board.xml", "set"), rooms);
         parseRooms(getOuterNodes("board.xml", "office"), rooms);

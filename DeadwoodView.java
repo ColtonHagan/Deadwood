@@ -99,11 +99,6 @@ class DeadwoodView {
         consoleListener.printToLog("The winners are:");
     }
 
-    public void promptRestart(){
-        consoleListener.printToLog("Would you like to restart the game?");
-        System.out.print("Enter 'Yes' to restart, anything else to end the game: ");
-    }
-
     public void showWinnerTie(String name, int score) {
         consoleListener.printToLog(name + " with a score of " + score);
     }

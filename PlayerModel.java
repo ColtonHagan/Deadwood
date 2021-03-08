@@ -39,10 +39,6 @@ class PlayerModel {
         return credits;
     }
 
-    public CastingOffice getOffice() {
-        return office;
-    }
-
     public int getRank() {
         return rank;
     }

@@ -22,6 +22,7 @@ class GameStateController extends DeadwoodController {
         this.gameModel = new GameState();
     }
 
+    // Sets up buttons to start the game
     public void preSetUp() {
         for (int i = 0; i < 7; i++) {
             boardView.bPlayerCount[i].addMouseListener(new boardMouseListener());
@@ -141,19 +142,14 @@ class GameStateController extends DeadwoodController {
                 playersOnCard.get(i).updateMoney(playersOnCard.get(i).getMoney() + diceRolls[i]);
                 getView().showBonusPayment(playersOnCard.get(i).getName(), "on card", bonus);
             }
-            for (int i = 0; i < playersOffCard.size(); i++) {
-                bonus = playersOffCard.get(i).getCurrentRole().getRank();
-                playersOffCard.get(i).updateMoney(playersOffCard.get(i).getCurrentRole().getRank() + playersOffCard.get(i).getMoney());
-                getView().showBonusPayment(playersOffCard.get(i).getName(), "extra", bonus);
+            for (PlayerModel playerModel : playersOffCard) {
+                bonus = playerModel.getCurrentRole().getRank();
+                playerModel.updateMoney(playerModel.getCurrentRole().getRank() + playerModel.getMoney());
+                getView().showBonusPayment(playerModel.getName(), "extra", bonus);
             }
         } else {
             getView().noBonusPayment();
         }
-    }
-
-    public String getInput() {
-        Scanner in = new Scanner(System.in);
-        return in.nextLine();
     }
 
     // For finding the specific Room from its roomName (given from user input in console)
@@ -184,11 +180,10 @@ class GameStateController extends DeadwoodController {
         // Sets the player of the next turn to the next player
         if (gameModel.getCurrentPlayerInt() + 1 < gameModel.getTotalPlayers()) {
             gameModel.setCurrentPlayerInt(gameModel.getCurrentPlayerInt() + 1);
-            updateModel(gameModel.getCurrentPlayer());
         } else {
             gameModel.setCurrentPlayerInt(0);
-            updateModel(gameModel.getCurrentPlayer());
         }
+        updateModel(gameModel.getCurrentPlayer());
         getView().showEndTurn(gameModel.getCurrentPlayer().getName());
 
         // Resets buttons based on player status
@@ -236,7 +231,7 @@ class GameStateController extends DeadwoodController {
         }
     }
 
-    public void endGame() throws Exception {
+    public void endGame() {
         getView().showEndGame();
         boardView.endGame();
         int tieAmount = 1;
@@ -270,11 +265,6 @@ class GameStateController extends DeadwoodController {
         } else {
             getView().showWinner(winningPlayers[0], highestScore);
         }
-
-        // Asks to restart the game
-        /*getView().promptRestart();
-        String userInput = getInput();
-        if (userInput.equals("Yes")) setUpGame();*/
     }
 
     // This class holds all the button press logic and also all the playing game logic
@@ -504,7 +494,8 @@ class GameStateController extends DeadwoodController {
             }
 
         }
-
+        
+        // Required MouseEvent Stuff, unused
         public void mousePressed(MouseEvent e) {
         }
 

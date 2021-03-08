@@ -15,7 +15,8 @@ public class Room {
     private final int roomNumber;
     private final int[][] shotCounterCords;
 
-    public Room(String name, int shotCounters, Role[] extraRoles, String[] adjacentRooms, int[] cords, int roomNumber, int[][] shotCounterCords) { //add room number and shot chounter cords
+    // Adds room number and shot counter cords
+    public Room(String name, int shotCounters, Role[] extraRoles, String[] adjacentRooms, int[] cords, int roomNumber, int[][] shotCounterCords) {
         this.name = name;
         totalShotCounters = shotCounters;
         currentShotCounters = shotCounters;
@@ -82,15 +83,6 @@ public class Room {
         return extraRoles;
     }
 
-    // Checks if role exists on this Room - for extra roles
-    public boolean hasRole(Role role) {
-        for (Role r : extraRoles) {
-            if (r.equals(role)) {
-                return true;
-            }
-        }
-        return false;
-    }
 
     // Resets extras on room end so they can be used next day
     public void clearExtras() {

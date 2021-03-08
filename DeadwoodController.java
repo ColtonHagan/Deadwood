@@ -14,7 +14,7 @@ class DeadwoodController {
 
     public DeadwoodController() {
         view = new DeadwoodView();
-        this.system = new Systems(model);
+        this.system = new Systems(null);
     }
 
     // Getters
@@ -56,11 +56,10 @@ class DeadwoodController {
     public void upgradeRankCredits(int targetUpgrade, CastingOffice castingOffice) {
         // System check to ensure upgrade is legal (Must be in office)
         if (system.checkCanUpgrade()) {
-            CastingOffice office = castingOffice;
 
             // Ensuring the rank up logic is legal (Can't upgrade to rank 7 or rank down)
             if (system.rankPossible(model.getRank(), targetUpgrade)) {
-                int cost = office.costCredits(targetUpgrade);
+                int cost = castingOffice.costCredits(targetUpgrade);
 
                 // Checking that there is enough credits to rank up
                 if (model.getCredits() >= cost) {
@@ -81,11 +80,10 @@ class DeadwoodController {
     public void upgradeRankDollars(int targetUpgrade, CastingOffice castingOffice) {
         // System check to ensure upgrade is legal (Must be in office)
         if (system.checkCanUpgrade()) {
-            CastingOffice office = castingOffice;
 
             // Ensuring the rank up logic is legal (Can't upgrade to rank 7 or rank down)
             if (system.rankPossible(model.getRank(), targetUpgrade)) {
-                int cost = office.costDollars(targetUpgrade);
+                int cost = castingOffice.costDollars(targetUpgrade);
 
                 // Checking that there is enough cash to rank up
                 if (model.getMoney() >= cost) {
@@ -135,10 +133,6 @@ class DeadwoodController {
         view.showTakeRoleSuccess(role.getName());
         model.updateHasRole(true);
         model.updateWorked(true);
-    }
-
-    public void removeRole() {
-        model.removeRole();
     }
 
     public void rehearse() {

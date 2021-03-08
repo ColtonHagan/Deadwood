@@ -10,7 +10,7 @@ class GameState {
     private int currentPlayer;
     private int totalPlayers;
     private PlayerModel[] players;
-    private final Scenes sceneLibray = new Scenes();
+    private final Scenes sceneLibrary = new Scenes();
     private Board board = new Board();
 
     public GameState() {
@@ -44,7 +44,7 @@ class GameState {
     }
 
     public Scenes getSceneLibrary() {
-        return sceneLibray;
+        return sceneLibrary;
     }
 
     public Board getBoard() {
@@ -74,10 +74,6 @@ class GameState {
 
     public void setAllPlayers(PlayerModel[] players) {
         this.players = players;
-    }
-
-    public void setBoard(Board board) {
-        this.board = board;
     }
 
 }
