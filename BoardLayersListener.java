@@ -97,7 +97,7 @@ public class BoardLayersListener extends JFrame {
     private void createConsoleListener() {
         // Add a listener for console
         consoleListener = new ConsoleListener();
-        consoleListener.setBounds(boardlabel.getWidth() + 20, 400, 250, 500);
+        consoleListener.setBounds(boardlabel.getWidth() + 20, 400, 300, 500);
         consoleListener.setVisible(true);
         bPane.add(consoleListener);
     }

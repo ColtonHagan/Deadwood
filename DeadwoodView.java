@@ -77,8 +77,11 @@ class DeadwoodView {
     }
 
     public void printAddRoleError() {
-        consoleListener.printToLog("Error: Cannot take role! This could be due to many reasons: You currently have a role, the role is already taken," +
-                " you do not have enough rank for the role, there is no scene card on location, or the role exists in a different location! \n");
+        consoleListener.printToLog("Error: Cannot take role, there are no available roles \n");
+    }
+
+    public void printAlreadyHaveRole() {
+        consoleListener.printToLog("Error: Cannot take role, there are no available roles \n");
     }
 
     // General player information
@@ -114,7 +117,7 @@ class DeadwoodView {
     }
 
     public void noBonusPayment() {
-        consoleListener.printToLog("No player was on card, so no bonuses where given");
+        consoleListener.printToLog("No player was on card, so no bonuses were given");
     }
 
     public void showEndTurn(String name) {

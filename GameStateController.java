@@ -72,7 +72,6 @@ class GameStateController extends DeadwoodController {
         updateModel(gameModel.getCurrentPlayer());
         createOffice(dataParser);
 
-        //playGame();
 
         // Button Setup
         boardView.createButtons();
@@ -193,7 +192,7 @@ class GameStateController extends DeadwoodController {
         }
         boardView.updatePlayerDisplay(gameModel.getCurrentPlayer().getName(), gameModel.getCurrentPlayer().getMoney(), gameModel.getCurrentPlayer().getCredits(), gameModel.getCurrentPlayer().getPracticeChips(), gameModel.getCurrentPlayerInt(), gameModel.getCurrentDay(), gameModel.getTotalDays());
         getView().showEndTurn(gameModel.getCurrentPlayer().getName());
-        
+
         // Resets buttons based on player status
         boardView.hideAll();
         if (gameModel.getCurrentPlayer().getHasRole()) {
@@ -201,7 +200,7 @@ class GameStateController extends DeadwoodController {
         } else {
             boardView.showButtonsDefault();
         }
-        
+
         // Checks if this is the last Scenecard on board, ends day if true;
         if (gameModel.getBoard().getCurrentRooms() == 1) {
             endDay();
@@ -231,6 +230,10 @@ class GameStateController extends DeadwoodController {
         if (gameModel.getCurrentDay() > gameModel.getTotalDays()) {
             endGame();
         }
+
+        // Bring buttons back to default
+        boardView.hideAll();
+        boardView.showButtonsDefault();
     }
 
     public void endGame() throws Exception {
@@ -274,6 +277,7 @@ class GameStateController extends DeadwoodController {
         if (userInput.equals("Yes")) setUpGame();*/
     }
 
+    // This class holds all the button press logic and also all the playing game logic
     class boardMouseListener implements MouseListener {
         public void mouseClicked(MouseEvent e) {
             // Button for Cancelling
@@ -294,11 +298,13 @@ class GameStateController extends DeadwoodController {
 
                 // Button for acting
             } else if (e.getSource() == boardView.bAct) {
-                System.out.println("Act is Selected\n");
                 if (getSystem().checkCanAct()) {
+                    // If an act succeeds, also remove a shot counter
                     if (act()) {
                         boardView.removeShotCounter(gameModel.getCurrentPlayer().getCurrentRoom().getRoomNumber());
                     }
+
+                    // Checks if all shot counters are done
                     if (gameModel.getCurrentPlayer().getCurrentRoom().getShotCounters() == 0) {
                         endRoom(gameModel.getCurrentPlayer().getCurrentRoom());
                     }
@@ -313,7 +319,6 @@ class GameStateController extends DeadwoodController {
 
                 // Button for Rehearsing
             } else if (e.getSource() == boardView.bRehearse) {
-                System.out.println("Rehearse is Selected\n");
                 if (getSystem().checkCanRehearse()) {
                     rehearse();
                     try {
@@ -327,7 +332,6 @@ class GameStateController extends DeadwoodController {
 
                 // Button for Moving
             } else if (e.getSource() == boardView.bMove) {
-                System.out.println("Move is Selected\n");
                 if (getSystem().checkCanMove()) {
                     String[] adjacentRooms = gameModel.getCurrentPlayer().getCurrentRoom().getAdjacentRooms();
                     boardView.hideAll();
@@ -342,15 +346,16 @@ class GameStateController extends DeadwoodController {
                 // Button for Upgrading
             } else if (e.getSource() == boardView.bUpgrade) {
                 if (getSystem().checkCanUpgrade()) {
-                    System.out.println("Upgrade is Selected\n");
                     boardView.hideAll();
                     for (int i = 0; i < 10; i++) {
+                        // Applies correct values from xml file to costs of upgrading
                         if (i < 5) {
                             boardView.setPayment(i, gameModel.getExactPlayer(0).getCastingOffice().costDollars(i + 2));
                         } else {
                             boardView.setPayment(i, gameModel.getExactPlayer(0).getCastingOffice().costCredits(i - 3));
                         }
 
+                        // Enables or disables buttons depending on if the current player can afford an upgrade
                         if (i < 5 && gameModel.getCurrentPlayer().getRank() < (i + 2) && gameModel.getCurrentPlayer().getMoney() >= gameModel.getExactPlayer(0).getCastingOffice().costDollars(i + 2)) {
                             boardView.bPayment[i].addMouseListener(new boardMouseListener());
                             boardView.bPayment[i].setEnabled(true);
@@ -363,7 +368,7 @@ class GameStateController extends DeadwoodController {
                     }
                     boardView.showPromptPayment();
                 } else {
-                    System.out.println("Error: Not in office!");
+                    getView().printUpgradeError();
                 }
             }
 
@@ -383,6 +388,7 @@ class GameStateController extends DeadwoodController {
             // Choosing Upgrade Buttons
             for (int i = 0; i < 10; i++) {
                 if (e.getSource() == boardView.bPayment[i]) {
+                    // Depending ont he button clicked, will pay with credits or dollars
                     if (i < 5) {
                         upgradeRankDollars((i + 2), gameModel.getExactPlayer(0).getCastingOffice());
                     } else {
@@ -404,6 +410,8 @@ class GameStateController extends DeadwoodController {
                 if (e.getSource() == boardView.bRooms[i]) {
                     Room room = roomNameToRoom(boardView.bRooms[i].getText());
                     move(room);
+
+                    // Checks if a scenecard is on the room
                     if (!(gameModel.getCurrentPlayer().getCurrentRoom().getSceneCard() == null)) {
                         if (!gameModel.getCurrentPlayer().getCurrentRoom().getSceneCard().getFlip()) {
                             gameModel.getCurrentPlayer().getCurrentRoom().getSceneCard().setFlip(true);
@@ -412,9 +420,11 @@ class GameStateController extends DeadwoodController {
                         workRoom = true;
                     }
 
-                    //boardView.displayMove(gameModel.getCurrentPlayerInt(), room.getCords());
+                    // Moves the players dice to the room
                     boardView.displayMove(gameModel.getCurrentPlayerInt(), gameModel.getCurrentPlayer().getCurrentRoom().getCords());
                     boardView.hideRooms();
+
+                    // Prompts user to take a role if they want to and if a role exists
                     if (workRoom) {
                         boardView.showPromptTakeRole();
                     } else {
@@ -430,9 +440,9 @@ class GameStateController extends DeadwoodController {
             // Choosing Role Buttons
             for (int i = 0; i < boardView.bRoles.length; i++) {
                 if (e.getSource() == boardView.bRoles[i]) {
+                    // Gives the player the role and moves player's dice onto roll
                     Role role = roleNameToRole(boardView.bRoles[i].getText());
                     addRole(role);
-                    //boardView.displayMove(gameModel.getCurrentPlayerInt(), gameModel.getCurrentPlayer().getCurrentRoom().getCords());
                     boardView.displayRole(role, gameModel.getCurrentPlayerInt(), gameModel.getCurrentPlayer().getCurrentRoom().getCords());
                     boardView.hideRoles();
 
@@ -450,16 +460,19 @@ class GameStateController extends DeadwoodController {
 
             // Take a role, before or after moving
             if (e.getSource() == boardView.bWork || e.getSource() == boardView.bTakeRole[0]) {
-                System.out.println("Taking a Role Selected");
                 if (getSystem().checkCanAddRole()) {
                     int i = 0;
                     Role[] valid = new Role[gameModel.getCurrentPlayer().getCurrentRoom().availableRoles().length];
+
+                    // Parsing all the roles in a room (Off and oncard)
                     for (Role r : gameModel.getCurrentPlayer().getCurrentRoom().availableRoles()) {
                         if (getSystem().checkRoleValid(r)) {
                             valid[i] = r;
                             i++;
                         }
                     }
+
+                    // Creates buttons for all roles that the player can take
                     if (i > 0) {
                         String[] validNames = new String[i];
                         for (int j = 0; j < i; j++) {
@@ -472,17 +485,18 @@ class GameStateController extends DeadwoodController {
                             b.addMouseListener(new boardMouseListener());
                         }
                     } else {
-                        System.out.println("Cannot take role, no available roles");
+                        getView().printAddRoleError();
                         boardView.hideRoles();
                         boardView.hideAll();
                         boardView.showButtonsDefault();
 
                     }
                 } else {
-                    System.out.println("Cannot take role, already have role");
+                    getView().printAlreadyHaveRole();
                 }
                 // After moving, refuse to take a role
             } else if (e.getSource() == boardView.bTakeRole[1]) {
+                // Brings default menu back
                 boardView.hideAll();
                 boardView.showButtonsDefault();
             }
