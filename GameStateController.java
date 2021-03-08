@@ -17,6 +17,7 @@ class GameStateController extends DeadwoodController {
 
     public GameStateController() {
         this.boardView = new BoardLayersListener();
+        getView().addListener(boardView.consoleListener);
         boardView.addListener(this);
         boardView.setVisible(true);
         this.gameModel = new GameState();
@@ -101,9 +102,7 @@ class GameStateController extends DeadwoodController {
         for (int i = 0; i < gameModel.getPlayers().length; i++) {
             PlayerModel player = gameModel.getPlayers()[i];
             if (player.getCurrentRoom() == currentRoom) {
-                if(player.getCurrentRole() != null) {
-                  boardView.displayMove(i, gameModel.getCurrentPlayer().getCurrentRoom().getCords());
-                }
+                boardView.displayMove(i, gameModel.getCurrentPlayer().getCurrentRoom().getCords());
                 player.removeRole();
                 player.updateHasRole(false);
                 player.updatePracticeChips(0);

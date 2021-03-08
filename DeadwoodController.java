@@ -14,7 +14,6 @@ class DeadwoodController {
 
     public DeadwoodController() {
         view = new DeadwoodView();
-        view.addListener(this);
         this.system = new Systems(model);
     }
 

@@ -92,10 +92,6 @@ public class BoardLayersListener extends JFrame {
         consoleListener.setBounds(boardlabel.getWidth() + 20, 400, 250, 500);
         consoleListener.setVisible(true);
         bPane.add(consoleListener);
-
-        for(int i = 0; i < 100; i++) {
-            consoleListener.printToLog("Test " + i);
-        }
     }
 
     public void createScenes(int[] cords, String image, int roomNumber) {
@@ -151,24 +147,23 @@ public class BoardLayersListener extends JFrame {
     }
     
     public void displayMove(int playerNumber, int[] roomCords) {
-      int slotsOver = -1;
       int y = roomCords[1]+100;
       int x = roomCords[0];
+      int slotsOver = 0;
       //checks if current player is at location
-      while(slotsOver != 0) {
-         slotsOver = 0;
-         for(int i = 0; i < playerlabel.length; i++) {
-            if(playerlabel[i].getLocation().x == x && playerlabel[i].getLocation().y == y && playerNumber != i) {
-               slotsOver++;
-               if(x > (2*playerlabel[playerNumber].getIcon().getIconWidth() + roomCords[0])) {
-                  y += playerlabel[playerNumber].getIcon().getIconHeight();
-                  x = roomCords[0];
-               } else {
-                  x += playerlabel[playerNumber].getIcon().getIconWidth();
-               }
+      for(int i = 0; i < playerlabel.length; i++) {
+         System.out.println(i + " " + playerlabel[i].getLocation().x + " " + playerlabel[i].getLocation().y);
+         if(playerlabel[i].getLocation().x == x && playerlabel[i].getLocation().y == y && playerNumber != i) {
+            slotsOver++;
+            if(slotsOver == 4) {
+               y += playerlabel[playerNumber].getIcon().getIconHeight();
+               x = roomCords[0];
+            } else {
+               x += playerlabel[playerNumber].getIcon().getIconHeight();
             }
          }
       }
+      System.out.println(slotsOver);
       playerlabel[playerNumber].setBounds(x,y, playerlabel[playerNumber].getIcon().getIconWidth(), playerlabel[playerNumber].getIcon().getIconHeight());
       bPane.add(playerlabel[playerNumber], new Integer(3));
       playerlabel[playerNumber].setVisible(true);
