@@ -114,7 +114,9 @@ public class BoardLayersListener extends JFrame {
     }
     
     public void removeScene(int roomNumber) {
-      cardlabel[roomNumber].setIcon(null);
+      if(cardlabel[roomNumber] != null) {
+         cardlabel[roomNumber].setIcon(null);
+      }
     }
     
     public void removeShotCounter(int roomNumber) {
