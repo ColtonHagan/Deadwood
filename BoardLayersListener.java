@@ -8,9 +8,6 @@
 */
 
 //for testing
-import java.io.*; 
-import java.util.*; 
-
 
 import java.awt.*;
 import javax.swing.*;
@@ -20,6 +17,8 @@ import javax.swing.JOptionPane;
 public class BoardLayersListener extends JFrame {
     // GameStateController, Acting as a listener
     GameStateController controller;
+
+    ConsoleListener consoleListener;
 
     // JLabels
     JLabel boardlabel;
@@ -56,6 +55,7 @@ public class BoardLayersListener extends JFrame {
         cardlabel = new JLabel[10];
         createBoard();
         createButtonsPlayerCount();
+        createConsoleListener();
     }
 
     public void addListener(GameStateController controller) {
@@ -84,6 +84,18 @@ public class BoardLayersListener extends JFrame {
         setSize(icon.getIconWidth() + 350, icon.getIconHeight() + 50);
         // setPreferredSize(new Dimension(icon.getIconWidth()+200,icon.getIconHeight()));
         // setPreferredSize(new Dimension(1280,720));
+    }
+
+    private void createConsoleListener() {
+        // Add a listener for console
+        consoleListener = new ConsoleListener();
+        consoleListener.setBounds(boardlabel.getWidth() + 20, 400, 250, 500);
+        consoleListener.setVisible(true);
+        bPane.add(consoleListener);
+
+        for(int i = 0; i < 100; i++) {
+            consoleListener.printToLog("Test " + i);
+        }
     }
 
     public void createScenes(int[] cords, String image, int roomNumber) {
