@@ -61,9 +61,13 @@ class GameStateController extends DeadwoodController {
         gameModel.getBoard().createBoard(dataParser, gameModel.getSceneLibrary(), boardView);
 
         // Creating players with inputted names, variable stats based on above totalPlayers
+        String[] namesList = {"Blue", "Cyan", "Green", "Orange", "Pink", "Red", "Violet", "Yellow"};
         PlayerModel[] players = new PlayerModel[gameModel.getTotalPlayers()];
         for (int i = 0; i < gameModel.getTotalPlayers(); i++) {
             String name = boardView.createPlayers(i);
+            if(name == null) {
+                name = namesList[i];
+            }
             players[i] = new PlayerModel(name, money, credits, rank, gameModel.getBoard().getTrailer());
             boardView.displayMove(i, gameModel.getBoard().getTrailer().getCords());
         }
